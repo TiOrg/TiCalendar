@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 import {
   Platform,
@@ -21,6 +13,8 @@ import {
   Agenda,
   LocaleConfig
 } from 'react-native-calendars';
+
+import { SafeAreaView } from 'react-navigation';
 
 
 // import ScreenUtil from '../ScreenUtil';
@@ -56,9 +50,7 @@ export default class App extends Component<Props> {
 
 
 
-      <View style={{
-        flex : 1,
-        flexDirection : 'column'}}>
+      <SafeAreaView style={styles.container}>
         {/* <Text style={styles.welcome}>Welcome to React Native!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text> */}
@@ -100,7 +92,7 @@ export default class App extends Component<Props> {
           onPressArrowRight={addMonth => addMonth()}
 />
 
-      </View>
+</SafeAreaView>
     );
   }
 }

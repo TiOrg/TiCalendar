@@ -9,7 +9,8 @@
   "dependencies": {
     "react": "16.5.0",
     "react-native": "0.57.1",
-    "react-native-calendars": "^1.21.0"
+    "react-native-calendars": "^1.21.0",
+    "react-navigation": "^2.18.0"
   },
   "devDependencies": {
     "@babel/runtime": "^7.0.0",
