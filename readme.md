@@ -10,4 +10,4 @@
 
 `npm install --save react-native-calendars`
 
-more to be added.
+more and more to be added.
