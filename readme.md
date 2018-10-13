@@ -21,3 +21,14 @@ more and more to be added.
 
 
 `$ npm install leancloud-realtime --save`
+
+### react-native-vector-icons
+
+`npm install react-native-vector-icons `
+` react-native link react-native-vector-icons `
+
+### react-native-scrollable-tab-view
+
+`yarn add happypancake/react-native-scrollable-tab-view#master `
+
+
