@@ -57,51 +57,46 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-
-
-
       <SafeAreaView style={styles.container}>
-        {/* <Text style={styles.text}>Calendar with selectable date and arrows</Text> */}
-
         <ScrollableTabView
-    style={{marginTop: 20, }}
-    initialPage={1}
-    renderTabBar={() => <FacebookTabBar />}
-    tabBarPosition='bottom'
-  >
-    <ScrollView tabLabel="ios-paper" style={styles.tabView}>
-      <View style={styles.card}>
-        <Agenda
-        items={this.state.items}
-        loadItemsForMonth={this.loadItems.bind(this)}
-        selected={'2017-05-16'}
-        renderItem={this.renderItem.bind(this)}
-        renderEmptyDate={this.renderEmptyDate.bind(this)}
-        rowHasChanged={this.rowHasChanged.bind(this)}
-      />
-      </View>
-    </ScrollView>
-    <ScrollView tabLabel="ios-people" style={styles.tabView}>
-      <View style={styles.card}>
-        <Text>Friends</Text>
-      </View>
-    </ScrollView>
-    <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
-      <View style={styles.card}>
-        <Text>Messenger</Text>
-      </View>
-    </ScrollView>
-    <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
-      <View style={styles.card}>
-        <Text>Notifications</Text>
-      </View>
-    </ScrollView>
-    <ScrollView tabLabel="ios-list" style={styles.tabView}>
-      <View style={styles.card}>
-        <Text>Other nav</Text>
-      </View>
-    </ScrollView>
-  </ScrollableTabView>
+          style={{marginTop: 20, }}
+          initialPage={1}
+          renderTabBar={() => <FacebookTabBar />}
+          tabBarPosition='bottom'
+          >
+            <ScrollView tabLabel="ios-paper" style={styles.tabView}>
+              <View style={styles.card}>
+                <Agenda
+                  items={this.state.items}
+                  loadItemsForMonth={this.loadItems.bind(this)}
+                  selected={'2017-05-16'}
+                  renderItem={this.renderItem.bind(this)}
+                  renderEmptyDate={this.renderEmptyDate.bind(this)}
+                  rowHasChanged={this.rowHasChanged.bind(this)}
+                />
+              </View>
+            </ScrollView>
+            <ScrollView tabLabel="ios-people" style={styles.tabView}>
+              <View style={styles.card}>
+          <Text>Friends</Text>
+        </View>
+      </ScrollView>
+      <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
+        <View style={styles.card}>
+          <Text>Messenger</Text>
+        </View>
+      </ScrollView>
+      <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
+        <View style={styles.card}>
+          <Text>Notifications</Text>
+        </View>
+      </ScrollView>
+      <ScrollView tabLabel="ios-list" style={styles.tabView}>
+        <View style={styles.card}>
+          <Text>Other nav</Text>
+        </View>
+      </ScrollView>
+    </ScrollableTabView>
 
       </SafeAreaView>
     );
@@ -188,3 +183,5 @@ const styles = StyleSheet.create({
     paddingTop: 30
   }
 });
+
+// export default Main;
