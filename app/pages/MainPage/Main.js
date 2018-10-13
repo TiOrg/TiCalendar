@@ -44,16 +44,33 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.onDayPress = this.onDayPress.bind(this);
+  }
+
   render() {
     return (
 
 
 
       <SafeAreaView style={styles.container}>
-        <Text style={styles.text}>Calendar with selectable date and arrows</Text>
-
+        {/* <Text style={styles.text}>Calendar with selectable date and arrows</Text> */}
+        <Calendar
+          onDayPress={this.onDayPress}
+          style={styles.calendar}
+          hideExtraDays
+          markedDates={{[this.state.selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}}}
+        />
       </SafeAreaView>
     );
+  }
+
+  onDayPress(day) {
+    this.setState({
+      selected: day.dateString
+    });
   }
 }
 
