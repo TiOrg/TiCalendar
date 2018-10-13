@@ -24,8 +24,8 @@ more and more to be added.
 
 ### react-native-vector-icons
 
-`npm install react-native-vector-icons `
-` react-native link react-native-vector-icons `
+```npm install react-native-vector-icons  
+react-native link react-native-vector-icons ```
 
 ### react-native-scrollable-tab-view
 
