@@ -15,6 +15,9 @@ import {
 
 import { SafeAreaView } from 'react-navigation';
 
+import FacebookTabBar from './FacebookTabBar';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+
 
 // import ScreenUtil from '../ScreenUtil';
 
@@ -57,12 +60,45 @@ export default class App extends Component<Props> {
 
       <SafeAreaView style={styles.container}>
         {/* <Text style={styles.text}>Calendar with selectable date and arrows</Text> */}
+
+        <ScrollableTabView
+    style={{marginTop: 20, }}
+    initialPage={1}
+    renderTabBar={() => <FacebookTabBar />}
+    tabBarPosition='bottom'
+  >
+    <ScrollView tabLabel="ios-paper" style={styles.tabView}>
+      <View style={styles.card}>
         <Calendar
           onDayPress={this.onDayPress}
           style={styles.calendar}
           hideExtraDays
           markedDates={{[this.state.selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}}}
         />
+      </View>
+    </ScrollView>
+    <ScrollView tabLabel="ios-people" style={styles.tabView}>
+      <View style={styles.card}>
+        <Text>Friends</Text>
+      </View>
+    </ScrollView>
+    <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
+      <View style={styles.card}>
+        <Text>Messenger</Text>
+      </View>
+    </ScrollView>
+    <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
+      <View style={styles.card}>
+        <Text>Notifications</Text>
+      </View>
+    </ScrollView>
+    <ScrollView tabLabel="ios-list" style={styles.tabView}>
+      <View style={styles.card}>
+        <Text>Other nav</Text>
+      </View>
+    </ScrollView>
+  </ScrollableTabView>
+
       </SafeAreaView>
     );
   }
@@ -84,6 +120,6 @@ const styles = StyleSheet.create({
  },
  container: {
    flex: 1,
-   backgroundColor: 'gray'
+   backgroundColor: 'white'
  }
 });
