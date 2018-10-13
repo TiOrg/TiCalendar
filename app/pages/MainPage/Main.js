@@ -16,6 +16,10 @@ import {
 import { SafeAreaView } from 'react-navigation';
 
 
+import ScrollableTabView, { ScrollableTabBar, }  from 'react-native-scrollable-tab-view';
+import FacebookTabBar from './FacebookTabBar';
+
+
 // import ScreenUtil from '../ScreenUtil';
 
 
@@ -35,15 +39,15 @@ LocaleConfig.locales['zh-CN'] = {
 
 LocaleConfig.defaultLocale = 'zh-CN';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu and fuck you',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+// const instructions = Platform.select({
+//   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu and fuck you',
+//   android:
+//     'Double tap R on your keyboard to reload,\n' +
+//     'Shake or press menu button for dev menu',
+// });
 
 type Props = {};
-export default class App extends Component<Props> {
+export default class Main extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -52,18 +56,49 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-
-
-
       <SafeAreaView style={styles.container}>
-        {/* <Text style={styles.text}>Calendar with selectable date and arrows</Text> */}
+        <ScrollableTabView
+    style={{marginTop: 20, }}
+    initialPage={1}
+    renderTabBar={() => <FacebookTabBar />}
+  >
+    <ScrollView tabLabel="ios-paper" style={styles.tabView}>
+      <View style={styles.card}>
         <Calendar
           onDayPress={this.onDayPress}
           style={styles.calendar}
           hideExtraDays
           markedDates={{[this.state.selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}}}
         />
+      </View>
+    </ScrollView>
+    <ScrollView tabLabel="ios-people" style={styles.tabView}>
+      <View style={styles.card}>
+        <Text>Friends</Text>
+      </View>
+    </ScrollView>
+    <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
+      <View style={styles.card}>
+        <Text>Messenger</Text>
+      </View>
+    </ScrollView>
+    <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
+      <View style={styles.card}>
+        <Text>Notifications</Text>
+      </View>
+    </ScrollView>
+    <ScrollView tabLabel="ios-list" style={styles.tabView}>
+      <View style={styles.card}>
+        <Text>Other nav</Text>
+      </View>
+    </ScrollView>
+  </ScrollableTabView>
+
+
+
       </SafeAreaView>
+
+
     );
   }
 
@@ -84,6 +119,23 @@ const styles = StyleSheet.create({
  },
  container: {
    flex: 1,
-   backgroundColor: 'gray'
- }
+   backgroundColor: 'white'
+ },
+ tabView: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: 'rgba(0,0,0,0.01)',
+  },
+  card: {
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    borderColor: 'rgba(0,0,0,0.1)',
+    margin: 5,
+    height: 150,
+    padding: 15,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 2, height: 2, },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+  },
 });
