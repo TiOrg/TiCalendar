@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: '#fff',
     borderColor: 'rgba(0,0,0,0)',
-    margin: 5,
+    // margin: 5,
     height: 550,
     padding: 15,
     shadowColor: '#fff',

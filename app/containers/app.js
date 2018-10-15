@@ -27,28 +27,30 @@ const TabContainer = TabNavigator(
 );
 
 
-const App = TabNavigator (
-  {
-    Home: {
-      screen: MainContainer,
-      navigationOptions: {
-        headerLeft: null
-      }
-    }
-  },
-  {
-    headerMode: 'screen',
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: '#3e9ce9'
-      },
-      headerTitleStyle: {
-        color: '#fff',
-        fontSize: 20
-      },
-      headerTintColor: '#fff'
-    }
-  }
-);
+// const App = TabNavigator (
+//   {
+//     Home: {
+//       screen: MainContainer,
+//       navigationOptions: {
+//         headerLeft: null
+//       }
+//     }
+//   },
+//   {
+//     headerMode: 'screen',
+//     navigationOptions: {
+//       headerStyle: {
+//         backgroundColor: '#3e9ce9'
+//       },
+//       headerTitleStyle: {
+//         color: '#fff',
+//         fontSize: 20
+//       },
+//       headerTintColor: '#fff'
+//     }
+//   }
+// );
+
+const App = MainContainer;
 
 export default App;
