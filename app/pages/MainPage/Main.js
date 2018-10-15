@@ -6,15 +6,13 @@ import {
   View,
   ScrollView
 } from 'react-native';
-import {
-  Calendar,
-  CalendarList,
-  Agenda,
-  LocaleConfig
-} from 'react-native-calendars';
 
 import { SafeAreaView } from 'react-navigation';
+import FacebookTabBar from './FacebookTabBar';
+import CalendarPage from './CalendarPage';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
 
+<<<<<<< HEAD
 
 import ScrollableTabView, { ScrollableTabBar, }  from 'react-native-scrollable-tab-view';
 import FacebookTabBar from './FacebookTabBar';
@@ -53,10 +51,14 @@ export default class Main extends Component<Props> {
     this.state = {};
     this.onDayPress = this.onDayPress.bind(this);
   }
+=======
+export default class App extends Component{
+>>>>>>> dev
 
   render() {
     return (
       <SafeAreaView style={styles.container}>
+<<<<<<< HEAD
         <ScrollableTabView
     style={{marginTop: 20, }}
     initialPage={1}
@@ -95,6 +97,44 @@ export default class Main extends Component<Props> {
   </ScrollableTabView>
 
 
+=======
+
+        <ScrollableTabView
+          // style={{marginTop: 20, }}
+          initialPage={0}
+          renderTabBar={() => <FacebookTabBar />}
+          tabBarPosition='bottom'>
+
+            <View tabLabel="ios-paper" style={styles.tabView}>
+              <CalendarPage />
+            </View>
+
+            <ScrollView tabLabel="ios-people" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Friends</Text>
+              </View>
+            </ScrollView>
+
+            <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Messenger</Text>
+              </View>
+            </ScrollView>
+
+            <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Notifications</Text>
+              </View>
+            </ScrollView>
+
+            <ScrollView tabLabel="ios-list" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Other nav</Text>
+              </View>
+            </ScrollView>
+
+        </ScrollableTabView>
+>>>>>>> dev
 
       </SafeAreaView>
 
@@ -102,25 +142,36 @@ export default class Main extends Component<Props> {
     );
   }
 
-  onDayPress(day) {
-    this.setState({
-      selected: day.dateString
-    });
-  }
+
+
 }
 
 const styles = StyleSheet.create({
-  calendar: {
-   borderTopWidth: 1,
-   paddingTop: 5,
-   borderBottomWidth: 1,
-   borderColor: '#eee',
-   height: 350
- },
+  tabView: {
+    flex: 1,
+    padding: 0,
+    backgroundColor: 'rgba(0,0,0,0.01)',
+  },
+
+  card: {
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    borderColor: 'rgba(0,0,0,0)',
+    // margin: 5,
+    height: 500,
+    // flex: 1,
+    padding: 15,
+    shadowColor: '#fff',
+    shadowOffset: { width: 2, height: 2, },
+    shadowOpacity: 0,
+    shadowRadius: 3,
+  },
+
  container: {
    flex: 1,
    backgroundColor: 'white'
  },
+<<<<<<< HEAD
  tabView: {
     flex: 1,
     padding: 10,
@@ -138,4 +189,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 3,
   },
+=======
+
+
+>>>>>>> dev
 });
+
+// export default Main;
