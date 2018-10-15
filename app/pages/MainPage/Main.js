@@ -39,13 +39,13 @@ export default class App extends Component{
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        
+
         <ScrollableTabView
           style={{marginTop: 20, }}
           initialPage={1}
           renderTabBar={() => <FacebookTabBar />}
           tabBarPosition='bottom'>
-            
+
             <ScrollView tabLabel="ios-paper" style={styles.tabView}>
               <View style={styles.card}>
                 <Agenda
@@ -58,25 +58,25 @@ export default class App extends Component{
                 />
               </View>
             </ScrollView>
-            
+
             <ScrollView tabLabel="ios-people" style={styles.tabView}>
               <View style={styles.card}>
                 <Text>Friends</Text>
               </View>
             </ScrollView>
-           
+
             <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
               <View style={styles.card}>
                 <Text>Messenger</Text>
               </View>
             </ScrollView>
-            
+
             <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
               <View style={styles.card}>
                 <Text>Notifications</Text>
               </View>
             </ScrollView>
-            
+
             <ScrollView tabLabel="ios-list" style={styles.tabView}>
               <View style={styles.card}>
                 <Text>Other nav</Text>
@@ -152,13 +152,13 @@ const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
     backgroundColor: '#fff',
-    borderColor: 'rgba(0,0,0,0.1)',
+    borderColor: 'rgba(0,0,0,0)',
     margin: 5,
     height: 550,
     padding: 15,
-    shadowColor: '#ccc',
+    shadowColor: '#fff',
     shadowOffset: { width: 2, height: 2, },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0,
     shadowRadius: 3,
   },
 

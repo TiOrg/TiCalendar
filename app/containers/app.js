@@ -27,10 +27,10 @@ const TabContainer = TabNavigator(
 );
 
 
-const App = StackNavigator(
+const App = TabNavigator (
   {
     Home: {
-      screen: TabContainer,
+      screen: MainContainer,
       navigationOptions: {
         headerLeft: null
       }
