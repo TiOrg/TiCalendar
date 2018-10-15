@@ -38,3 +38,11 @@ more and more to be added.
 npm install --save redux react-redux
 yarn add redux react-redux
 ```
+
+### proptypes
+```
+npm install --save prop-types
+```
+
+
+
