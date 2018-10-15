@@ -170,7 +170,7 @@ class CalendarList extends Component {
         renderItem={this.renderCalendarBound}
         showsVerticalScrollIndicator={false}
         scrollEnabled={this.props.scrollingEnabled !== undefined ? this.props.scrollingEnabled : true}
-        keyExtractor={(item, index) => index}
+        keyExtractor={(item, index) => index.toString()}
         initialScrollIndex={this.state.openDate ? this.getMonthIndex(this.state.openDate) : false}
         getItemLayout={this.getItemLayout}
       />
