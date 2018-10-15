@@ -20,3 +20,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
     rowHasChanged={this.rowHasChanged.bind(this)}
   />
 </View>
+
+const styles = StyleSheet.create({
+  
+})
