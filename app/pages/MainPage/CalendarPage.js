@@ -11,11 +11,9 @@ import {
   CalendarList,
   Agenda,
   LocaleConfig
-} from 'react-native-calendars';
+} from '../../utils/CalendarUtils/index';
 
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-
-// import
 
 LocaleConfig.locales['zh-CN'] = {
   monthNames: ['一月','二月','三月','四月','五月','六月',
@@ -131,16 +129,10 @@ const styles = StyleSheet.create({
      marginRight: 10,
      marginTop: 17
    },
-   emptyDate: {
+  
+  emptyDate: {
      height: 15,
      flex:1,
      paddingTop: 30
    },
-   calendar: {
-    borderTopWidth: 1,
-    paddingTop: 5,
-    borderBottomWidth: 1,
-    borderColor: '#eee',
-    height: 350
-  },
 })
