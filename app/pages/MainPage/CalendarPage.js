@@ -22,5 +22,16 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 </View>
 
 const styles = StyleSheet.create({
-  
+  card: {
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    borderColor: 'rgba(0,0,0,0)',
+    // margin: 5,
+    height: 550,
+    padding: 15,
+    shadowColor: '#fff',
+    shadowOffset: { width: 2, height: 2, },
+    shadowOpacity: 0,
+    shadowRadius: 3,
+  },
 })
