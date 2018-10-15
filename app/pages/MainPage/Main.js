@@ -41,8 +41,8 @@ export default class App extends Component{
       <SafeAreaView style={styles.container}>
 
         <ScrollableTabView
-          style={{marginTop: 20, }}
-          initialPage={1}
+          // style={{marginTop: 20, }}
+          initialPage={0}
           renderTabBar={() => <FacebookTabBar />}
           tabBarPosition='bottom'>
 
