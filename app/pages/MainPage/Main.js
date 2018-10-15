@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-navigation';
 import FacebookTabBar from './FacebookTabBar';
 import CalendarPage from './CalendarPage';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-
+import {combineReducers} from 'redux';
 export default class App extends Component{
 
   render() {
