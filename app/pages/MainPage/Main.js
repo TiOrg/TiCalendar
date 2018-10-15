@@ -14,19 +14,8 @@ import {
 } from 'react-native-calendars';
 
 import { SafeAreaView } from 'react-navigation';
-
 import FacebookTabBar from './FacebookTabBar';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-
-
-// import ScreenUtil from '../ScreenUtil';
-
-
-
-// const screenWeight = ScreenUtil.width;
-// const
-
-
 
 LocaleConfig.locales['zh-CN'] = {
   monthNames: ['一月','二月','三月','四月','五月','六月',
@@ -38,15 +27,7 @@ LocaleConfig.locales['zh-CN'] = {
 
 LocaleConfig.defaultLocale = 'zh-CN';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu and fuck you',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -58,12 +39,13 @@ export default class App extends Component<Props> {
   render() {
     return (
       <SafeAreaView style={styles.container}>
+        
         <ScrollableTabView
           style={{marginTop: 20, }}
           initialPage={1}
           renderTabBar={() => <FacebookTabBar />}
-          tabBarPosition='bottom'
-          >
+          tabBarPosition='bottom'>
+            
             <ScrollView tabLabel="ios-paper" style={styles.tabView}>
               <View style={styles.card}>
                 <Agenda
@@ -76,27 +58,32 @@ export default class App extends Component<Props> {
                 />
               </View>
             </ScrollView>
+            
             <ScrollView tabLabel="ios-people" style={styles.tabView}>
               <View style={styles.card}>
-          <Text>Friends</Text>
-        </View>
-      </ScrollView>
-      <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
-        <View style={styles.card}>
-          <Text>Messenger</Text>
-        </View>
-      </ScrollView>
-      <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
-        <View style={styles.card}>
-          <Text>Notifications</Text>
-        </View>
-      </ScrollView>
-      <ScrollView tabLabel="ios-list" style={styles.tabView}>
-        <View style={styles.card}>
-          <Text>Other nav</Text>
-        </View>
-      </ScrollView>
-    </ScrollableTabView>
+                <Text>Friends</Text>
+              </View>
+            </ScrollView>
+           
+            <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Messenger</Text>
+              </View>
+            </ScrollView>
+            
+            <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Notifications</Text>
+              </View>
+            </ScrollView>
+            
+            <ScrollView tabLabel="ios-list" style={styles.tabView}>
+              <View style={styles.card}>
+                <Text>Other nav</Text>
+              </View>
+            </ScrollView>
+
+        </ScrollableTabView>
 
       </SafeAreaView>
     );
@@ -157,6 +144,25 @@ export default class App extends Component<Props> {
 }
 
 const styles = StyleSheet.create({
+  tabView: {
+    flex: 1,
+    padding: 0,
+    backgroundColor: 'rgba(0,0,0,0.01)',
+  },
+  card: {
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    borderColor: 'rgba(0,0,0,0.1)',
+    margin: 5,
+    height: 550,
+    padding: 15,
+    shadowColor: '#ccc',
+    shadowOffset: { width: 2, height: 2, },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+  },
+
+
   calendar: {
    borderTopWidth: 1,
    paddingTop: 5,
