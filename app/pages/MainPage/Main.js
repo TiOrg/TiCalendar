@@ -6,27 +6,11 @@ import {
   View,
   ScrollView
 } from 'react-native';
-import {
-  Calendar,
-  CalendarList,
-  Agenda,
-  LocaleConfig
-} from 'react-native-calendars';
 
 import { SafeAreaView } from 'react-navigation';
 import FacebookTabBar from './FacebookTabBar';
 import CalendarPage from './CalendarPage';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-
-// LocaleConfig.locales['zh-CN'] = {
-//   monthNames: ['一月','二月','三月','四月','五月','六月',
-//   '七月','八月','九月','十月','十一月','十二月'],
-//   monthNamesShort: ['一','二','三','四','五','六','七','八','九','十','十一','十二'],
-//   dayNames: ['周日','周一','周二','周三','周四','周五','周六'],
-//   dayNamesShort: ['日','一','二','三','四','五','六']
-// };
-//
-// LocaleConfig.defaultLocale = 'zh-CN';
 
 export default class App extends Component{
 
@@ -40,9 +24,9 @@ export default class App extends Component{
           renderTabBar={() => <FacebookTabBar />}
           tabBarPosition='bottom'>
 
-            <ScrollView tabLabel="ios-paper" style={styles.tabView}>
+            <View tabLabel="ios-paper" style={styles.tabView}>
               <CalendarPage />
-            </ScrollView>
+            </View>
 
             <ScrollView tabLabel="ios-people" style={styles.tabView}>
               <View style={styles.card}>
@@ -81,6 +65,7 @@ export default class App extends Component{
 const styles = StyleSheet.create({
   tabView: {
     flex: 1,
+    // height: 500,
     padding: 0,
     backgroundColor: 'rgba(0,0,0,0.01)',
   },

@@ -15,6 +15,8 @@ import {
 
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
+// import
+
 LocaleConfig.locales['zh-CN'] = {
   monthNames: ['一月','二月','三月','四月','五月','六月',
   '七月','八月','九月','十月','十一月','十二月'],
@@ -113,6 +115,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,0)',
     // margin: 5,
     height: 550,
+    // flex: 1,
     padding: 15,
     shadowColor: '#fff',
     shadowOffset: { width: 2, height: 2, },
