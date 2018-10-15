@@ -35,3 +35,4 @@ more and more to be added.
 ### redux和react-redux
 
 `npm install --save redux react-redux`
+`yarn add redux react-redux`
