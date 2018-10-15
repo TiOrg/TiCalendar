@@ -32,4 +32,6 @@ more and more to be added.
 
 `yarn add happypancake/react-native-scrollable-tab-view#master `
 
-what?
+### redux和react-redux
+
+`npm install --save redux react-redux`
