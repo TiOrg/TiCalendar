@@ -65,7 +65,6 @@ export default class App extends Component{
 const styles = StyleSheet.create({
   tabView: {
     flex: 1,
-    // height: 500,
     padding: 0,
     backgroundColor: 'rgba(0,0,0,0.01)',
   },
@@ -75,7 +74,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderColor: 'rgba(0,0,0,0)',
     // margin: 5,
-    height: 550,
+    height: 500,
+    // flex: 1,
     padding: 15,
     shadowColor: '#fff',
     shadowOffset: { width: 2, height: 2, },
