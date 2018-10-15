@@ -1819,10 +1819,7 @@ create-react-class@^15.6.2, create-react-class@^15.6.3:
 create-react-context@0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.2.2.tgz#9836542f9aaa22868cd7d4a6f82667df38019dca"
-<<<<<<< HEAD
-=======
   integrity sha1-mDZUL5qqIoaM19Sm+CZn3zgBnco=
->>>>>>> dev
   dependencies:
     fbjs "^0.8.0"
     gud "^1.0.0"
@@ -2659,10 +2656,7 @@ has@^1.0.1:
 hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
-<<<<<<< HEAD
-=======
   integrity sha1-xZA89AnA39kI84jmGdhrnBF0y0c=
->>>>>>> dev
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -3681,11 +3675,6 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-<<<<<<< HEAD
-lodash.get@^4.4.2:
-  version "4.4.2"
-  resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
-=======
 lodash-es@^4.17.5:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
@@ -3695,15 +3684,11 @@ lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
->>>>>>> dev
 
 lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
-<<<<<<< HEAD
-=======
   integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
->>>>>>> dev
 
 lodash.pad@^4.1.0:
   version "4.5.1"
@@ -5051,38 +5036,26 @@ react-native@0.57.1:
 react-navigation-deprecated-tab-navigator@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/react-navigation-deprecated-tab-navigator/-/react-navigation-deprecated-tab-navigator-1.3.0.tgz#015dcae1e977b984ca7e99245261c15439026bb7"
-<<<<<<< HEAD
-=======
   integrity sha1-AV3K4el3uYTKfpkkUmHBVDkCa7c=
->>>>>>> dev
   dependencies:
     react-native-tab-view "^0.0.77"
 
 react-navigation-drawer@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/react-navigation-drawer/-/react-navigation-drawer-0.5.0.tgz#d91b6a6ec65c34ba78c00f814b1e6508922cc9ec"
-<<<<<<< HEAD
-=======
   integrity sha1-2RtqbsZcNLp4wA+BSx5lCJIsyew=
->>>>>>> dev
   dependencies:
     react-native-drawer-layout-polyfill "^1.3.2"
 
 react-navigation-stack@0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-navigation-stack/-/react-navigation-stack-0.7.0.tgz#0b2f139ee1cba953037ef51353df992ec6c74fa2"
-<<<<<<< HEAD
-=======
   integrity sha1-Cy8TnuHLqVMDfvUTU9+ZLsbHT6I=
->>>>>>> dev
 
 react-navigation-tabs@0.8.4:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/react-navigation-tabs/-/react-navigation-tabs-0.8.4.tgz#aa767f28b899f13c99f2b034b4a665f8cf0a5737"
-<<<<<<< HEAD
-=======
   integrity sha1-qnZ/KLiZ8TyZ8rA0tKZl+M8KVzc=
->>>>>>> dev
   dependencies:
     hoist-non-react-statics "^2.5.0"
     prop-types "^15.6.1"
@@ -5092,10 +5065,7 @@ react-navigation-tabs@0.8.4:
 react-navigation@^2.18.0:
   version "2.18.0"
   resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-2.18.0.tgz#c14e632da308cb60c3f60bbfba4b0c037ea502c3"
-<<<<<<< HEAD
-=======
   integrity sha1-wU5jLaMIy2DD9gu/uksMA36lAsM=
->>>>>>> dev
   dependencies:
     clamp "^1.0.1"
     create-react-context "0.2.2"
@@ -6334,10 +6304,7 @@ xcode@^0.9.1:
 xdate@^0.8.0:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/xdate/-/xdate-0.8.2.tgz#d7b033c00485d02695baf0044f4eacda3fc961a3"
-<<<<<<< HEAD
-=======
   integrity sha1-17AzwASF0CaVuvAET06s2j/JYaM=
->>>>>>> dev
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
@@ -6426,10 +6393,7 @@ yargs@^11.0.0:
 yargs@^8.0.2:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-8.0.2.tgz#6299a9055b1cefc969ff7e79c1d918dceb22c360"
-<<<<<<< HEAD
-=======
   integrity sha1-YpmpBVsc78lp/355wdkY3Osiw2A=
->>>>>>> dev
   dependencies:
     camelcase "^4.1.0"
     cliui "^3.2.0"

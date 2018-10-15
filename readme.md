@@ -20,19 +20,6 @@ more and more to be added.
 #### 实时消息服务
 
 
-<<<<<<< HEAD
-`$ npm install leancloud-realtime --save`
-
-
-### react-native-scrollable-tab-view
-
-`yarn add happypancake/react-native-scrollable-tab-view#master`
-
-
-### npm install react-native-vector-icons
-`$ npm install react-native-vector-icons --save`
-`$ react-native link react-native-vector-icons`
-=======
 `npm install leancloud-realtime --save `
 
 ### react-native-vector-icons
@@ -46,4 +33,3 @@ more and more to be added.
 `yarn add happypancake/react-native-scrollable-tab-view#master `
 
 what?
->>>>>>> dev
