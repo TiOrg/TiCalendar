@@ -38,5 +38,8 @@ yarn add redux react-redux
 npm install --save prop-types
 ```
 
-
+### react-native-navigation-actions
+```
+npm install --save react-native-navigation-actions
+```
 

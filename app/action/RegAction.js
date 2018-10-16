@@ -1,10 +1,23 @@
 'use strict';
 
 import * as types from '../constants/RegTypes';
+import AV from '../service/AVService';
 import React, {Component} from 'react';
 
 export function reg(mobile, password) {
     console.log('注册方法');
+    // 新建 AVUser 对象实例
+    var user = new AV.User();
+    // 设置用户名
+    user.setUsername(mobile);
+    // 设置密码
+    user.setPassword(password);
+    // 设置邮箱
+    user.setEmail('tom@leancloud.cn');
+    user.signUp().then(function (loggedInUser) {
+      console.log(loggedInUser);
+  }, function (error) {
+  });
     return dispatch => {
         dispatch(isReging());
         // 模拟用户注册

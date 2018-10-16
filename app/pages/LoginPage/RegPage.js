@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, TextInput, Alert} from 'react-native';
 import {
   SafeAreaView,
-  NavigationActions
+  NavigationActions,
+  StackActions
 } from 'react-navigation';
 import {connect} from 'react-redux'; // 引入connect函数
 import * as registerAction from '../../action/RegAction';// 导入action方法
@@ -18,12 +19,22 @@ import CButton from '../../common/button';
 //     ]
 // });
 
+const resetAction = StackActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'Login' }),
+    // NavigationActions.navigate({ routeName: 'settings' })
+  ]
+});
+// navigation.dispatch(resetAction);
+
 class RegPage extends Component {
 
   static navigationOptions = getStackOptions('注册');
   mobile = '';
   password = '';
   password2 = '';
+  email = '';
 
   constructor(props) {
         super(props);
@@ -55,7 +66,7 @@ class RegPage extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.regPage}>
-           <TextInput style={styles.regInput} placeholder='手机号码' keyboardType={'numeric'}
+           <TextInput style={styles.regInput} placeholder='用户名'
               autoCapitalize={'none'} maxLength={20}
               onChangeText={(text) => this.mobile = text}/>
            <TextInput style={styles.regInput} placeholder='密码' secureTextEntry={true}
@@ -64,6 +75,9 @@ class RegPage extends Component {
            <TextInput style={styles.regInput} placeholder='确认密码' secureTextEntry={true}
               autoCapitalize={'none'} maxLength={20}
               onChangeText={(text) => this.password2 = text}/>
+            <TextInput style={styles.regInput} placeholder='电子邮箱' keyboardType={'email-address'}
+               autoCapitalize={'none'} maxLength={20}
+               onChangeText={(text) => this.email = text}/>
            <CButton style={styles.regInput} title={'提交'} onPress={() => this.doReg()}/>
            <Text style={styles.message}>{message}</Text>
            <Text style={{marginTop: 16, fontSize: 12}}>状态: {this.props.status}</Text>
@@ -86,6 +100,10 @@ class RegPage extends Component {
         if (!this.password2) {
             this.updateState('message', '请输入确认密码');
             return;
+        }
+        if (!this.email) {
+          this.updateState('message', '请输入电子邮箱');
+          return;
         }
         if (this.password !== this.password2) {
             this.updateState('message', '前后两次密码不一致');
