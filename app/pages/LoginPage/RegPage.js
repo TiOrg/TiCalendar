@@ -5,7 +5,7 @@ import {
   NavigationActions
 } from 'react-navigation';
 import {connect} from 'react-redux'; // 引入connect函数
-// import * as registerAction from './registerAction';// 导入action方法
+import * as registerAction from '../../action/RegAction';// 导入action方法
 import {THEME, THEME_BACKGROUND, THEME_TEXT} from '../../assets/css/color';
 import {getStackOptions} from '../../common/NavigatorOpts';
 import CButton from '../../common/button';
@@ -18,7 +18,7 @@ import CButton from '../../common/button';
 //     ]
 // });
 
-export default class RegPage extends Component {
+class RegPage extends Component {
 
   static navigationOptions = getStackOptions('注册');
   mobile = '';
@@ -124,5 +124,15 @@ const styles = StyleSheet.create({
 
 
 });
+
+export default connect(
+    (state) => ({
+        status: state.reg.status,
+        isSuccess: state.reg.isSuccess
+    }),
+    (dispatch) => ({
+        reg: (u, p) => dispatch(registerAction.reg(u, p)),
+    })
+)(RegPage)
 
 // export default Main;
