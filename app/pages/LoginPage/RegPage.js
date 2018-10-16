@@ -1,11 +1,22 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TextInput, Alert} from 'react-native';
-import {NavigationActions} from 'react-navigation';
+import {
+  SafeAreaView,
+  NavigationActions
+} from 'react-navigation';
 import {connect} from 'react-redux'; // 引入connect函数
 // import * as registerAction from './registerAction';// 导入action方法
 import {THEME, THEME_BACKGROUND, THEME_TEXT} from '../../assets/css/color';
 import {getStackOptions} from '../../common/NavigatorOpts';
 import CButton from '../../common/button';
+
+// 清空导航记录，跳转到首页
+// const resetAction = NavigationActions.reset({
+//     index: 0,
+//     actions: [
+//         NavigationActions.navigate({routeName: 'Login'})
+//     ]
+// });
 
 export default class RegPage extends Component {
 
@@ -19,7 +30,28 @@ export default class RegPage extends Component {
         this.state = {message: ''};
   }
 
+  goBack() {
+        this.props.navigation.goBack();
+  }
+
+  // 状态更新
+    shouldComponentUpdate(nextProps, nextState) {
+        // 注册成功,切到登录
+        if (nextProps.status === '注册成功' && nextProps.isSuccess) {
+            this.props.navigation.dispatch(resetAction);
+            return false;
+        }
+        return true;
+    }
+
+    updateState(key, val) {
+        let state = this.state;
+        state[key] = val;
+        this.setState(state);
+    }
+
   render() {
+    let message = this.state && this.state.message ? this.state.message : '';
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.regPage}>
@@ -78,16 +110,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    padding: 20,
+    padding: 40,
     backgroundColor: THEME_BACKGROUND
   },
   regInput: {
     marginBottom: 8
   },
   message: {
-    marginTop: 16,
+    marginTop: 20,
     color: THEME_TEXT,
-    fontSize: 14
+    fontSize: 18
   }
 
 

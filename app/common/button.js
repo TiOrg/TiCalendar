@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity, Touchable, TouchableNativeFeedback, Platform} from 'react-native';
-import {THEME} from '../assets/css/color';
+import { FACEBOOK_BLUE, THEME } from '../assets/css/color';
 const PropTypes = require('prop-types');
 const invariant = require('fbjs/lib/invariant');
 import ColorPropType from 'react-native/Libraries/StyleSheet/ColorPropType';
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     text: Platform.select({
         ios: {
             // iOS blue from https://developer.apple.com/ios/human-interface-guidelines/visual-design/color/
-            color: 'white',
+            color: FACEBOOK_BLUE,
             textAlign: 'center',
             padding: 8,
             fontSize: 18,

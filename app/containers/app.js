@@ -41,7 +41,7 @@ const App = StackNavigator({
         })
     }
 }, {
-    initialRouteName: 'Login', // 默认登录页
+    initialRouteName: 'Reg', // 默认登录页
     headerMode: 'screen'
 });
 export default App;
