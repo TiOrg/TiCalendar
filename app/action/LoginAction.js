@@ -20,12 +20,13 @@ export function login(mobile, password) {
         AV.User.logIn(mobile, password).then(function (loggedInUser) {
           dispatch(loginSuccess(true, user));
         }, function (error) {
-        });
-        if (mobile === '' + user.mobile && password === user.pwd) {
-            dispatch(loginSuccess(true, user));
-        } else {
             dispatch(loginError(false));
-        }
+        });
+        // if (mobile === '' + user.mobile && password === user.pwd) {
+        //     dispatch(loginSuccess(true, user));
+        // } else {
+        //     dispatch(loginError(false));
+        // }
         /*let result = fetch('https://localhost:8088/login')
          .then((res) => {
          dispatch(loginSuccess(true, user));
