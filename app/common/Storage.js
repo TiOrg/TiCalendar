@@ -1,6 +1,7 @@
 import React from 'react';
 import {AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
+import AV from '../service/AVService';
 
 
 var storage = new Storage({
@@ -33,6 +34,7 @@ storage.sync = {
     // 这里可以使用promise。或是使用普通回调函数，但需要调用resolve或reject。
     user(params){
       let { id, resolve, reject, syncParams: { extraFetchOptions, someFlag } } = params;
+      console.log('sync starts');
       fetch('user/', {
         method: 'GET',
         body: 'id=' + id,

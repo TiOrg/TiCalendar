@@ -53,10 +53,10 @@ function isLogining() {
 function loginSuccess(isSuccess,user) {
     console.log('success');
 
-    // global.storage.save({
-    //     key: 'user',
-    //     data: user
-    // });
+    global.storage.save({
+        key: 'user',
+        data: user
+    });
     return {
         type: types.LOGIN_IN_DONE,
         user: user,

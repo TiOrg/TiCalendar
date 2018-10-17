@@ -38,6 +38,7 @@ const resetAction = StackActions.reset({
 });
 
 
+
 class LoginPage extends Component{
 
   constructor(props) {
@@ -50,18 +51,20 @@ class LoginPage extends Component{
     }
 
     checkHasLogin() {
-        // global.storage.load({
-        //     key: 'user',
-        //     autoSync: false,
-        // }).then(ret => {
-        //     if (ret && ret.name) {
-        //         // console.warn('用户已经登录：' + ret.name);
-        //         this.props.navigation.dispatch(resetAction);
-        //     }
-        // }).catch(err => {
-        //     // console.warn(err.message);
-        // });
-        // console.log('testCheckFunc');
+        global.storage.load({
+            key: 'user',
+            autoSync: false,
+        }).then(ret => {
+            if (ret && ret.username) {
+              console.log('client login success.');
+                console.log('用户已经登录：',ret.username);
+                this.props.navigation.dispatch(resetAction);
+            }
+        }).catch(err => {
+            // console.warn(err.message);
+            console.warn(err.message);
+        });
+        console.log('testCheckFunc');
         // this.props.navigation.dispatch(resetAction);
     }
 
@@ -103,6 +106,9 @@ class LoginPage extends Component{
   render() {
     const {login} = this.props;
     let message = this.state && this.state.message ? this.state.message : '';
+    console.log('状态测试');
+    console.log(this.state);
+    console.log(this.state.message);
     return (
       <SafeAreaView style={styles.container}>
 
@@ -117,7 +123,7 @@ class LoginPage extends Component{
                            onChangeText={(text) => this.password = text}/>
                 <CButton style={styles.loginInput} title={'登录'} onPress={() => this.doLogin()}/>
                 <View style={styles.subButton}>
-                    <Text style={styles.subButtonText} onPress={() => this.doReg()}>免费注册</Text>
+                    <Text style={styles.subButtonText} onPress={() => this.doReg()}>注册</Text>
                     <Text style={styles.subButtonText} onPress={() => this.findAccount()}>找回密码</Text>
                 </View>
                 <Text style={styles.message}>{message}</Text>
