@@ -12,14 +12,15 @@ import React, {Component} from 'react';
 export function login(mobile, password) {
     console.log('登录方法');
 
-    AV.User.logIn('Tom', 'cat!@#123').then(function (loggedInUser) {
-      console.log(loggedInUser);
-    }, function (error) {
-    });
+
 
     return dispatch => {
         dispatch(isLogining());
         // 模拟用户登录
+        AV.User.logIn(mobile, password).then(function (loggedInUser) {
+          dispatch(loginSuccess(true, user));
+        }, function (error) {
+        });
         if (mobile === '' + user.mobile && password === user.pwd) {
             dispatch(loginSuccess(true, user));
         } else {
