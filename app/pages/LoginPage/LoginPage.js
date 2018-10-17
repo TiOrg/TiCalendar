@@ -9,6 +9,12 @@ import {
 
 import CButton from '../../common/button';
 
+import storage from '../../common/Storage';
+
+import * as LoginAction from '../../action/LoginAction';
+
+
+
 
 import {
   SafeAreaView,
@@ -21,12 +27,64 @@ import {
   THEME_LABEL,
   THEME_TEXT
 } from '../../assets/css/color';
-export default class LoginPage extends Component{
+class LoginPage extends Component{
 
   constructor(props) {
       super(props);
       this.state = {message: ''};
   }
+
+  componentWillMount() {
+        this.checkHasLogin();
+    }
+
+    checkHasLogin() {
+        // global.storage.load({
+        //     key: 'user',
+        //     autoSync: false,
+        // }).then(ret => {
+        //     if (ret && ret.name) {
+        //         // console.warn('用户已经登录：' + ret.name);
+        //         this.props.navigation.dispatch(resetAction);
+        //     }
+        // }).catch(err => {
+        //     // console.warn(err.message);
+        // });
+    }
+
+    // 状态更新，判断是否登录并作出处理
+    shouldComponentUpdate(nextProps, nextState) {
+        // 登录完成,切成功登录
+        if (nextProps.status === '登陆成功' && nextProps.isSuccess) {
+            // this.props.navigation.dispatch(resetAction);
+            this.checkHasLogin();
+            return false;
+        }
+        return true;
+    }
+
+    updateState(key, val) {
+        let state = this.state;
+        state[key] = val;
+        this.setState(state);
+    }
+
+    doLogin() {
+        const {login} = this.props;
+        if (!this.mobile) {
+            this.updateState('message', '请输入手机号码');
+            return;
+        }
+        if (!this.password) {
+            this.updateState('message', '请输入密码');
+            return;
+        }
+        login(this.mobile, this.password);
+    }
+
+    doReg() {
+        this.props.navigation.navigate('Reg');
+    }
 
 
   render() {
@@ -107,5 +165,16 @@ const styles = StyleSheet.create({
 
 
 });
+
+export default connect(
+    (state) => ({
+        status: state.loginIn.status,
+        isSuccess: state.loginIn.isSuccess,
+        user: state.loginIn.user,
+    }),
+    (dispatch) => ({
+        login: (m, p) => dispatch(LoginAction.login(m, p)),
+    })
+)(LoginPage)
 
 // export default Main;

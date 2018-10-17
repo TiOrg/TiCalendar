@@ -67,16 +67,16 @@ class RegPage extends Component {
       <SafeAreaView style={styles.container}>
         <View style={styles.regPage}>
            <TextInput style={styles.regInput} placeholder='用户名'
-              autoCapitalize={'none'} maxLength={20}
+              autoCapitalize={'none'} maxLength={30}
               onChangeText={(text) => this.mobile = text}/>
            <TextInput style={styles.regInput} placeholder='密码' secureTextEntry={true}
-              autoCapitalize={'none'} maxLength={20}
+              autoCapitalize={'none'} maxLength={30}
               onChangeText={(text) => this.password = text}/>
            <TextInput style={styles.regInput} placeholder='确认密码' secureTextEntry={true}
-              autoCapitalize={'none'} maxLength={20}
+              autoCapitalize={'none'} maxLength={30}
               onChangeText={(text) => this.password2 = text}/>
             <TextInput style={styles.regInput} placeholder='电子邮箱' keyboardType={'email-address'}
-               autoCapitalize={'none'} maxLength={20}
+               autoCapitalize={'none'} maxLength={30}
                onChangeText={(text) => this.email = text}/>
            <CButton style={styles.regInput} title={'提交'} onPress={() => this.doReg()}/>
            <Text style={styles.message}>{message}</Text>
@@ -109,7 +109,7 @@ class RegPage extends Component {
             this.updateState('message', '前后两次密码不一致');
             return;
         }
-        reg(this.mobile, this.password);
+        reg(this.mobile, this.password, this.email);
     }
 
 

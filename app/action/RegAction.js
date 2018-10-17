@@ -4,7 +4,7 @@ import * as types from '../constants/RegTypes';
 import AV from '../service/AVService';
 import React, {Component} from 'react';
 
-export function reg(mobile, password) {
+export function reg(mobile, password, email) {
     console.log('注册方法');
     // 新建 AVUser 对象实例
     var user = new AV.User();
@@ -13,7 +13,7 @@ export function reg(mobile, password) {
     // 设置密码
     user.setPassword(password);
     // 设置邮箱
-    user.setEmail('tom@leancloud.cn');
+    user.setEmail(email);
     user.signUp().then(function (loggedInUser) {
       console.log(loggedInUser);
   }, function (error) {
