@@ -11,8 +11,7 @@ import { SafeAreaView } from 'react-navigation';
 import FacebookTabBar from './FacebookTabBar';
 import CalendarPage from './CalendarPage';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-
-export default class App extends Component{
+export default class MainPage extends Component{
 
   render() {
     return (

@@ -6,12 +6,6 @@
 
 `npm install --save react-navigation`
 
-### react-native-calendars
-
-`npm install --save react-native-calendars`
-
-more and more to be added.
-
 ### leanCloud 
 #### 存储服务
 
@@ -34,4 +28,18 @@ more and more to be added.
 
 ### redux和react-redux
 
-`npm install --save redux react-redux`
+```
+npm install --save redux react-redux
+yarn add redux react-redux
+```
+
+### proptypes
+```
+npm install --save prop-types
+```
+
+### react-native-navigation-actions
+```
+npm install --save react-native-navigation-actions
+```
+
