@@ -18,7 +18,8 @@ import * as LoginAction from '../../action/LoginAction';
 
 import {
   SafeAreaView,
-  NavigationActions
+  NavigationActions,
+  StackActions
 } from 'react-navigation';
 import {connect} from 'react-redux'; // 引入connect函数
 
@@ -27,6 +28,16 @@ import {
   THEME_LABEL,
   THEME_TEXT
 } from '../../assets/css/color';
+
+// 清空导航记录，跳转到首页
+const resetAction = StackActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({routeName: 'Main'})
+    ]
+});
+
+
 class LoginPage extends Component{
 
   constructor(props) {
@@ -50,6 +61,8 @@ class LoginPage extends Component{
         // }).catch(err => {
         //     // console.warn(err.message);
         // });
+        // console.log('testCheckFunc');
+        // this.props.navigation.dispatch(resetAction);
     }
 
     // 状态更新，判断是否登录并作出处理

@@ -21,7 +21,7 @@ export default function reg(state = initialState, action) {
                 ...state,
                 status: '注册成功',
                 isSuccess: true,
-                user: action.user,
+                user: null,
             };
             break;
         case types.REG_ERROR:
