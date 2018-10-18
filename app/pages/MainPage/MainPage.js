@@ -88,12 +88,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
 
- container: {
-   flex: 1,
-   backgroundColor: 'white'
- },
-
-
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
+  },
 });
 
 // export default Main;

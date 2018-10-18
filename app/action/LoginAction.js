@@ -6,19 +6,14 @@ import AV from '../service/AVService';
 import React, {Component} from 'react';
 
 
-// var user = {
-//   mobile: '',
-//   password: '',
-// }
-
-
 export function quit() {
-  console.log('退出登录方法');
-
-
-  return dispatch => {
-      dispatch(quitLogin(true));
-  }
+    console.log('退出登录方法');
+    global.storage.remove({
+        key:'user',
+    });
+    return {
+        type: types.LOGIN_OUT
+    }
 }
 
 // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
@@ -32,10 +27,9 @@ export function login(mobile, password) {
         dispatch(isLogining());
         // 模拟用户登录
         AV.User.logIn(mobile, password).then(function (loggedInUser) {
-          console.log(loggedInUser);
-          // current_user = AV.User.current();
-          dispatch(loginSuccess(true,loggedInUser));
-
+            console.log(loggedInUser);
+            // current_user = AV.User.current();
+            dispatch(loginSuccess(true,loggedInUser));
         }, function (error) {
             dispatch(loginError(false));
             console.log(error);
@@ -58,13 +52,6 @@ function isLogining() {
     return {
         type: types.LOGIN_IN_DOING
     }
-}
-
-function quitLogin(isSuccess) {
-  console.log('quit success');
-  return {
-      type: types.LOGIN_OUT
-  }
 }
 
 function loginSuccess(isSuccess,user) {
