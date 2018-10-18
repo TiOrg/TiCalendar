@@ -12,7 +12,7 @@ export default function loginIn(state = initialState, action) {
         case types.LOGIN_IN_DOING:
             return {
                 ...state,
-                status: '正在登陆',
+                status: '正在登录',
                 isSuccess: false,
                 user: null,
             };
@@ -20,7 +20,7 @@ export default function loginIn(state = initialState, action) {
         case types.LOGIN_IN_DONE:
             return {
                 ...state,
-                status: '登陆成功',
+                status: '登录成功',
                 isSuccess: true,
                 user: action.user,
             };

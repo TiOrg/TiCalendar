@@ -41,14 +41,14 @@ const resetAction = StackActions.reset({
 
 
 class LoginPage extends Component{
-  static navigationOptions = getStackOptions('登录');
+    static navigationOptions = getStackOptions('登录');
 
-  constructor(props) {
-      super(props);
-      this.state = {message: ''};
-  }
+    constructor(props) {
+        super(props);
+        this.state = {message: ''};
+    }
 
-  componentWillMount() {
+    componentWillMount() {
         this.checkHasLogin();
     }
 
@@ -71,7 +71,7 @@ class LoginPage extends Component{
     // 状态更新，判断是否登录并作出处理
     shouldComponentUpdate(nextProps, nextState) {
         // 登录完成,切成功登录
-        if (nextProps.status === '登陆成功' && nextProps.isSuccess) {
+        if (nextProps.status === '登录成功' && nextProps.isSuccess) {
             this.checkHasLogin();
             return false;
         }
@@ -86,15 +86,15 @@ class LoginPage extends Component{
 
     doLogin() {
         const {login} = this.props;
-        if (!this.mobile) {
-            this.updateState('message', '请输入手机号码');
+        if (!this.username) {
+            this.updateState('message', '请输入用户名');
             return;
         }
         if (!this.password) {
             this.updateState('message', '请输入密码');
             return;
         }
-        login(this.mobile, this.password);
+        login(this.username, this.password);
     }
 
     doReg() {
@@ -112,14 +112,15 @@ class LoginPage extends Component{
             <View style={styles.loginSection}>
                 <Text style={styles.loginTitle}>TiCalendar</Text>
                 <TextInput style={styles.loginInput} placeholder='手机号码' keyboardType={'numeric'}
-                           defaultValue={this.mobile} autoCapitalize={'none'} maxLength={11}
-                           onChangeText={(text) => this.mobile = text}/>
+                           defaultValue={this.username} autoCapitalize={'none'} maxLength={11}
+                           onChangeText={(text) => this.username = text}/>
                 <TextInput style={styles.loginInput} placeholder='password' secureTextEntry={true}
                            defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
                            onChangeText={(text) => this.password = text}/>
                 <CButton style={styles.loginInput} title={'登录'} onPress={() => this.doLogin()}/>
+                <CButton style={styles.loginInput} title={'注册'} onPress={() => this.doReg()}/>
                 <View style={styles.subButton}>
-                    <Text style={styles.subButtonText} onPress={() => this.doReg()}>注册</Text>
+                    <Text style={styles.subButtonText} onPress={() => this.doReg()}>跳过登录</Text>
                     <Text style={styles.subButtonText} onPress={() => this.findAccount()}>找回密码</Text>
                 </View>
                 <Text style={styles.message}>{message}</Text>
@@ -136,7 +137,7 @@ class LoginPage extends Component{
 }
 
 const styles = StyleSheet.create({
-  loginPage: {
+    loginPage: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
@@ -188,7 +189,7 @@ export default connect(
         user: state.loginIn.user,
     }),
     (dispatch) => ({
-        login: (m, p) => dispatch(LoginAction.login(m, p)),
+        login: (u, p) => dispatch(LoginAction.login(u, p)),
     })
 )(LoginPage)
 
