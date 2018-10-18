@@ -23,7 +23,7 @@ const resetAction = StackActions.reset({
     ]
 });
 
-class SettingPage extends Component {
+export default class SettingPage extends Component {
   constructor(props) {
       super(props);
       this.state = {message: ''};
@@ -62,17 +62,6 @@ class SettingPage extends Component {
 
 
 }
-export default connect(
-    (state) => ({
-        status: state.loginIn.status,
-        isSuccess: state.loginIn.isSuccess,
-        user: state.loginIn.user,
-    }),
-    (dispatch) => ({
-        login: (m, p) => dispatch(LoginAction.login(m, p)),
-    })
-)(SettingPage)
-
 
 
 
