@@ -25,6 +25,7 @@
   "devDependencies": {
     "@babel/runtime": "^7.0.0",
     "babel-jest": "23.6.0",
+    "flow-bin": "^0.83.0",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.47.0",
     "react-test-renderer": "16.5.0",
