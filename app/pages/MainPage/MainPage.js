@@ -27,7 +27,7 @@ export default class MainPage extends Component{
 
         <ScrollableTabView
           // style={{marginTop: 20, }}
-          initialPage={4}
+          initialPage={0}
           renderTabBar={() => <FacebookTabBar />}
           tabBarPosition='bottom'>
 

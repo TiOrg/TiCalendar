@@ -34,7 +34,7 @@ class SettingPage extends Component {
   render() {
 	return (
 	  <View style={styles.card}>
-		<CButton style={styles.quitbutton} title={'退出登录'} onPress={() => this.quitLogin()}/>
+		<CButton color={'#ef9a9a'} title={'退出登录'} onPress={() => this.quitLogin()}/>
 
 	  </View>
 	);
@@ -63,9 +63,5 @@ const styles = StyleSheet.create({
 	shadowRadius: 3,
   },
 
-	quitbutton: {
-        // color: '#c70039',
-		marginBottom: 8
-	},
 })
 

@@ -117,8 +117,11 @@ class LoginPage extends Component{
                 <TextInput style={styles.loginInput} placeholder='password' secureTextEntry={true}
                            defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
                            onChangeText={(text) => this.password = text}/>
-                <CButton style={styles.loginInput} title={'登录'} onPress={() => this.doLogin()}/>
-                <CButton style={styles.loginInput} title={'注册'} onPress={() => this.doReg()}/>
+                
+                <CButton title={'登录'} onPress={() => this.doLogin()}/>
+                <Text style={{marginTop: 5, fontSize: 2}}> </Text>
+                <CButton color={'#80cbc4'} title={'注册'} onPress={() => this.doReg()}/>
+                
                 <View style={styles.subButton}>
                     <Text style={styles.subButtonText} onPress={() => this.doReg()}>跳过登录</Text>
                     <Text style={styles.subButtonText} onPress={() => this.findAccount()}>找回密码</Text>
@@ -157,6 +160,7 @@ const styles = StyleSheet.create({
         marginTop: 32,
         marginBottom: 32
     },
+
     subButton: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     loginInput: {
-        marginBottom: 8
+        marginBottom: 8,
     },
     container: {
       flex: 1,

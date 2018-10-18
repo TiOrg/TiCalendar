@@ -11,10 +11,11 @@ const App = StackNavigator({
     Main: { // 主页面
         screen: MainPage, // tab导航配置
         navigationOptions: ({navigation}) => ({
-            //header: null // 去头部
-        })
-    }
-}, {
+            header: null // 去头部
+            })
+        }
+    }, 
+    {
     initialRouteName: 'Login', // 默认登录页
     headerMode: 'screen'
 });
