@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
 
 	quitbutton: {
-        color: '#c70039',
+        // color: '#c70039',
 		marginBottom: 8
 	},
 })
