@@ -55,7 +55,7 @@ class LoginPage extends Component{
     checkHasLogin() {
         global.storage.load({
             key: 'user',
-            autoSync: false,
+            //autoSync: false,
         }).then(ret => {
             if (ret && ret.username) {
               console.log('client login success.');
@@ -74,7 +74,6 @@ class LoginPage extends Component{
     shouldComponentUpdate(nextProps, nextState) {
         // 登录完成,切成功登录
         if (nextProps.status === '登陆成功' && nextProps.isSuccess) {
-            // this.props.navigation.dispatch(resetAction);
             this.checkHasLogin();
             return false;
         }
