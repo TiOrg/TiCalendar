@@ -33,6 +33,14 @@ export default function loginIn(state = initialState, action) {
                 user: null,
             };
             break;
+        case types.LOGIN_OUT:
+            return {
+                ...state,
+                status: '点击登录',
+                isSuccess: true,
+                user: null,
+            };
+            break;
         default:
             return state;
     }
