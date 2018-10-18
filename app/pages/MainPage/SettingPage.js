@@ -14,7 +14,11 @@ import {
 } from 'react-navigation';
 import {connect} from 'react-redux'; // 引入connect函数
 import storage from '../../common/Storage';
-import * as registerAction from '../../action/RegAction';// 导入action方法
+// import * as registerAction from '../../action/RegAction';// 导入action方法
+
+import * as LoginAction from '../../action/LoginAction';
+
+
 
 const resetAction = StackActions.reset({
     index: 0,
@@ -23,7 +27,7 @@ const resetAction = StackActions.reset({
     ]
 });
 
-export default class SettingPage extends Component {
+class SettingPage extends Component {
   constructor(props) {
       super(props);
       this.state = {message: ''};
@@ -32,22 +36,10 @@ export default class SettingPage extends Component {
   quitLogin() {
     //const ({ navigate }) = this.props.navigation;
     this.props.navigate('Login');
-    global.storage.load({
-            key: 'user',
-            //autoSync: false,
-        }).then(ret => {
-            if (ret && ret.username) {
-              console.log('client login success.');
-                console.log('用户已经登录：',ret.username);
-                this.props.dispatch(resetAction);
-            }
-        }).catch(err => {
-            // console.warn(err.message);
-            console.warn(err.message);
-        });
     global.storage.remove({
       key:'user'
     });
+    // console.log(this.props.status);
   }
 
   render() {
@@ -84,3 +76,16 @@ const styles = StyleSheet.create({
         marginBottom: 8
     },
 })
+
+
+
+export default connect(
+    (state) => ({
+        status: state.loginIn.status,
+        isSuccess: state.loginIn.isSuccess,
+        user: state.loginIn.user,
+    }),
+    (dispatch) => ({
+        quit: () => dispatch(LoginAction.quit()),
+    })
+)(SettingPage)

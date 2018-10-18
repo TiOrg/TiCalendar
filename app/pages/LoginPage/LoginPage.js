@@ -58,7 +58,6 @@ class LoginPage extends Component{
             //autoSync: false,
         }).then(ret => {
             if (ret && ret.username) {
-              console.log('client login success.');
                 console.log('用户已经登录：',ret.username);
                 this.props.navigation.dispatch(resetAction);
             }
@@ -66,7 +65,6 @@ class LoginPage extends Component{
             // console.warn(err.message);
             console.warn(err.message);
         });
-        console.log('testCheckFunc');
         // this.props.navigation.dispatch(resetAction);
     }
 
@@ -107,9 +105,6 @@ class LoginPage extends Component{
   render() {
     const {login} = this.props;
     let message = this.state && this.state.message ? this.state.message : '';
-    console.log('状态测试');
-    console.log(this.state);
-    console.log(this.state.message);
     return (
       <SafeAreaView style={styles.container}>
 

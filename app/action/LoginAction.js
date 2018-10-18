@@ -11,6 +11,16 @@ import React, {Component} from 'react';
 //   password: '',
 // }
 
+
+export function quit() {
+  console.log('退出登录方法');
+
+
+  return dispatch => {
+      dispatch(quitLogin(true));
+  }
+}
+
 // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
 export function login(mobile, password) {
     console.log('登录方法');
@@ -48,6 +58,13 @@ function isLogining() {
     return {
         type: types.LOGIN_IN_DOING
     }
+}
+
+function quitLogin(isSuccess) {
+  console.log('quit success');
+  return {
+      type: types.LOGIN_OUT
+  }
 }
 
 function loginSuccess(isSuccess,user) {
