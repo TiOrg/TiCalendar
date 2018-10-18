@@ -149,7 +149,7 @@ export default connect(
         isSuccess: state.reg.isSuccess
     }),
     (dispatch) => ({
-        reg: (u, p) => dispatch(registerAction.reg(u, p)),
+        reg: (u, p,e) => dispatch(registerAction.reg(u, p,e)),
     })
 )(RegPage)
 

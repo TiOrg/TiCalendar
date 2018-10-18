@@ -6,10 +6,11 @@ import RegPage from '../pages/LoginPage/RegPage';
 const App = StackNavigator({
     Login: {screen: LoginPage}, // 登录页
     Reg: {screen: RegPage}, // 注册页
+
     Main: { // 主页面
         screen: MainPage, // tab导航配置
         navigationOptions: ({navigation}) => ({
-            header: null // 去头部
+            //header: null // 去头部
         })
     }
 }, {

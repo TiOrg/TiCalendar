@@ -12,6 +12,7 @@ import CButton from '../../common/button';
 import storage from '../../common/Storage';
 
 import * as LoginAction from '../../action/LoginAction';
+import {getStackOptions} from '../../common/NavigatorOpts';
 
 
 
@@ -40,6 +41,7 @@ const resetAction = StackActions.reset({
 
 
 class LoginPage extends Component{
+  static navigationOptions = getStackOptions('登录');
 
   constructor(props) {
       super(props);
