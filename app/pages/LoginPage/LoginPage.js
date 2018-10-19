@@ -111,10 +111,10 @@ class LoginPage extends Component{
         <View style={styles.loginPage}>
             <View style={styles.loginSection}>
                 <Text style={styles.loginTitle}>TiCalendar</Text>
-                <TextInput style={styles.loginInput} placeholder='手机号码' keyboardType={'numeric'}
+                <TextInput style={styles.loginInput} placeholder='用户名'
                            defaultValue={this.username} autoCapitalize={'none'} maxLength={11}
                            onChangeText={(text) => this.username = text}/>
-                <TextInput style={styles.loginInput} placeholder='password' secureTextEntry={true}
+                <TextInput style={styles.loginInput} placeholder='密码' secureTextEntry={true}
                            defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
                            onChangeText={(text) => this.password = text}/>
                 
@@ -123,7 +123,7 @@ class LoginPage extends Component{
                 <CButton color={'#80cbc4'} title={'注册'} onPress={() => this.doReg()}/>
                 
                 <View style={styles.subButton}>
-                    <Text style={styles.subButtonText} onPress={() => this.doReg()}>跳过登录</Text>
+                    <Text style={styles.subButtonText} onPress={() => this.doReg()}>游客浏览</Text>
                     <Text style={styles.subButtonText} onPress={() => this.findAccount()}>找回密码</Text>
                 </View>
                 <Text style={styles.message}>{message}</Text>
