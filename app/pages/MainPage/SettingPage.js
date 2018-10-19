@@ -13,41 +13,58 @@ import {
 } from 'react-navigation';
 import {connect} from 'react-redux'; // 引入connect函数
 import storage from '../../common/Storage';
+import {getStackOptions} from '../../common/NavigatorOpts';
 
 import * as LoginAction from '../../action/LoginAction';
 
+const resetAction = StackActions.reset({
+    index: 0,
+    actions: [
+        NavigationActions.navigate({routeName: 'Login'})
+    ]
+});
+
+
+
 
 class SettingPage extends Component {
+  static navigationOptions = getStackOptions('登录');
   constructor(props) {
 	  super(props);
 	  this.state = {message: ''};
   }
 
   quitLogin() {
-	//const ({ navigate }) = this.props.navigation;
-	this.props.navigate('Login');
+	   // const ({ navigate }) = this.props.navigation;
+    // this.props.navigation.dispatch(resetAction);
 
-	this.props.dispatch(LoginAction.quit());
+    // StackActions.reset({
+    //     index: 0,
+    //     actions: [
+    //         NavigationActions.navigate({routeName: 'Login'})
+    //     ]
+    // });
+    this.props.navigate('Login');
+    // this.props.reset({
+    //     index: 0,
+    //     actions: [
+    //         NavigationActions.navigate({routeName: 'Login'})
+    //     ]
+    // });
+  	this.props.dispatch(LoginAction.quit());
+
 	// console.log(this.props.status);
   }
 
   render() {
-	return (
-	  <View style={styles.card}>
-		<CButton style={styles.quitbutton} title={'退出登录'} onPress={() => this.quitLogin()}/>
+  	return (
+  	  <View style={styles.card}>
+		    <CButton style={styles.quitbutton} title={'退出登录'} onPress={() => this.quitLogin()}/>
 
-	  </View>
-	);
+  	  </View>
+  	);
   }
 }
-
-export default connect(
-	(dispatch) => ({
-		quit: () => dispatch(LoginAction.quit()),
-	})
-)(SettingPage)
-
-
 const styles = StyleSheet.create({
   card: {
 	borderWidth: 1,
@@ -69,3 +86,8 @@ const styles = StyleSheet.create({
 	},
 })
 
+export default connect(
+	(dispatch) => ({
+		quit: () => dispatch(LoginAction.quit()),
+	})
+)(SettingPage)

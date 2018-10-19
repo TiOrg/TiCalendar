@@ -1,3 +1,4 @@
+/*@flow*/
 'use strict';
 
 import * as types from '../constants/LoginTypes';
@@ -17,7 +18,7 @@ export function quit() {
 }
 
 // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
-export function login(mobile, password) {
+export function login(username, password) {
     console.log('登录方法');
 
     // user.mobile = mobile;
@@ -26,7 +27,7 @@ export function login(mobile, password) {
     return dispatch => {
         dispatch(isLogining());
         // 模拟用户登录
-        AV.User.logIn(mobile, password).then(function (loggedInUser) {
+        AV.User.logIn(username, password).then(function (loggedInUser) {
             console.log(loggedInUser);
             // current_user = AV.User.current();
             dispatch(loginSuccess(true,loggedInUser));
