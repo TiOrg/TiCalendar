@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import {
   Calendar,
@@ -13,7 +13,9 @@ import {
   LocaleConfig
 } from '../../utils/CalendarUtils/index';
 
+import {FACEBOOK_BLUE} from '../../assets/css/color';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+
 
 LocaleConfig.locales['zh-CN'] = {
   monthNames: ['一月','二月','三月','四月','五月','六月',
@@ -26,12 +28,14 @@ LocaleConfig.locales['zh-CN'] = {
 LocaleConfig.defaultLocale = 'zh-CN';
 
 export default class CalendarPage extends Component {
+  static navigationOptions = {
+    title: 'Details',
+  };
   constructor(props) {
     super(props);
     this.state = {
       items: {}
     };
-    this.onDayPress = this.onDayPress.bind(this);
   }
 
   render() {
@@ -40,20 +44,33 @@ export default class CalendarPage extends Component {
         <Agenda
           items={this.state.items}
           loadItemsForMonth={this.loadItems.bind(this)}
-          selected={'2017-05-16'}
+          selected={this.getToday.bind(this)}
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
           rowHasChanged={this.rowHasChanged.bind(this)}
+          theme={{
+            // agendaDayTextColor: 'yellow',
+            // agendaDayNumColor: 'green',
+            // agendaTodayColor: 'red',
+            // agendaKnobColor: FACEBOOK_BLUE
+          }}
         />
       </View>
     );
   }
-
-  onDayPress(day) {
-    this.setState({
-      selected: day.dateString
-    });
+  getToday(){
+    var systemDate = new Date();
+    var year = systemDate.getFullYear();
+    var month = systemDate.getMonth() + 1;
+    var day =  systemDate.getDate();
+    if (day < 10) { // 如果日小于10，前面拼接0
+    }
+    if (month < 10) { // 如果月小于10，前面拼接0
+        month = '0' + month;
+    }
+    return [year, month, day].join('-');
   }
+
 
   loadItems(day) {
     setTimeout(() => {
@@ -129,7 +146,7 @@ const styles = StyleSheet.create({
      marginRight: 10,
      marginTop: 17
    },
-  
+
   emptyDate: {
      height: 15,
      flex:1,

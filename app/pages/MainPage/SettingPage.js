@@ -37,9 +37,6 @@ class SettingPage extends Component {
 
   quitLogin() {
     const {quit} = this.props;
-    console.log('quit props');
-    console.log(this.props);
-    // this.props.navigation.dispatch(LoginAction.quit());
     quit();
     this.props.navigation.dispatch(resetAction);
   }
@@ -69,10 +66,6 @@ const styles = StyleSheet.create({
 	shadowRadius: 3,
   },
 
-	quitbutton: {
-        // color: '#c70039',
-		marginBottom: 8
-	},
 })
 
 export default connect(

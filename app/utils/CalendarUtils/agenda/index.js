@@ -345,7 +345,7 @@ export default class AgendaView extends Component {
       weekdaysStyle.push({height: HEADER_HEIGHT});
     }
 
-    const shouldAllowDragging = !this.props.hideKnob && !this.state.calendarScrollable;
+    const shouldAllowDragging = !this.props.hideKnob ;
     const scrollPadPosition = (shouldAllowDragging ? HEADER_HEIGHT  : 0) - KNOB_HEIGHT;
 
     const scrollPadStyle = {
@@ -360,7 +360,7 @@ export default class AgendaView extends Component {
 
     if (!this.props.hideKnob) {
       const knobView = this.props.renderKnob ? this.props.renderKnob() : (<View style={this.styles.knob}/>);
-      knob = this.state.calendarScrollable ? null : (
+      knob = (
         <View style={this.styles.knobContainer}>
           <View ref={(c) => this.knob = c}>{knobView}</View>
         </View>
