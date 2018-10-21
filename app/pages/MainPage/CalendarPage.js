@@ -16,6 +16,7 @@ import {
 import {FACEBOOK_BLUE} from '../../assets/css/color';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
+
 LocaleConfig.locales['zh-CN'] = {
   monthNames: ['一月','二月','三月','四月','五月','六月',
   '七月','八月','九月','十月','十一月','十二月'],
@@ -27,7 +28,7 @@ LocaleConfig.locales['zh-CN'] = {
 LocaleConfig.defaultLocale = 'zh-CN';
 
 export default class CalendarPage extends Component {
-static navigationOptions = {
+  static navigationOptions = {
     title: 'Details',
   };
   constructor(props) {
@@ -63,7 +64,7 @@ static navigationOptions = {
     var month = systemDate.getMonth() + 1;
     var day =  systemDate.getDate();
     if (day < 10) { // 如果日小于10，前面拼接0
-    } 
+    }
     if (month < 10) { // 如果月小于10，前面拼接0
         month = '0' + month;
     }
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
      marginRight: 10,
      marginTop: 17
    },
-  
+
   emptyDate: {
      height: 15,
      flex:1,
