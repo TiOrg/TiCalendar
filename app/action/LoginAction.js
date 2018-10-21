@@ -12,8 +12,9 @@ export function quit() {
     global.storage.remove({
         key:'user',
     });
-    return {
-        type: types.LOGIN_OUT
+    return dispatch => {
+        dispatch(isQuiting());
+        console.log('quiting');
     }
 }
 
@@ -52,6 +53,12 @@ export function login(username, password) {
 function isLogining() {
     return {
         type: types.LOGIN_IN_DOING
+    }
+}
+
+function isQuiting() {
+    return {
+        type: types.LOGIN_OUT
     }
 }
 

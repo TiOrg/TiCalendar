@@ -54,7 +54,7 @@ export default class MainPage extends Component{
             </ScrollView>
 
             <ScrollView tabLabel="ios-list" style={styles.tabView}>
-              <SettingPage navigate={navigate} dispatch={dispatch}/>
+              <SettingPage {...this.props}/>
             </ScrollView>
 
         </ScrollableTabView>

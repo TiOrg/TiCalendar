@@ -28,35 +28,24 @@ const resetAction = StackActions.reset({
 
 
 class SettingPage extends Component {
-  static navigationOptions = getStackOptions('登录');
+  static navigationOptions = getStackOptions('设置');
+
   constructor(props) {
 	  super(props);
 	  this.state = {message: ''};
   }
 
   quitLogin() {
-	   // const ({ navigate }) = this.props.navigation;
-    // this.props.navigation.dispatch(resetAction);
-
-    // StackActions.reset({
-    //     index: 0,
-    //     actions: [
-    //         NavigationActions.navigate({routeName: 'Login'})
-    //     ]
-    // });
-    this.props.navigate('Login');
-    // this.props.reset({
-    //     index: 0,
-    //     actions: [
-    //         NavigationActions.navigate({routeName: 'Login'})
-    //     ]
-    // });
-  	this.props.dispatch(LoginAction.quit());
-
-	// console.log(this.props.status);
+    const {quit} = this.props;
+    console.log('quit props');
+    console.log(this.props);
+    // this.props.navigation.dispatch(LoginAction.quit());
+    quit();
+    this.props.navigation.dispatch(resetAction);
   }
 
   render() {
+
   	return (
   	  <View style={styles.card}>
 		    <CButton style={styles.quitbutton} title={'退出登录'} onPress={() => this.quitLogin()}/>
@@ -87,6 +76,11 @@ const styles = StyleSheet.create({
 })
 
 export default connect(
+  (state) => ({
+      status: state.loginIn.status,
+      isSuccess: state.loginIn.isSuccess,
+      user: state.loginIn.user,
+  }),
 	(dispatch) => ({
 		quit: () => dispatch(LoginAction.quit()),
 	})

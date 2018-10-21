@@ -86,6 +86,8 @@ class LoginPage extends Component{
 
     doLogin() {
         const {login} = this.props;
+        console.log('login props');
+        console.log(this.props);
         if (!this.username) {
             this.updateState('message', '请输入用户名');
             return;
