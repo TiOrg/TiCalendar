@@ -69,10 +69,6 @@ const styles = StyleSheet.create({
 	shadowRadius: 3,
   },
 
-	quitbutton: {
-        // color: '#c70039',
-		marginBottom: 8
-	},
 })
 
 export default connect(
