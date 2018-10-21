@@ -7,13 +7,21 @@ import {
   ScrollView
 } from 'react-native';
 
-import { SafeAreaView } from 'react-navigation';
+import {
+  SafeAreaView,
+  NavigationActions,
+  StackActions,
+  StackNavigator
+} from 'react-navigation';
+
 import FacebookTabBar from './FacebookTabBar';
 import CalendarPage from './CalendarPage';
+import SettingPage from './SettingPage';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 export default class MainPage extends Component{
 
   render() {
+    const { navigate,dispatch } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container}>
 
@@ -46,9 +54,7 @@ export default class MainPage extends Component{
             </ScrollView>
 
             <ScrollView tabLabel="ios-list" style={styles.tabView}>
-              <View style={styles.card}>
-                <Text>Other nav</Text>
-              </View>
+              <SettingPage {...this.props}/>
             </ScrollView>
 
         </ScrollableTabView>
@@ -82,12 +88,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
 
- container: {
-   flex: 1,
-   backgroundColor: 'white'
- },
-
-
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
+  },
 });
 
 // export default Main;

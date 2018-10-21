@@ -14,8 +14,10 @@ export function reg(mobile, password, email) {
     user.setPassword(password);
     // 设置邮箱
     user.setEmail(email);
+
+    //console.warn(email);
+
     user.signUp().then(function (loggedInUser) {
-      console.log(loggedInUser);
   }, function (error) {
   });
     return dispatch => {
@@ -42,7 +44,7 @@ function isReging() {
 }
 
 function regSuccess(isSuccess, user) {
-    console.warn('success');
+    console.log('success');
     return {
         type: types.REG_DONE,
         user: user,

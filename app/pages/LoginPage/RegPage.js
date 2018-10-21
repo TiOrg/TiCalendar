@@ -69,15 +69,19 @@ class RegPage extends Component {
            <TextInput style={styles.regInput} placeholder='用户名'
               autoCapitalize={'none'} maxLength={30}
               onChangeText={(text) => this.mobile = text}/>
+
            <TextInput style={styles.regInput} placeholder='密码' secureTextEntry={true}
               autoCapitalize={'none'} maxLength={30}
               onChangeText={(text) => this.password = text}/>
+
            <TextInput style={styles.regInput} placeholder='确认密码' secureTextEntry={true}
               autoCapitalize={'none'} maxLength={30}
               onChangeText={(text) => this.password2 = text}/>
+
             <TextInput style={styles.regInput} placeholder='电子邮箱' keyboardType={'email-address'}
                autoCapitalize={'none'} maxLength={30}
                onChangeText={(text) => this.email = text}/>
+
            <CButton style={styles.regInput} title={'提交'} onPress={() => this.doReg()}/>
            <Text style={styles.message}>{message}</Text>
            <Text style={{marginTop: 16, fontSize: 12}}>状态: {this.props.status}</Text>
@@ -149,7 +153,7 @@ export default connect(
         isSuccess: state.reg.isSuccess
     }),
     (dispatch) => ({
-        reg: (u, p) => dispatch(registerAction.reg(u, p)),
+        reg: (u, p ,e) => dispatch(registerAction.reg(u, p ,e)),
     })
 )(RegPage)
 

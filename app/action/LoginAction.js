@@ -1,3 +1,4 @@
+/*@flow*/
 'use strict';
 
 import * as types from '../constants/LoginTypes';
@@ -6,13 +7,19 @@ import AV from '../service/AVService';
 import React, {Component} from 'react';
 
 
-// var user = {
-//   mobile: '',
-//   password: '',
-// }
+export function quit() {
+    console.log('退出登录方法');
+    global.storage.remove({
+        key:'user',
+    });
+    return dispatch => {
+        dispatch(isQuiting());
+        console.log('quiting');
+    }
+}
 
 // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
-export function login(mobile, password) {
+export function login(username, password) {
     console.log('登录方法');
 
     // user.mobile = mobile;
@@ -21,11 +28,10 @@ export function login(mobile, password) {
     return dispatch => {
         dispatch(isLogining());
         // 模拟用户登录
-        AV.User.logIn(mobile, password).then(function (loggedInUser) {
-          console.log(loggedInUser);
-          // current_user = AV.User.current();
-          dispatch(loginSuccess(true,loggedInUser));
-
+        AV.User.logIn(username, password).then(function (loggedInUser) {
+            console.log(loggedInUser);
+            // current_user = AV.User.current();
+            dispatch(loginSuccess(true,loggedInUser));
         }, function (error) {
             dispatch(loginError(false));
             console.log(error);
@@ -47,6 +53,12 @@ export function login(mobile, password) {
 function isLogining() {
     return {
         type: types.LOGIN_IN_DOING
+    }
+}
+
+function isQuiting() {
+    return {
+        type: types.LOGIN_OUT
     }
 }
 

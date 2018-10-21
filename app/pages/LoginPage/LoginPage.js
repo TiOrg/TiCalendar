@@ -12,6 +12,7 @@ import CButton from '../../common/button';
 import storage from '../../common/Storage';
 
 import * as LoginAction from '../../action/LoginAction';
+import {getStackOptions} from '../../common/NavigatorOpts';
 
 
 
@@ -40,23 +41,23 @@ const resetAction = StackActions.reset({
 
 
 class LoginPage extends Component{
+    static navigationOptions = getStackOptions('登录');
 
-  constructor(props) {
-      super(props);
-      this.state = {message: ''};
-  }
+    constructor(props) {
+        super(props);
+        this.state = {message: ''};
+    }
 
-  componentWillMount() {
+    componentWillMount() {
         this.checkHasLogin();
     }
 
     checkHasLogin() {
         global.storage.load({
             key: 'user',
-            autoSync: false,
+            //autoSync: false,
         }).then(ret => {
             if (ret && ret.username) {
-              console.log('client login success.');
                 console.log('用户已经登录：',ret.username);
                 this.props.navigation.dispatch(resetAction);
             }
@@ -64,15 +65,13 @@ class LoginPage extends Component{
             // console.warn(err.message);
             console.warn(err.message);
         });
-        console.log('testCheckFunc');
         // this.props.navigation.dispatch(resetAction);
     }
 
     // 状态更新，判断是否登录并作出处理
     shouldComponentUpdate(nextProps, nextState) {
         // 登录完成,切成功登录
-        if (nextProps.status === '登陆成功' && nextProps.isSuccess) {
-            // this.props.navigation.dispatch(resetAction);
+        if (nextProps.status === '登录成功' && nextProps.isSuccess) {
             this.checkHasLogin();
             return false;
         }
@@ -87,15 +86,17 @@ class LoginPage extends Component{
 
     doLogin() {
         const {login} = this.props;
-        if (!this.mobile) {
-            this.updateState('message', '请输入手机号码');
+        console.log('login props');
+        console.log(this.props);
+        if (!this.username) {
+            this.updateState('message', '请输入用户名');
             return;
         }
         if (!this.password) {
             this.updateState('message', '请输入密码');
             return;
         }
-        login(this.mobile, this.password);
+        login(this.username, this.password);
     }
 
     doReg() {
@@ -106,24 +107,22 @@ class LoginPage extends Component{
   render() {
     const {login} = this.props;
     let message = this.state && this.state.message ? this.state.message : '';
-    console.log('状态测试');
-    console.log(this.state);
-    console.log(this.state.message);
     return (
       <SafeAreaView style={styles.container}>
 
         <View style={styles.loginPage}>
             <View style={styles.loginSection}>
                 <Text style={styles.loginTitle}>TiCalendar</Text>
-                <TextInput style={styles.loginInput} placeholder='手机号码' keyboardType={'numeric'}
-                           defaultValue={this.mobile} autoCapitalize={'none'} maxLength={11}
-                           onChangeText={(text) => this.mobile = text}/>
-                <TextInput style={styles.loginInput} placeholder='password' secureTextEntry={true}
+                <TextInput style={styles.loginInput} placeholder='用户名'
+                           defaultValue={this.username} autoCapitalize={'none'} maxLength={11}
+                           onChangeText={(text) => this.username = text}/>
+                <TextInput style={styles.loginInput} placeholder='密码' secureTextEntry={true}
                            defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
                            onChangeText={(text) => this.password = text}/>
                 <CButton style={styles.loginInput} title={'登录'} onPress={() => this.doLogin()}/>
+                <CButton style={styles.loginInput} title={'注册'} onPress={() => this.doReg()}/>
                 <View style={styles.subButton}>
-                    <Text style={styles.subButtonText} onPress={() => this.doReg()}>注册</Text>
+                    <Text style={styles.subButtonText} onPress={() => this.doReg()}>游客浏览</Text>
                     <Text style={styles.subButtonText} onPress={() => this.findAccount()}>找回密码</Text>
                 </View>
                 <Text style={styles.message}>{message}</Text>
@@ -140,7 +139,7 @@ class LoginPage extends Component{
 }
 
 const styles = StyleSheet.create({
-  loginPage: {
+    loginPage: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
@@ -192,7 +191,7 @@ export default connect(
         user: state.loginIn.user,
     }),
     (dispatch) => ({
-        login: (m, p) => dispatch(LoginAction.login(m, p)),
+        login: (u, p) => dispatch(LoginAction.login(u, p)),
     })
 )(LoginPage)
 
