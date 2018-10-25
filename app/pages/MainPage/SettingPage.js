@@ -16,6 +16,7 @@ import storage from '../../common/Storage';
 import {getStackOptions} from '../../common/NavigatorOpts';
 
 import * as LoginAction from '../../action/LoginAction';
+import * as color from '../../assets/css/color';
 
 const resetAction = StackActions.reset({
     index: 0,
@@ -45,7 +46,7 @@ class SettingPage extends Component {
 
   	return (
   	  <View style={styles.card}>
-		    <CButton style={styles.quitbutton} title={'退出登录'} onPress={() => this.quitLogin()}/>
+		    <CButton color={color.BUTTON_RED} title={'退出登录'} onPress={() => this.quitLogin()}/>
 
   	  </View>
   	);

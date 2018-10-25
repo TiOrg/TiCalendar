@@ -24,11 +24,7 @@ import {
 } from 'react-navigation';
 import {connect} from 'react-redux'; // 引入connect函数
 
-import {
-  THEME_BACKGROUND,
-  THEME_LABEL,
-  THEME_TEXT
-} from '../../assets/css/color';
+import * as color from '../../assets/css/color';
 
 // 清空导航记录，跳转到首页
 const resetAction = StackActions.reset({
@@ -147,7 +143,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-start',
         padding: 20,
-        backgroundColor: THEME_BACKGROUND
+        backgroundColor: color.THEME_BACKGROUND
     },
     loginSection: {
         flexDirection: 'column',
@@ -157,7 +153,7 @@ const styles = StyleSheet.create({
     loginTitle: {
         fontSize: 28,
         fontWeight: '500',
-        color: THEME_LABEL,
+        color: color.THEME_LABEL,
         textAlign: 'center',
         marginTop: 32,
         marginBottom: 32
@@ -169,7 +165,7 @@ const styles = StyleSheet.create({
         marginTop: 8
     },
     subButtonText: {
-        color: THEME_TEXT,
+        color: color.THEME_TEXT,
         fontSize: 14
     },
     loginInput: {
@@ -181,7 +177,7 @@ const styles = StyleSheet.create({
     },
     message: {
         marginTop: 16,
-        color: THEME_TEXT,
+        color: color.THEME_TEXT,
         fontSize: 14
     }
 
