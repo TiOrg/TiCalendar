@@ -6,6 +6,8 @@ import {
   View,
 } from 'react-native';
 import CButton from '../../common/button';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { List, ListItem } from 'react-native-elements';
 import {
   NavigationActions,
   StackActions,
@@ -25,7 +27,16 @@ const resetAction = StackActions.reset({
     ]
 });
 
-
+const list = [
+  {
+    title: '退出登录',
+    icon: 'log-out'
+  },
+  {
+    title: 'Trips',
+    icon: 'flight-takeoff'
+  },
+]
 
 
 class SettingPage extends Component {
@@ -42,10 +53,24 @@ class SettingPage extends Component {
     this.props.navigation.dispatch(resetAction);
   }
 
+
+
   render() {
 
   	return (
+
   	  <View style={styles.card}>
+        <View>
+        {
+          list.map((item, i) => (
+            <ListItem
+              key={i}
+              title={item.title}
+              leftIcon={{ name: item.icon }}
+            />
+          ))
+        }
+      </View>
 		    <CButton color={color.BUTTON_RED} title={'退出登录'} onPress={() => this.quitLogin()}/>
 
   	  </View>

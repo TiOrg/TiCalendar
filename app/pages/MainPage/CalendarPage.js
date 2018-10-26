@@ -13,8 +13,9 @@ import {
   LocaleConfig
 } from '../../utils/CalendarUtils/index';
 
-import {FACEBOOK_BLUE} from '../../assets/css/color';
+import * as color from '../../assets/css/color';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import {Header} from 'react-native-elements';
 
 
 LocaleConfig.locales['zh-CN'] = {
@@ -40,7 +41,16 @@ export default class CalendarPage extends Component {
 
   render() {
     return (
+
       <View style={styles.card}>
+        <Header
+          // statusBarProps={{ barStyle: 'light-content' }}
+          leftComponent={{ icon: 'menu', color: color.FACEBOOK_BLUE }}
+          centerComponent={{ text: 'MY TITLE', style: { color: color.FACEBOOK_BLUE } }}
+          rightComponent={{ icon: 'home', color: color.FACEBOOK_BLUE }}
+          outerContainerStyles={{ backgroundColor: '#fff' }}
+          // innerContainerStyles={{ justifyContent: 'space-around' }}
+        />
         <Agenda
           items={this.state.items}
           loadItemsForMonth={this.loadItems.bind(this)}
@@ -83,6 +93,7 @@ export default class CalendarPage extends Component {
           for (let j = 0; j < numItems; j++) {
             this.state.items[strTime].push({
               name: 'Item for ' + strTime,
+
               height: Math.max(50, Math.floor(Math.random() * 150))
             });
           }
