@@ -43,3 +43,8 @@ npm install --save prop-types
 npm install --save react-native-navigation-actions
 ```
 
+### native-base
+```
+npm install native-base --save
+react-native link
+```
