@@ -109,8 +109,8 @@ class LoginPage extends Component{
         <View style={styles.loginPage}>
             <View style={styles.loginSection}>
                 <Text style={styles.loginTitle}>TiCalendar</Text>
-                <TextInput style={styles.loginInput} placeholder='用户名'
-                           defaultValue={this.username} autoCapitalize={'none'} maxLength={20}
+                <TextInput style={styles.loginInput} placeholder='用户名/电子邮箱'
+                           defaultValue={this.username} autoCapitalize={'none'} maxLength={30}
                            onChangeText={(text) => this.username = text}/>
                 <TextInput style={styles.loginInput} placeholder='密码' secureTextEntry={true}
                            defaultValue={this.password} autoCapitalize={'none'} maxLength={20}

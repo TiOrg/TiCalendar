@@ -15,7 +15,18 @@ import {
 
 import * as color from '../../assets/css/color';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import {Header} from 'react-native-elements';
+// import {Header} from 'react-native-elements';
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Button,
+  Icon,
+  Title
+} from 'native-base';
+import MyDrawer from './MyDrawer';
 
 
 LocaleConfig.locales['zh-CN'] = {
@@ -43,14 +54,18 @@ export default class CalendarPage extends Component {
     return (
 
       <View style={styles.card}>
-        <Header
-          // statusBarProps={{ barStyle: 'light-content' }}
-          leftComponent={{ icon: 'menu', color: color.FACEBOOK_BLUE }}
-          centerComponent={{ text: 'MY TITLE', style: { color: color.FACEBOOK_BLUE } }}
-          rightComponent={{ icon: 'home', color: color.FACEBOOK_BLUE }}
-          outerContainerStyles={{ backgroundColor: '#fff' }}
-          // innerContainerStyles={{ justifyContent: 'space-around' }}
-        />
+        <Header>
+          <Left>
+          </Left>
+          <Body>
+            <Title style = {{fontSize:20,color:color.FACEBOOK_BLUE}}>TiCalendar</Title>
+          </Body>
+          <Right>
+            <Button transparent>
+              <Icon name='add' style = {{color:color.FACEBOOK_BLUE}}/>
+            </Button>
+          </Right>
+        </Header>
         <Agenda
           items={this.state.items}
           loadItemsForMonth={this.loadItems.bind(this)}
@@ -142,7 +157,7 @@ const styles = StyleSheet.create({
     // margin: 5,
     // height: 550,
     flex: 1,
-    padding: 15,
+    // padding: 15,
     shadowColor: '#fff',
     shadowOffset: { width: 2, height: 2, },
     shadowOpacity: 0,

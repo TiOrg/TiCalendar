@@ -9,6 +9,7 @@
   "dependencies": {
     "leancloud-realtime": "^4.2.0",
     "leancloud-storage": "^3.10.0",
+    "native-base": "^2.8.1",
     "prop-types": "^15.6.2",
     "react": "16.5.0",
     "react-native": "0.57.1",

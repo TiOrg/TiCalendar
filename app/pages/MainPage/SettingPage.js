@@ -30,7 +30,7 @@ const resetAction = StackActions.reset({
 const list = [
   {
     title: '退出登录',
-    icon: 'log-out'
+    icon: 'exit-to-app'
   },
   {
     title: 'Trips',
