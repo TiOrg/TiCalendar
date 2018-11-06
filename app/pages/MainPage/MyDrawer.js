@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { Drawer } from 'native-base';
+import SideBar from '../SideBar/index';
 
 export default class MyDrawer extends Component {
   render() {
@@ -19,8 +20,8 @@ export default class MyDrawer extends Component {
    return (
       <Drawer
         ref={(ref) => { this.drawer = ref; }}
-        // content={<SideBar navigator={this.navigator} />}
-        content={<Text>hahaha</Text>}
+        content={<SideBar navigator={this.navigator} />}
+        // content={<Text>hahaha</Text>}
         onClose={() => this.closeDrawer()} >
       // Main View
       </Drawer>

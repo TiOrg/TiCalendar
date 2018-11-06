@@ -18,12 +18,25 @@ import FacebookTabBar from './FacebookTabBar';
 import CalendarPage from './CalendarPage';
 import SettingPage from './SettingPage';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Right,
+  Button,
+  Icon,
+  Title,
+  Drawer
+} from 'native-base';
+import * as color from '../../assets/css/color';
 export default class MainPage extends Component{
 
   render() {
     const { navigate,dispatch } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container}>
+
 
         <ScrollableTabView
           // style={{marginTop: 20, }}

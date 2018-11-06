@@ -12,6 +12,7 @@ import {
   Agenda,
   LocaleConfig
 } from '../../utils/CalendarUtils/index';
+import SideBar from '../SideBar/index';
 
 import * as color from '../../assets/css/color';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -24,9 +25,9 @@ import {
   Right,
   Button,
   Icon,
-  Title
+  Title,
+  Drawer
 } from 'native-base';
-import MyDrawer from './MyDrawer';
 
 
 LocaleConfig.locales['zh-CN'] = {
@@ -40,6 +41,12 @@ LocaleConfig.locales['zh-CN'] = {
 LocaleConfig.defaultLocale = 'zh-CN';
 
 export default class CalendarPage extends Component {
+  closeDrawer() {
+    this._drawer._root.close()
+  }
+  openDrawer() {
+    this._drawer._root.open()
+  }
   static navigationOptions = {
     title: 'Details',
   };
@@ -54,15 +61,25 @@ export default class CalendarPage extends Component {
     return (
 
       <View style={styles.card}>
+      <Drawer
+        ref = {(ref) => {this._drawer = ref;}}
+        content = {<SideBar navigator={this.navigator} />}
+        onClose = {() => this.closeDrawer()} >
         <Header>
           <Left>
+            <Button
+              transparent
+              onPress={() => this.openDrawer()}
+            >
+              <Icon name="md-menu" style = {{color:color.FACEBOOK_BLUE}}/>
+            </Button>
           </Left>
           <Body>
             <Title style = {{fontSize:20,color:color.FACEBOOK_BLUE}}>TiCalendar</Title>
           </Body>
           <Right>
             <Button transparent>
-              <Icon name='add' style = {{color:color.FACEBOOK_BLUE}}/>
+              <Icon name='md-add' style = {{color:color.FACEBOOK_BLUE}}/>
             </Button>
           </Right>
         </Header>
@@ -80,6 +97,7 @@ export default class CalendarPage extends Component {
             // agendaKnobColor: FACEBOOK_BLUE
           }}
         />
+        </Drawer>
       </View>
     );
   }
@@ -158,10 +176,10 @@ const styles = StyleSheet.create({
     // height: 550,
     flex: 1,
     // padding: 15,
-    shadowColor: '#fff',
-    shadowOffset: { width: 2, height: 2, },
-    shadowOpacity: 0,
-    shadowRadius: 3,
+    // shadowColor: '#fff',
+    // shadowOffset: { width: 2, height: 2, },
+    // shadowOpacity: 0,
+    // shadowRadius: 3,
   },
 
   item: {
