@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Touchable, TouchableNativeFeedback, Platform} from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, Touchable, TouchableNativeFeedback, Platform } from 'react-native';
 import { FACEBOOK_BLUE, THEME } from '../assets/css/color';
 const PropTypes = require('prop-types');
 const invariant = require('fbjs/lib/invariant');
@@ -42,14 +42,14 @@ export default class CButton extends Component<{
 
      * */
     render() {
-        const {accessibilityLabel, color, onPress, title, hasTVPreferredFocus, disabled, testID,} = this.props;
+        const { accessibilityLabel, color, onPress, title, hasTVPreferredFocus, disabled, testID, } = this.props;
         const buttonStyles = [styles.button];
         const textStyles = [styles.text];
         if (color) {
             if (Platform.OS === 'ios') {
-                textStyles.push({color: color});
+                textStyles.push({ color: color });
             } else {
-                buttonStyles.push({backgroundColor: color});
+                buttonStyles.push({ backgroundColor: color });
             }
         }
         const accessibilityTraits = ['button'];

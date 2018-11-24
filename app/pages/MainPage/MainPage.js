@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -30,10 +30,10 @@ import {
   Drawer
 } from 'native-base';
 import * as color from '../../assets/css/color';
-export default class MainPage extends Component{
+export default class MainPage extends Component {
 
   render() {
-    const { navigate,dispatch } = this.props.navigation;
+    const { navigate, dispatch } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container}>
 
@@ -44,31 +44,31 @@ export default class MainPage extends Component{
           renderTabBar={() => <FacebookTabBar />}
           tabBarPosition='bottom'>
 
-            <View tabLabel="ios-paper" style={styles.tabView}>
-              <CalendarPage />
+          <View tabLabel="ios-paper" style={styles.tabView}>
+            <CalendarPage />
+          </View>
+
+          <ScrollView tabLabel="ios-people" style={styles.tabView}>
+            <View style={styles.card}>
+              <Text>Friends</Text>
             </View>
+          </ScrollView>
 
-            <ScrollView tabLabel="ios-people" style={styles.tabView}>
-              <View style={styles.card}>
-                <Text>Friends</Text>
-              </View>
-            </ScrollView>
+          <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
+            <View style={styles.card}>
+              <Text>Messenger</Text>
+            </View>
+          </ScrollView>
 
-            <ScrollView tabLabel="ios-chatboxes" style={styles.tabView}>
-              <View style={styles.card}>
-                <Text>Messenger</Text>
-              </View>
-            </ScrollView>
+          <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
+            <View style={styles.card}>
+              <Text>Notifications</Text>
+            </View>
+          </ScrollView>
 
-            <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
-              <View style={styles.card}>
-                <Text>Notifications</Text>
-              </View>
-            </ScrollView>
-
-            <ScrollView tabLabel="ios-list" style={styles.tabView}>
-              <SettingPage {...this.props}/>
-            </ScrollView>
+          <ScrollView tabLabel="ios-list" style={styles.tabView}>
+            <SettingPage {...this.props} />
+          </ScrollView>
 
         </ScrollableTabView>
 

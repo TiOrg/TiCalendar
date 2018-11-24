@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -31,11 +31,11 @@ import {
 
 
 LocaleConfig.locales['zh-CN'] = {
-  monthNames: ['一月','二月','三月','四月','五月','六月',
-  '七月','八月','九月','十月','十一月','十二月'],
-  monthNamesShort: ['一','二','三','四','五','六','七','八','九','十','十一','十二'],
-  dayNames: ['周日','周一','周二','周三','周四','周五','周六'],
-  dayNamesShort: ['日','一','二','三','四','五','六']
+  monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
+    '七月', '八月', '九月', '十月', '十一月', '十二月'],
+  monthNamesShort: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
+  dayNames: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+  dayNamesShort: ['日', '一', '二', '三', '四', '五', '六']
 };
 
 LocaleConfig.defaultLocale = 'zh-CN';
@@ -61,55 +61,55 @@ export default class CalendarPage extends Component {
     return (
 
       <View style={styles.card}>
-      <Drawer
-        ref = {(ref) => {this._drawer = ref;}}
-        content = {<SideBar navigator={this.navigator} />}
-        onClose = {() => this.closeDrawer()} >
-        <Header>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.openDrawer()}
-            >
-              <Icon name="md-menu" style = {{color:color.FACEBOOK_BLUE}}/>
-            </Button>
-          </Left>
-          <Body>
-            <Title style = {{fontSize:20,color:color.FACEBOOK_BLUE}}>TiCalendar</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name='md-add' style = {{color:color.FACEBOOK_BLUE}}/>
-            </Button>
-          </Right>
-        </Header>
-        <Agenda
-          items={this.state.items}
-          loadItemsForMonth={this.loadItems.bind(this)}
-          selected={this.getToday.bind(this)}
-          renderItem={this.renderItem.bind(this)}
-          renderEmptyDate={this.renderEmptyDate.bind(this)}
-          rowHasChanged={this.rowHasChanged.bind(this)}
-          theme={{
-            // agendaDayTextColor: 'yellow',
-            // agendaDayNumColor: 'green',
-            // agendaTodayColor: 'red',
-            // agendaKnobColor: FACEBOOK_BLUE
-          }}
-        />
+        <Drawer
+          ref={(ref) => { this._drawer = ref; }}
+          content={<SideBar navigator={this.navigator} />}
+          onClose={() => this.closeDrawer()} >
+          <Header>
+            <Left>
+              <Button
+                transparent
+                onPress={() => this.openDrawer()}
+              >
+                <Icon name="md-menu" style={{ color: color.FACEBOOK_BLUE }} />
+              </Button>
+            </Left>
+            <Body>
+              <Title style={{ fontSize: 20, color: color.FACEBOOK_BLUE }}>TiCalendar</Title>
+            </Body>
+            <Right>
+              <Button transparent>
+                <Icon name='md-add' style={{ color: color.FACEBOOK_BLUE }} />
+              </Button>
+            </Right>
+          </Header>
+          <Agenda
+            items={this.state.items}
+            loadItemsForMonth={this.loadItems.bind(this)}
+            selected={this.getToday.bind(this)}
+            renderItem={this.renderItem.bind(this)}
+            renderEmptyDate={this.renderEmptyDate.bind(this)}
+            rowHasChanged={this.rowHasChanged.bind(this)}
+            theme={{
+              // agendaDayTextColor: 'yellow',
+              // agendaDayNumColor: 'green',
+              // agendaTodayColor: 'red',
+              // agendaKnobColor: FACEBOOK_BLUE
+            }}
+          />
         </Drawer>
       </View>
     );
   }
-  getToday(){
+  getToday() {
     var systemDate = new Date();
     var year = systemDate.getFullYear();
     var month = systemDate.getMonth() + 1;
-    var day =  systemDate.getDate();
+    var day = systemDate.getDate();
     if (day < 10) { // 如果日小于10，前面拼接0
     }
     if (month < 10) { // 如果月小于10，前面拼接0
-        month = '0' + month;
+      month = '0' + month;
     }
     return [year, month, day].join('-');
   }
@@ -134,7 +134,7 @@ export default class CalendarPage extends Component {
       }
       //console.log(this.state.items);
       const newItems = {};
-      Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+      Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
       this.setState({
         items: newItems
       });
@@ -144,7 +144,7 @@ export default class CalendarPage extends Component {
 
   renderItem(item) {
     return (
-      <View style={[styles.item, {height: item.height}]}><Text>{item.name}</Text></View>
+      <View style={[styles.item, { height: item.height }]}><Text>{item.name}</Text></View>
     );
   }
 
@@ -183,17 +183,17 @@ const styles = StyleSheet.create({
   },
 
   item: {
-     backgroundColor: 'white',
-     flex: 1,
-     borderRadius: 5,
-     padding: 10,
-     marginRight: 10,
-     marginTop: 17
-   },
+    backgroundColor: 'white',
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17
+  },
 
   emptyDate: {
-     height: 15,
-     flex:1,
-     paddingTop: 30
-   },
+    height: 15,
+    flex: 1,
+    paddingTop: 30
+  },
 })

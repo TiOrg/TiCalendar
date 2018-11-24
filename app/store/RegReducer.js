@@ -1,6 +1,6 @@
 'use strict';
 import * as types from '../constants/RegTypes';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 const initialState = {
     status: '点击注册',
     isSuccess: false
