@@ -1,50 +1,41 @@
+# TiCalendar📆
+
+TiCalendar是一个智能日历应用，致力于提取网络关键信息并智能生成日历事件。
+
+## 项目适用平台
+
+iOS 9.0+  Android 5.0+
+
+参与代码编写：Zealoft simon0628
 
 
-## modules to be installed
 
-### react-navigation
+## 安装说明
 
-`npm install --save react-navigation`
+项目基于React Native进行编写，React Native开发环境的具体搭建请参考[React Native官方网站](https://facebook.github.io/react-native/)
 
-### leanCloud 
-#### 存储服务
+开发环境搭建完成后，将代码克隆到本地
 
-`npm install leancloud-storage --save`
-
-#### 实时消息服务
-
-
-`npm install leancloud-realtime --save `
-
-### react-native-vector-icons
-
-` npm install react-native-vector-icons ` 
-
-` react-native link react-native-vector-icons `
-
-### react-native-scrollable-tab-view
-
-`yarn add happypancake/react-native-scrollable-tab-view#master `
-
-### redux和react-redux
-
-```
-npm install --save redux react-redux
-yarn add redux react-redux
+```shell
+git@github.com:TiOrg/TiCalendar.git
+cd TiCalendar
 ```
 
-### proptypes
-```
-npm install --save prop-types
+使用目录中的Makefile快速安装所需的npm包
+
+```shell
+make
 ```
 
-### react-native-navigation-actions
-```
-npm install --save react-native-navigation-actions
-```
 
-### native-base
-```
-npm install native-base --save
-react-native link
-```
+
+### 依赖包列表
+
+- [react-navigation](https://reactnavigation.org/)
+- [leanCloud](https://leancloud.cn/)
+- [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+- [react-native-scrollable-tab-view](https://github.com/happypancake/react-native-scrollable-tab-view)
+- [react-redux](https://github.com/reactjs/redux)
+- [proptypes](https://github.com/prototypejs/prototype)
+- [react-native-navigation-actions](https://www.npmjs.com/package/react-native-navigation-actions)
+- [native-base](https://docs.nativebase.io/)
