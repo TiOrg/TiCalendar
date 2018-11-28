@@ -1,9 +1,9 @@
 'use strict';
 
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import loginIn from './LoginReducer';
 import reg from './RegReducer';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 const rootReducer = combineReducers({
     loginIn: loginIn, // 登录类型状态

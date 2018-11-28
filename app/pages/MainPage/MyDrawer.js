@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -15,9 +15,9 @@ export default class MyDrawer extends Component {
       this.drawer._root.close()
     };
     openDrawer = () => {
-     this.drawer._root.open()
-   };
-   return (
+      this.drawer._root.open()
+    };
+    return (
       <Drawer
         ref={(ref) => { this.drawer = ref; }}
         content={<SideBar navigator={this.navigator} />}

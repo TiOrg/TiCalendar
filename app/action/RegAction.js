@@ -2,7 +2,7 @@
 
 import * as types from '../constants/RegTypes';
 import AV from '../service/AVService';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 export function reg(mobile, password, email) {
     console.log('注册方法');
@@ -18,8 +18,8 @@ export function reg(mobile, password, email) {
     //console.warn(email);
 
     user.signUp().then(function (loggedInUser) {
-  }, function (error) {
-  });
+    }, function (error) {
+    });
     return dispatch => {
         dispatch(isReging());
         // 模拟用户注册

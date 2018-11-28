@@ -4,13 +4,13 @@
 import * as types from '../constants/LoginTypes';
 import AV from '../service/AVService';
 // import storage from '../common/Storage';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 
 export function quit() {
     console.log('退出登录方法');
     global.storage.remove({
-        key:'user',
+        key: 'user',
     });
     return dispatch => {
         dispatch(isQuiting());
@@ -31,7 +31,7 @@ export function login(username, password) {
         AV.User.logIn(username, password).then(function (loggedInUser) {
             console.log(loggedInUser);
             // current_user = AV.User.current();
-            dispatch(loginSuccess(true,loggedInUser));
+            dispatch(loginSuccess(true, loggedInUser));
         }, function (error) {
             dispatch(loginError(false));
             console.log(error);
@@ -62,7 +62,7 @@ function isQuiting() {
     }
 }
 
-function loginSuccess(isSuccess,user) {
+function loginSuccess(isSuccess, user) {
     console.log('success');
 
     global.storage.save({
