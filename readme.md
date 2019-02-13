@@ -14,7 +14,11 @@ iOS 9.0+  Android 5.0+
 
 项目基于React Native进行编写，React Native开发环境的具体搭建请参考[React Native官方网站](https://facebook.github.io/react-native/)
 
-开发环境搭建完成后，将代码克隆到本地
+开发环境搭建完成后，首先使用react-native的init功能初始化一个React Native项目
+```
+react-native init TiCalendar
+```
+将代码克隆到本地
 
 ```shell
 git clone git@github.com:TiOrg/TiCalendar.git
