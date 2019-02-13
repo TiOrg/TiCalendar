@@ -17,7 +17,7 @@ iOS 9.0+  Android 5.0+
 开发环境搭建完成后，将代码克隆到本地
 
 ```shell
-git@github.com:TiOrg/TiCalendar.git
+git clone git@github.com:TiOrg/TiCalendar.git
 cd TiCalendar
 ```
 
