@@ -74,15 +74,18 @@ export default class CalendarPage extends Component {
                 transparent
                 onPress={() => this.openDrawer()}
               >
-                <Icon name="md-menu" style={{ color: color.WHITE }} />
+                <Icon name="md-menu" style={{ color: (Platform.OS === 'ios') ? 
+                color.FACEBOOK_BLUE : color.WHITE }} />
               </Button>
             </Left>
             <Body>
-              <Title style={{ fontSize: 20, color: color.WHITE }}>TiCalendar</Title>
+              <Title style={{ fontSize: 20, color: (Platform.OS === 'ios') ? 
+                color.FACEBOOK_BLUE : color.WHITE }}>TiCalendar</Title>
             </Body>
             <Right>
               <Button transparent>
-                <Icon name='md-add' style={{ color: color.WHITE }} />
+                <Icon name='md-add' style={{ color: (Platform.OS === 'ios') ? 
+                color.FACEBOOK_BLUE : color.WHITE }} />
               </Button>
             </Right>
           </Header>
