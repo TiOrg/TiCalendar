@@ -29,6 +29,8 @@ import {
   Drawer
 } from 'native-base';
 
+Drawer.defaultProps.styles.mainOverlay.elevation = 0;
+
 
 LocaleConfig.locales['zh-CN'] = {
   monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
@@ -60,7 +62,8 @@ export default class CalendarPage extends Component {
   render() {
     return (
 
-      <View style={styles.card}>
+      // <View style={styles.card}>
+      <Container>
         <Drawer
           ref={(ref) => { this._drawer = ref; }}
           content={<SideBar navigator={this.navigator} />}
@@ -71,15 +74,15 @@ export default class CalendarPage extends Component {
                 transparent
                 onPress={() => this.openDrawer()}
               >
-                <Icon name="md-menu" style={{ color: color.FACEBOOK_BLUE }} />
+                <Icon name="md-menu" style={{ color: color.WHITE }} />
               </Button>
             </Left>
             <Body>
-              <Title style={{ fontSize: 20, color: color.FACEBOOK_BLUE }}>TiCalendar</Title>
+              <Title style={{ fontSize: 20, color: color.WHITE }}>TiCalendar</Title>
             </Body>
             <Right>
               <Button transparent>
-                <Icon name='md-add' style={{ color: color.FACEBOOK_BLUE }} />
+                <Icon name='md-add' style={{ color: color.WHITE }} />
               </Button>
             </Right>
           </Header>
@@ -98,7 +101,8 @@ export default class CalendarPage extends Component {
             }}
           />
         </Drawer>
-      </View>
+      </Container>
+      // </View>
     );
   }
   getToday() {

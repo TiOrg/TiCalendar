@@ -36,8 +36,6 @@ export default class MainPage extends Component {
     const { navigate, dispatch } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container}>
-
-
         <ScrollableTabView
           // style={{marginTop: 20, }}
           initialPage={0}
