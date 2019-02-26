@@ -8,10 +8,7 @@ import {
 } from 'react-native';
 
 import {
-  SafeAreaView,
-  NavigationActions,
-  StackActions,
-  StackNavigator
+  SafeAreaView
 } from 'react-navigation';
 
 import FacebookTabBar from './FacebookTabBar';
