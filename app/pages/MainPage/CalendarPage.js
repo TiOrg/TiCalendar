@@ -13,6 +13,16 @@ import {
   LocaleConfig
 } from '../../utils/CalendarUtils/index';
 import SideBar from '../SideBar/index';
+import Dialog, { 
+  SlideAnimation, 
+  ScaleAnimation,
+  DialogTitle,
+  DialogFooter,
+  DialogButton,
+  DialogContent 
+} from 'react-native-popup-dialog';
+
+import { Input } from 'react-native-elements';
 
 import * as color from '../../assets/css/color';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -28,6 +38,12 @@ import {
   Title,
   Drawer
 } from 'native-base';
+
+import DatePicker from 'react-native-datepicker'
+
+// import DatePicker from '../CalendarPage/DatePickerPage';
+
+// import {}
 
 Drawer.defaultProps.styles.mainOverlay.elevation = 0;
 
@@ -55,7 +71,8 @@ export default class CalendarPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: {}
+      items: {},
+      date:""
     };
   }
 
@@ -83,7 +100,52 @@ export default class CalendarPage extends Component {
                 color.FACEBOOK_BLUE : color.WHITE }}>TiCalendar</Title>
             </Body>
             <Right>
-              <Button transparent>
+              <Button 
+                transparent
+                onPress={() => {
+                  this.setState({ visible: true });
+                }}  
+              >
+              <Dialog
+                // height={0.5}
+                visible={this.state.visible}
+                footer={
+                  <DialogFooter>
+                    <DialogButton 
+                      text="取消"
+                      onPress={() => {
+                        this.setState({ visible: false });
+                      }}
+                    />
+                    <DialogButton 
+                      text="添加"
+                      onPress={() => {}}
+                    />
+                  </DialogFooter>
+                }
+                dialogTitle={<DialogTitle title="手动添加事件"/>}
+                dialogAnimation={new ScaleAnimation({
+                  toValue: 0,
+                  useNativeDriver: true,
+                })}
+                onTouchOutside={() => {
+                  this.setState({ visible: false });
+                }}
+              >
+                <DialogContent>
+                  <Input
+                    placeholder="    事件名称"
+                  />
+                  <DatePicker style={{paddingTop: 10}}
+                    placeholder="选择日期"
+                    format="YYYY-MM-DD"
+                    date={this.state.date}
+                    mode="date"
+                    confirmBtnText="确认"
+                    cancelBtnText="取消"
+                  />
+                </DialogContent>
+              </Dialog>
                 <Icon name='md-add' style={{ color: (Platform.OS === 'ios') ? 
                 color.FACEBOOK_BLUE : color.WHITE }} />
               </Button>
