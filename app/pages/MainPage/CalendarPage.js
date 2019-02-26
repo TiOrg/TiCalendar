@@ -5,6 +5,7 @@ import {
   Text,
   View,
   ScrollView,
+  DeviceInfo,
 } from 'react-native';
 import {
   Calendar,
@@ -14,7 +15,6 @@ import {
 } from '../../utils/CalendarUtils/index';
 import SideBar from '../SideBar/index';
 import Dialog, { 
-  SlideAnimation, 
   ScaleAnimation,
   DialogTitle,
   DialogFooter,
@@ -72,7 +72,8 @@ export default class CalendarPage extends Component {
     super(props);
     this.state = {
       items: {},
-      date:""
+      startDate:"",
+      endDate:""
     };
   }
 
@@ -120,6 +121,7 @@ export default class CalendarPage extends Component {
                     <DialogButton 
                       text="添加"
                       onPress={() => {}}
+                      // @TODO write function here
                     />
                   </DialogFooter>
                 }
@@ -133,17 +135,49 @@ export default class CalendarPage extends Component {
                 }}
               >
                 <DialogContent>
+                  <View style={{paddingTop:10}}>
+                    <Text style={styles.label}>
+                      事件名称：
+                    </Text>
+                  </View>
                   <Input
-                    placeholder="    事件名称"
+                    style={{paddingTop: 10}}
+                    labelStyle={{fontSize: 20*(1.0/DeviceInfo.Dimensions.screen.fontScale)}}
+                    placeholder=""
                   />
-                  <DatePicker style={{paddingTop: 10}}
-                    placeholder="选择日期"
-                    format="YYYY-MM-DD"
-                    date={this.state.date}
-                    mode="date"
+                  <View style={{paddingTop:10}}>
+                    <Text style={styles.label}>
+                      开始时间：
+                    </Text>
+                  </View>
+                  <DatePicker style={{
+                    paddingTop: 10,
+                    width: 300}}
+                    placeholder="点击此处或图标以选择时间"
+                    format="YYYY年MM月DD日 HH:MM"
+                    date={this.state.startDate}
+                    mode="datetime"
                     confirmBtnText="确认"
                     cancelBtnText="取消"
+                    onDateChange={(date) => {this.setState({startDate: date})}}
                   />
+                  <View style={{paddingTop:10}}>
+                    <Text style={styles.label}>
+                      结束时间：
+                    </Text>
+                  </View>
+                  <DatePicker style={{
+                    paddingTop: 10,
+                    width: 300}}
+                    placeholder="点击此处或图标以选择时间"
+                    format="YYYY年MM月DD日 HH:MM"
+                    date={this.state.endDate}
+                    mode="datetime"
+                    confirmBtnText="确认"
+                    cancelBtnText="取消"
+                    onDateChange={(date) => {this.setState({endDate: date})}}
+                  />
+                  
                 </DialogContent>
               </Dialog>
                 <Icon name='md-add' style={{ color: (Platform.OS === 'ios') ? 
@@ -265,4 +299,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 30
   },
+
+  label: {
+    fontSize: 20*(1.0/DeviceInfo.Dimensions.screen.fontScale),
+    color: '#455a64',
+  }
 })
