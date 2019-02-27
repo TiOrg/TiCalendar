@@ -65,6 +65,10 @@ storage.sync = {
       console.warn(err);
       reject && reject(err);
     });
+  },
+
+  event(params) {
+
   }
 };
 

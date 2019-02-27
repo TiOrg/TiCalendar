@@ -6,6 +6,8 @@ import {
   View,
   ScrollView,
   DeviceInfo,
+  AsyncStorage,
+  Alert,
 } from 'react-native';
 import {
   Calendar,
@@ -25,6 +27,9 @@ import Dialog, {
 import { Input } from 'react-native-elements';
 
 import * as color from '../../assets/css/color';
+import * as EventAction from '../../action/AddEventAction';
+// import stringToDate from '../../common/StringToDate';
+// import * as GetUserInfo from '../../action/GetUserInfo';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 // import {Header} from 'react-native-elements';
 import {
@@ -39,11 +44,14 @@ import {
   Drawer
 } from 'native-base';
 
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker';
+
+
 
 // import DatePicker from '../CalendarPage/DatePickerPage';
 
-// import {}
+const uuidv1 = require('uuid/v1');
+
 
 Drawer.defaultProps.styles.mainOverlay.elevation = 0;
 
@@ -59,23 +67,63 @@ LocaleConfig.locales['zh-CN'] = {
 LocaleConfig.defaultLocale = 'zh-CN';
 
 export default class CalendarPage extends Component {
+  
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      userid: 0x0,
+      visible: false,
+      items: {},      // 当天的事件
+      startDate: '',   // 
+      endDate: '',
+      eventNameText: '',
+    };
+    this.getUserId();
+  }
   closeDrawer() {
     this._drawer._root.close()
   }
   openDrawer() {
     this._drawer._root.open()
   }
+
+  getUserId() {
+    storage.load({
+        key: 'user'
+    })
+    .then(ret => {
+        // console.log('user:', ret);
+        // id = ret.objectId;
+        // console.log('id:',ret.objectId);
+        this.setState({userid: ret.objectId});
+    })
+    .catch(err => {
+        // 如果没有找到数据且没有sync方法，
+        // 或者有其他异常，则在catch中返回
+        console.warn(err.message);
+        switch (err.name) {
+        case 'NotFoundError':
+            // TODO;
+            break;
+        case 'ExpiredError':
+            // TODO
+            break;
+        }
+    });
+  }
+
+  clearInputState() {
+    this.setState({startDate: ''});
+    this.setState({endDate: ''});
+    this.setState({eventNameText: ''});
+  }
   static navigationOptions = {
     title: 'Details',
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: {},
-      startDate:"",
-      endDate:""
-    };
-  }
+  
+
+
 
   render() {
     return (
@@ -115,13 +163,42 @@ export default class CalendarPage extends Component {
                     <DialogButton 
                       text="取消"
                       onPress={() => {
-                        this.setState({ visible: false });
+                        this.clearInputState();
+                        this.setState({visible: false});
                       }}
                     />
                     <DialogButton 
                       text="添加"
-                      onPress={() => {}}
-                      // @TODO write function here
+                      onPress={() => {
+                        // 按下添加按钮后的功能
+                        // 首先验证输入是否完整
+                        // console.log('获取所有数据');
+                        // storage.getAllDataForKey('event').then(events => {
+                        //   console.log(events);
+                        // })
+                        // storage.clearMap();
+                        let eventName = this.state.eventNameText;
+                        let startTime = this.state.startDate;
+                        let endTime = this.state.endDate;
+                        if(eventName === '') {
+                          Alert.alert('错误提示','事件名称不能为空',[{text:"好"}]);
+                        }
+                        else if(startTime === '') {
+                          Alert.alert('错误提示','请选择事件开始时间',[{text:"好"}]);
+                        }
+                        else if(startTime === '') {
+                          Alert.alert('错误提示','请选择事件结束时间',[{text:"好"}]);
+                        }
+                        else {
+                          // 输入合法，准备保存事件信息
+                          // 生成本地唯一的uuid，保证事件数据不被覆盖
+                          let id = uuidv1();
+                          EventAction.add(id, eventName, startTime, endTime);
+                          // EventAction.load(id);
+                          this.clearInputState();
+                          this.setState({ visible: false });
+                        }
+                      }}
                     />
                   </DialogFooter>
                 }
@@ -135,7 +212,7 @@ export default class CalendarPage extends Component {
                 }}
               >
                 <DialogContent>
-                  <View style={{paddingTop:10}}>
+                  <View style={styles.label_view}>
                     <Text style={styles.label}>
                       事件名称：
                     </Text>
@@ -144,8 +221,9 @@ export default class CalendarPage extends Component {
                     style={{paddingTop: 10}}
                     labelStyle={{fontSize: 20*(1.0/DeviceInfo.Dimensions.screen.fontScale)}}
                     placeholder=""
+                    onChangeText={(text) => this.setState({eventNameText: text})}
                   />
-                  <View style={{paddingTop:10}}>
+                  <View style={styles.label_view}>
                     <Text style={styles.label}>
                       开始时间：
                     </Text>
@@ -154,14 +232,14 @@ export default class CalendarPage extends Component {
                     paddingTop: 10,
                     width: 300}}
                     placeholder="点击此处或图标以选择时间"
-                    format="YYYY年MM月DD日 HH:MM"
+                    format="YYYY-MM-DD HH:MM"
                     date={this.state.startDate}
                     mode="datetime"
                     confirmBtnText="确认"
                     cancelBtnText="取消"
                     onDateChange={(date) => {this.setState({startDate: date})}}
                   />
-                  <View style={{paddingTop:10}}>
+                  <View style={styles.label_view}>
                     <Text style={styles.label}>
                       结束时间：
                     </Text>
@@ -170,7 +248,7 @@ export default class CalendarPage extends Component {
                     paddingTop: 10,
                     width: 300}}
                     placeholder="点击此处或图标以选择时间"
-                    format="YYYY年MM月DD日 HH:MM"
+                    format="YYYY-MM-DD HH:MM"
                     date={this.state.endDate}
                     mode="datetime"
                     confirmBtnText="确认"
@@ -303,5 +381,9 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 20*(1.0/DeviceInfo.Dimensions.screen.fontScale),
     color: '#455a64',
+  },
+  label_view: {
+    paddingLeft: 5,
+    paddingTop: 10
   }
 })
