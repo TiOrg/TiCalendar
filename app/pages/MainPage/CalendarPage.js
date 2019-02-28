@@ -5,7 +5,6 @@ import {
   Text,
   View,
   ScrollView,
-  Alert
 } from 'react-native';
 import {
   Calendar,
@@ -14,10 +13,10 @@ import {
   LocaleConfig
 } from '../../utils/CalendarUtils/index';
 import SideBar from '../SideBar/index';
-import AVEngine from '../../service/AVService';
 
 import * as color from '../../assets/css/color';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+// import {Header} from 'react-native-elements';
 import {
   Container,
   Header,
@@ -50,26 +49,6 @@ export default class CalendarPage extends Component {
   openDrawer() {
     this._drawer._root.open()
   }
-
-  addEvent() {
-    // 在 JavaScript 中 AV.Cloud 提供了一系列方法来调用云函数
-    var paramsJson = {
-      'name': "4m3.tongji.edu.cn"
-    };
-    // res.json({"code":0,"message":"test"});
-
-    // AVEngine.Cloud.run('hello', {}, {
-    //   success: function(results) {
-    //     res.json({"code":0,"message":JSON.parse(results)});
-    //   },
-    //   error: function(error) {
-    //     res.json({message:error});
-
-    //   }
-    // });
-    Alert.alert("done");
-  }
-
   static navigationOptions = {
     title: 'Details',
   };
@@ -95,26 +74,18 @@ export default class CalendarPage extends Component {
                 transparent
                 onPress={() => this.openDrawer()}
               >
-                <Icon name="md-menu" style={{
-                  color: (Platform.OS === 'ios') ?
-                    color.FACEBOOK_BLUE : color.WHITE
-                }} />
+                <Icon name="md-menu" style={{ color: (Platform.OS === 'ios') ? 
+                color.FACEBOOK_BLUE : color.WHITE }} />
               </Button>
             </Left>
             <Body>
-              <Title style={{
-                fontSize: 20, color: (Platform.OS === 'ios') ?
-                  color.FACEBOOK_BLUE : color.WHITE
-              }}>TiCalendar</Title>
+              <Title style={{ fontSize: 20, color: (Platform.OS === 'ios') ? 
+                color.FACEBOOK_BLUE : color.WHITE }}>TiCalendar</Title>
             </Body>
             <Right>
-              <Button
-                transparent
-                onPress={() => this.addEvent()}>
-                <Icon name='md-add' style={{
-                  color: (Platform.OS === 'ios') ?
-                    color.FACEBOOK_BLUE : color.WHITE
-                }} />
+              <Button transparent>
+                <Icon name='md-add' style={{ color: (Platform.OS === 'ios') ? 
+                color.FACEBOOK_BLUE : color.WHITE }} />
               </Button>
             </Right>
           </Header>

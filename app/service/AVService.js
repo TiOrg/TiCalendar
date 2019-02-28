@@ -1,7 +1,5 @@
 // 存储服务
 var AV = require('leancloud-storage');
-var AVEngine = require('leanengine');
-
 var { Query, User } = AV;
 // 实时消息服务
 var { Realtime, TextMessage } = require('leancloud-realtime');
@@ -21,12 +19,5 @@ AV.init({
   appKey: APP_KEY
 });
 
-AVEngine.init({
-  appId: APP_ID,
-  appKey: APP_KEY
-});
-
 
 export default AV;
-
-
