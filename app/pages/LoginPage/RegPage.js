@@ -7,7 +7,7 @@ import {
 } from 'react-navigation';
 import { connect } from 'react-redux'; // 引入connect函数
 import * as registerAction from '../../action/RegAction';// 导入action方法
-import { THEME, THEME_BACKGROUND, THEME_TEXT } from '../../assets/css/color';
+import { THEME_BACKGROUND, THEME_TEXT, THEME_LABEL } from '../../assets/css/color';
 import { getStackOptions } from '../../common/NavigatorOpts';
 import CButton from '../../common/button';
 
@@ -31,14 +31,17 @@ const resetAction = StackActions.reset({
 class RegPage extends Component {
 
   static navigationOptions = getStackOptions('注册');
-  mobile = '';
+  username = '';
   password = '';
   password2 = '';
   email = '';
 
   constructor(props) {
     super(props);
-    this.state = { message: '' };
+    this.state = { 
+      user: null,
+      isSuccess: false
+    };
   }
 
   goBack() {
@@ -46,45 +49,38 @@ class RegPage extends Component {
   }
 
   // 状态更新
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     // 注册成功,切到登录
-    if (nextProps.status === '注册成功' && nextProps.isSuccess) {
+    if (nextProps.isSuccess) {
       this.props.navigation.dispatch(resetAction);
       return false;
     }
     return true;
   }
 
-  updateState(key, val) {
-    let state = this.state;
-    state[key] = val;
-    this.setState(state);
-  }
-
   render() {
-    let message = this.state && this.state.message ? this.state.message : '';
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.regPage}>
-          <TextInput style={styles.regInput} placeholder='用户名'
-            autoCapitalize={'none'} maxLength={30}
-            onChangeText={(text) => this.mobile = text} />
-
-          <TextInput style={styles.regInput} placeholder='密码' secureTextEntry={true}
-            autoCapitalize={'none'} maxLength={30}
-            onChangeText={(text) => this.password = text} />
-
-          <TextInput style={styles.regInput} placeholder='确认密码' secureTextEntry={true}
-            autoCapitalize={'none'} maxLength={30}
-            onChangeText={(text) => this.password2 = text} />
+          <Text style={styles.loginTitle}>TiCalendar</Text>
 
           <TextInput style={styles.regInput} placeholder='电子邮箱' keyboardType={'email-address'}
             autoCapitalize={'none'} maxLength={30}
             onChangeText={(text) => this.email = text} />
 
+          <TextInput style={styles.regInput} placeholder='用户名'
+            autoCapitalize={'none'} maxLength={30}
+            onChangeText={(text) => this.username = text} />
+
+          <TextInput style={styles.regInput} placeholder='密码' secureTextEntry={true}
+            autoCapitalize={'none'} maxLength={30}
+            onChangeText={(text) => this.password = text} />
+
+          <TextInput style={{marginBottom: 30}} placeholder='确认密码' secureTextEntry={true}
+            autoCapitalize={'none'} maxLength={30}
+            onChangeText={(text) => this.password2 = text} />
+
           <CButton style={styles.regInput} title={'提交'} onPress={() => this.doReg()} />
-          <Text style={styles.message}>{message}</Text>
-          <Text style={{ marginTop: 16, fontSize: 12 }}>状态: {this.props.status}</Text>
         </View>
 
       </SafeAreaView>
@@ -93,41 +89,45 @@ class RegPage extends Component {
 
   doReg() {
     const { reg } = this.props;
-    if (!this.mobile) {
-      this.updateState('message', '请输入手机号码');
+    
+    if (!this.email || this.email.length < 4) {
+      alert('请输入电子邮箱');
+      return;
+    }
+    if (!this.username) {
+      alert('请输入用户名');
       return;
     }
     if (!this.password) {
-      this.updateState('message', '请输入登录密码');
-      return;
-    }
-    if (!this.password2) {
-      this.updateState('message', '请输入确认密码');
-      return;
-    }
-    if (!this.email || this.email.length < 4) {
-      this.updateState('message', '请输入电子邮箱');
+      alert('请输入登录密码');
       return;
     }
     if (this.password.length < 4) {
-      this.updateState('message', '密码需大于等于5位');
+      alert('密码需大于等于5位');
       return;
     }
+    if (!this.password2) {
+      alert('请输入确认密码');
+      return;
+    }
+
     if (this.password !== this.password2) {
-      this.updateState('message', '前后两次密码不一致');
+      alert('前后两次密码不一致');
       return;
     }
-    reg(this.mobile, this.password, this.email);
+    reg(this.username, this.password, this.email);
   }
-
-
-
-
-
-
 }
 
 const styles = StyleSheet.create({
+  loginTitle: {
+    fontSize: 28,
+    fontWeight: '500',
+    color: THEME_LABEL,
+    textAlign: 'center',
+    marginTop: 32,
+    marginBottom: 32
+  },
   container: {
     flex: 1,
     backgroundColor: 'white'
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   message: {
     marginTop: 20,
     color: THEME_TEXT,
-    fontSize: 18
+    fontSize: 12
   }
 
 
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 
 export default connect(
   (state) => ({
-    status: state.reg.status,
+    user: state.reg.user,
     isSuccess: state.reg.isSuccess
   }),
   (dispatch) => ({

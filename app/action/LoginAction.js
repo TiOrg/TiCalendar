@@ -2,9 +2,8 @@
 'use strict';
 
 import * as types from '../constants/LoginTypes';
-import AV from '../service/AVService';
-// import storage from '../common/Storage';
-import React, { Component } from 'react';
+import firebase from '../../FireBase';
+
 
 
 export function quit() {
@@ -17,37 +16,46 @@ export function quit() {
         console.log('quiting');
     }
 }
+export function loginAnonymously() {
+    console.log('Login Anonymously doing');
 
+    return dispatch => {
+        firebase.auth().signInAnonymously().then(()=>{
+            dispatch(loginSuccess(firebase.auth().currentUser));
+            console.log('login success');
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorMessage = error.message;
+            alert(errorMessage);
+          });
+    }
+}
 // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
-export function login(username, password) {
+export function login(email, password) {
     console.log('登录方法');
-
-    // user.mobile = mobile;
-    // user.password = password;
-
+    
     return dispatch => {
         dispatch(isLogining());
         // 模拟用户登录
-        AV.User.logIn(username, password).then(function (loggedInUser) {
-            console.log(loggedInUser);
-            // current_user = AV.User.current();
-            dispatch(loginSuccess(true, loggedInUser));
-        }, function (error) {
-            dispatch(loginError(false));
-            console.log(error);
+        firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+            dispatch(loginSuccess(firebase.auth().currentUser));
+        }).catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode === 'auth/invalid-email') {
+                
+                alert('请输入合法的email地址');
+            } else if (errorCode === 'auth/wrong-password') {
+                alert('密码错误');
+            } else {
+                alert(errorMessage);
+            }
+            dispatch(loginError(errorMessage));
         });
-        // if (mobile === '' + user.mobile && password === user.pwd) {
-        //     dispatch(loginSuccess(true, user));
-        // } else {
-        //     dispatch(loginError(false));
-        // }
-        /*let result = fetch('https://localhost:8088/login')
-         .then((res) => {
-         dispatch(loginSuccess(true, user));
-         }).catch((e) => {
-         dispatch(loginError(false));
-         })*/
+        
     }
+
 }
 
 function isLogining() {
@@ -62,22 +70,22 @@ function isQuiting() {
     }
 }
 
-function loginSuccess(isSuccess, user) {
+function loginSuccess(user) {
     console.log('success');
-
     global.storage.save({
         key: 'user',
         data: user
     });
     return {
         type: types.LOGIN_IN_DONE,
-        user: user,
+        user: user
     }
 }
 
-function loginError(isSuccess) {
+function loginError(errorMsg) {
     console.log('error');
     return {
         type: types.LOGIN_IN_ERROR,
+        status: errorMsg
     }
 }

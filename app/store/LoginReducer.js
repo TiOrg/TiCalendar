@@ -28,7 +28,7 @@ export default function loginIn(state = initialState, action) {
         case types.LOGIN_IN_ERROR:
             return {
                 ...state,
-                status: '登录出错',
+                status: '登录出错 - ' + action.status,
                 isSuccess: true,
                 user: null,
             };

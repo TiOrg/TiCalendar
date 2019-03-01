@@ -49,25 +49,30 @@ class LoginPage extends Component {
     }
 
     checkHasLogin() {
+        console.log('loading');
         global.storage.load({
             key: 'user',
             //autoSync: false,
         }).then(ret => {
-            if (ret && ret.username) {
-                console.log('用户已经登录：', ret.username);
+            if (ret) {
+                if (ret.displayName) {
+                    console.log('用户已经登录：', ret.displayName);
+                }
+                else if (ret.isAnonymous) {
+                    console.log('unknown用户已经登录');
+                }
                 this.props.navigation.dispatch(resetAction);
             }
         }).catch(err => {
-            // console.warn(err.message);
-            console.warn(err.message);
+            console.log(err.message);
         });
         // this.props.navigation.dispatch(resetAction);
     }
 
     // 状态更新，判断是否登录并作出处理
-    shouldComponentUpdate(nextProps, nextState) {
+    shouldComponentUpdate(nextProps) {
         // 登录完成,切成功登录
-        if (nextProps.status === '登录成功' && nextProps.isSuccess) {
+        if (nextProps.isSuccess) {
             this.checkHasLogin();
             return false;
         }
@@ -84,7 +89,7 @@ class LoginPage extends Component {
         const { login } = this.props;
         console.log('login props');
         console.log(this.props);
-        if (!this.username) {
+        if (!this.email) {
             this.updateState('message', '请输入用户名');
             return;
         }
@@ -92,7 +97,13 @@ class LoginPage extends Component {
             this.updateState('message', '请输入密码');
             return;
         }
-        login(this.username, this.password);
+        login(this.email, this.password);
+    }
+
+    doLoginAnonymously() {
+        console.log('Login Anonymously');
+        const { loginAnonymously } = this.props;
+        loginAnonymously();
     }
 
     doReg() {
@@ -101,34 +112,29 @@ class LoginPage extends Component {
 
 
     render() {
-        const { login } = this.props;
         let message = this.state && this.state.message ? this.state.message : '';
         return (
             <SafeAreaView style={styles.container}>
-
                 <View style={styles.loginPage}>
-                    <View style={styles.loginSection}>
-                        <Text style={styles.loginTitle}>TiCalendar</Text>
-                        <TextInput style={styles.loginInput} placeholder='用户名/电子邮箱'
-                            defaultValue={this.username} autoCapitalize={'none'} maxLength={30}
-                            onChangeText={(text) => this.username = text} />
-                        <TextInput style={styles.loginInput} placeholder='密码' secureTextEntry={true}
-                            defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
-                            onChangeText={(text) => this.password = text} />
+                    <Text style={styles.loginTitle}>TiCalendar</Text>
+                    <TextInput style={styles.loginInput} placeholder='电子邮箱'
+                        defaultValue={this.email} autoCapitalize={'none'} maxLength={30}
+                        onChangeText={(text) => this.email = text} />
+                    <TextInput style={styles.loginInput} placeholder='密码' secureTextEntry={true}
+                        defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
+                        onChangeText={(text) => this.password = text} />
 
-                        <CButton title={'登录'} onPress={() => this.doLogin()} />
-                        <Text style={{ marginTop: 5, fontSize: 2 }}> </Text>
-                        <CButton color={'#80cbc4'} title={'注册'} onPress={() => this.doReg()} />
+                    <CButton title={'登录'} onPress={() => this.doLogin()} />
+                    <Text style={{ marginTop: 5, fontSize: 2 }}> </Text>
+                    <CButton color={'#80cbc4'} title={'注册'} onPress={() => this.doReg()} />
 
-                        <View style={styles.subButton}>
-                            <Text style={styles.subButtonText} onPress={() => this.doReg()}>游客浏览</Text>
-                            <Text style={styles.subButtonText} onPress={() => this.findAccount()}>找回密码</Text>
-                        </View>
-                        <Text style={styles.message}>{message}</Text>
-                        <Text style={{ marginTop: 16, fontSize: 12 }}>状态: {this.props.status}</Text>
+                    <View style={styles.subButton}>
+                        <Text style={styles.subButtonText} onPress={() => this.doLoginAnonymously()}>游客浏览</Text>
+                        <Text style={styles.subButtonText} onPress={() => this.findAccount()}>找回密码</Text>
                     </View>
+                    <Text style={styles.message}>{message}</Text>
+                    <Text style={{ marginTop: 16, fontSize: 12 }}>状态: {this.props.status}</Text>
                 </View>
-
             </SafeAreaView>
         );
     }
@@ -142,13 +148,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        padding: 20,
+        padding: 60,
+        paddingTop: 120,
         backgroundColor: color.THEME_BACKGROUND
-    },
-    loginSection: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        padding: 20
     },
     loginTitle: {
         fontSize: 28,
@@ -192,6 +194,7 @@ export default connect(
     }),
     (dispatch) => ({
         login: (u, p) => dispatch(LoginAction.login(u, p)),
+        loginAnonymously: () => dispatch(LoginAction.loginAnonymously()),
     })
 )(LoginPage)
 
