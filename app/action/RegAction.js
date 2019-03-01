@@ -1,33 +1,34 @@
 'use strict';
 
 import * as types from '../constants/RegTypes';
-import AV from '../service/AVService';
+import firebase from '../../FireBase';
 import React, { Component } from 'react';
 
-export function reg(mobile, password, email) {
-    console.log('注册方法');
-    // 新建 AVUser 对象实例
-    var user = new AV.User();
-    // 设置用户名
-    user.setUsername(mobile);
-    // 设置密码
-    user.setPassword(password);
-    // 设置邮箱
-    user.setEmail(email);
+export function reg(username, password, email) {
+    alert(email);
+    alert(password);
 
-    //console.warn(email);
-
-    user.signUp().then(function (loggedInUser) {
-    }, function (error) {
-    });
-    return dispatch => {
-        dispatch(isReging());
-        // 模拟用户注册
-        if (true) {
-            dispatch(regSuccess(true));
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode == 'auth/weak-password') {
+            alert('The password is too weak.');
         } else {
-            dispatch(regError(false));
+            alert(errorMessage);
         }
+        alert(error);
+        // dispatch(regError(false));
+        // ...
+      });
+      
+      alert('log success');
+
+    return dispatch => {
+        // dispatch(isReging());
+        // 模拟用户注册
+        dispatch(regSuccess(true));
+
         /*let result = fetch('https://localhost:8088/reg')
          .then((res) => {
          dispatch(regSuccess(true, user));
@@ -37,11 +38,11 @@ export function reg(mobile, password, email) {
     }
 }
 
-function isReging() {
-    return {
-        type: types.REG_DOING
-    }
-}
+// function isReging() {
+//     return {
+//         type: types.REG_DOING
+//     }
+// }
 
 function regSuccess(isSuccess, user) {
     console.log('success');

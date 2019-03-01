@@ -105,8 +105,12 @@ class RegPage extends Component {
       this.updateState('message', '请输入确认密码');
       return;
     }
-    if (!this.email) {
+    if (!this.email || this.email.length < 4) {
       this.updateState('message', '请输入电子邮箱');
+      return;
+    }
+    if (this.password.length < 4) {
+      this.updateState('message', '密码需大于等于5位');
       return;
     }
     if (this.password !== this.password2) {
