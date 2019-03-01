@@ -1,8 +1,8 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import MainPage from '../pages/MainPage/MainPage';
-import SettingPage from '../pages/MainPage/SettingPage';
-import LoginPage from '../pages/LoginPage/LoginPage';
-import RegPage from '../pages/LoginPage/RegPage';
+import MainPage from './pages/MainPage/MainPage';
+import SettingPage from './pages/MainPage/SettingPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegPage from './pages/LoginPage/RegPage';
 
 
 
