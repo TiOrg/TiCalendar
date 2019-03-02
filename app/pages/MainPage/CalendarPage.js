@@ -28,6 +28,8 @@ import { Input } from 'react-native-elements';
 
 import * as color from '../../assets/css/color';
 import * as EventAction from '../../action/AddEventAction';
+import * as RefreshAction from '../../action/RefreshAction';
+
 // import stringToDate from '../../common/StringToDate';
 // import * as GetUserInfo from '../../action/GetUserInfo';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -114,7 +116,12 @@ export default class CalendarPage extends Component {
   }
 
   getAllAgenda() {
-    alert('pull all agenda from database...');
+    //pull
+    // alert('pulling all agenda from database...');
+    // 从云端拉取所有events数据存储到storage
+    RefreshAction.pullEvents(); 
+    // 将所有数据显示在日历上
+    // TODO
   }
 
   clearInputState() {

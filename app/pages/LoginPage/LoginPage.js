@@ -59,7 +59,7 @@ class LoginPage extends Component {
             }
         }).catch(err => {
             // console.warn(err.message);
-            console.warn(err.message);
+            // console.warn(err.message);
         });
         // this.props.navigation.dispatch(resetAction);
     }

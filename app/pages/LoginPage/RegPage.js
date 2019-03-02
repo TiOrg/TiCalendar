@@ -35,6 +35,7 @@ class RegPage extends Component {
   password = '';
   password2 = '';
   email = '';
+  school = '';
 
   constructor(props) {
     super(props);
@@ -49,6 +50,8 @@ class RegPage extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     // 注册成功,切到登录
     if (nextProps.status === '注册成功' && nextProps.isSuccess) {
+      Alert.alert('提示','注册成功',[{text:"好"}]);
+
       this.props.navigation.dispatch(resetAction);
       return false;
     }
@@ -81,6 +84,10 @@ class RegPage extends Component {
           <TextInput style={styles.regInput} placeholder='电子邮箱' keyboardType={'email-address'}
             autoCapitalize={'none'} maxLength={30}
             onChangeText={(text) => this.email = text} />
+          
+          <TextInput style={styles.regInput} placeholder='学校' 
+            autoCapitalize={'none'} maxLength={30}
+            onChangeText={(text) => this.school = text} />
 
           <CButton style={styles.regInput} title={'提交'} onPress={() => this.doReg()} />
           <Text style={styles.message}>{message}</Text>
@@ -113,7 +120,7 @@ class RegPage extends Component {
       this.updateState('message', '前后两次密码不一致');
       return;
     }
-    reg(this.mobile, this.password, this.email);
+    reg(this.mobile, this.password, this.email,this.school);
   }
 
 
@@ -153,7 +160,7 @@ export default connect(
     isSuccess: state.reg.isSuccess
   }),
   (dispatch) => ({
-    reg: (u, p, e) => dispatch(registerAction.reg(u, p, e)),
+    reg: (u, p, e, s) => dispatch(registerAction.reg(u, p, e, s)),
   })
 )(RegPage)
 
