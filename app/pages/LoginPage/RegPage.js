@@ -5,6 +5,8 @@ import {
   NavigationActions,
   StackActions
 } from 'react-navigation';
+
+import { Input, Button } from 'react-native-elements'
 import { connect } from 'react-redux'; // 引入connect函数
 import * as registerAction from '../../action/RegAction';// 导入action方法
 import { THEME, THEME_BACKGROUND, THEME_TEXT } from '../../assets/css/color';
@@ -69,27 +71,28 @@ class RegPage extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.regPage}>
-          <TextInput style={styles.regInput} placeholder='用户名'
+          <Input style={styles.regInput} placeholder='用户名'
             autoCapitalize={'none'} maxLength={30}
             onChangeText={(text) => this.mobile = text} />
 
-          <TextInput style={styles.regInput} placeholder='密码' secureTextEntry={true}
+          <Input style={styles.regInput} placeholder='密码' secureTextEntry={true}
             autoCapitalize={'none'} maxLength={30}
             onChangeText={(text) => this.password = text} />
 
-          <TextInput style={styles.regInput} placeholder='确认密码' secureTextEntry={true}
+          <Input style={styles.regInput} placeholder='确认密码' secureTextEntry={true}
             autoCapitalize={'none'} maxLength={30}
             onChangeText={(text) => this.password2 = text} />
 
-          <TextInput style={styles.regInput} placeholder='电子邮箱' keyboardType={'email-address'}
+          <Input style={styles.regInput} placeholder='电子邮箱' keyboardType={'email-address'}
             autoCapitalize={'none'} maxLength={30}
             onChangeText={(text) => this.email = text} />
           
-          <TextInput style={styles.regInput} placeholder='学校' 
+          <Input style={styles.regInput} placeholder='学校' 
             autoCapitalize={'none'} maxLength={30}
             onChangeText={(text) => this.school = text} />
 
-          <CButton style={styles.regInput} title={'提交'} onPress={() => this.doReg()} />
+          <Button title="注册" onPress={() => this.doReg()} />
+          {/* <CButton style={styles.regInput} title={'提交'} onPress={() => this.doReg()} /> */}
           <Text style={styles.message}>{message}</Text>
           <Text style={{ marginTop: 16, fontSize: 12 }}>状态: {this.props.status}</Text>
         </View>

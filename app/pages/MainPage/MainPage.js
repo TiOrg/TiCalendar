@@ -180,7 +180,7 @@ export default class MainPage extends Component {
                       <View style={styles.label_view}>
                         <Text style={styles.label}>
                           开始时间：
-                      </Text>
+                        </Text>
                       </View>
                       <DatePicker style={{
                         paddingTop: 10,
@@ -197,7 +197,7 @@ export default class MainPage extends Component {
                       <View style={styles.label_view}>
                         <Text style={styles.label}>
                           结束时间：
-                      </Text>
+                        </Text>
                       </View>
                       <DatePicker style={{
                         paddingTop: 10,

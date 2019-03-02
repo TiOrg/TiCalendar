@@ -11,6 +11,8 @@ import CButton from '../../common/button';
 
 import storage from '../../common/Storage';
 
+import { Input, Button } from 'react-native-elements'
+
 import * as LoginAction from '../../action/LoginAction';
 import { getStackOptions } from '../../common/NavigatorOpts';
 
@@ -109,16 +111,16 @@ class LoginPage extends Component {
                 <View style={styles.loginPage}>
                     <View style={styles.loginSection}>
                         <Text style={styles.loginTitle}>TiCalendar</Text>
-                        <TextInput style={styles.loginInput} placeholder='用户名/电子邮箱'
+                        <Input style={styles.loginInput} placeholder='用户名/电子邮箱'
                             defaultValue={this.username} autoCapitalize={'none'} maxLength={30}
                             onChangeText={(text) => this.username = text} />
-                        <TextInput style={styles.loginInput} placeholder='密码' secureTextEntry={true}
+                        <Input style={styles.loginInput} placeholder='密码' secureTextEntry={true}
                             defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
                             onChangeText={(text) => this.password = text} />
 
-                        <CButton title={'登录'} onPress={() => this.doLogin()} />
+                        <Button title={'登录'} onPress={() => this.doLogin()} />
                         <Text style={{ marginTop: 5, fontSize: 2 }}> </Text>
-                        <CButton color={'#80cbc4'} title={'注册'} onPress={() => this.doReg()} />
+                        <Button color={'#80cbc4'} title={'注册'} onPress={() => this.doReg()} />
 
                         <View style={styles.subButton}>
                             <Text style={styles.subButtonText} onPress={() => this.doReg()}>游客浏览</Text>
@@ -169,7 +171,8 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     loginInput: {
-        marginBottom: 8,
+        // marginBottom: 8,
+        padding: 10
     },
     container: {
         flex: 1,
