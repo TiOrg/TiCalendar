@@ -5,12 +5,37 @@ import AV from '../service/AVService';
 // import storage from '../common/Storage';
 
 
-function getSchool()
-{
+export function pullEvents() {
+
+    var eventsQuery = new AV.Query('Events');
+
     global.storage.load({
         key: 'user',
     }).then(ret=>{
-            return ret.school;
+        eventsQuery.equalTo('school', ret.school);
+        // eventsQuery.greaterThanOrEqualTo('updatedAt', ret.lastLogin);
+
+        eventsQuery.find().then(results=> {
+            storage.getIdsForKey('event').then(ids => {
+
+                // var events = [];
+                let i = Math.max(ids) + 1;
+                results.forEach(result=>{
+                    console.log(result.attributes);
+                    // events.push(result.attributes);
+    
+                    global.storage.save({
+                        key: 'event',
+                        id : toString(i),
+                        data: result.attributes
+                    })
+                    i = i + 1;
+                });
+              });
+            
+            }, function (error) {
+                console.warn(error);
+            });
     }).catch(err=>{
         console.warn(err);
         switch (err.name) {
@@ -21,14 +46,8 @@ function getSchool()
                 // TODO
                 break;
             }
-    });
-}
-
-export function pullEvents() {
-    
-    // alert('hello');
-    getSchool();
-    return {name: 'zzy'};
+        return 'error';
+    }); 
 }
 
 // // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理

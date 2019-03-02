@@ -117,10 +117,11 @@ export default class CalendarPage extends Component {
 
   getAllAgenda() {
     //pull
-    // alert('pull all agenda from database...');
-    let msg = RefreshAction.pullEvents().name;
-    alert('hello' + msg)
-    //save to local
+    // alert('pulling all agenda from database...');
+    // 从云端拉取所有events数据存储到storage
+    RefreshAction.pullEvents(); 
+    // 将所有数据显示在日历上
+    // TODO
   }
 
   clearInputState() {
