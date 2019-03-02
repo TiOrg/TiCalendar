@@ -12,6 +12,18 @@ export function pullEvents() {
     global.storage.load({
         key: 'user',
     }).then(ret=>{
+
+        AV.Cloud.run('refreshEvents', {
+            school: ret.school
+        }).then(function(data) {
+            alert(data);
+            // 调用成功，得到成功的应答 data
+          }, function(error) {
+            // 处理调用失败
+          });
+          
+
+    
         eventsQuery.equalTo('school', ret.school);
         // eventsQuery.greaterThanOrEqualTo('updatedAt', ret.lastLogin);
 
