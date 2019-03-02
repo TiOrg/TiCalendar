@@ -13,6 +13,7 @@ import {
 
 import FacebookTabBar from './FacebookTabBar';
 import CalendarPage from './CalendarPage';
+import AgendaPage from './AgendaPage';
 import SettingPage from './SettingPage';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import {
@@ -43,7 +44,7 @@ export default class MainPage extends Component {
             <CalendarPage />
           </View>
 
-          <ScrollView tabLabel="ios-people" style={styles.tabView}>
+          {/* <ScrollView tabLabel="ios-people" style={styles.tabView}>
             <View style={styles.card}>
               <Text>Friends</Text>
             </View>
@@ -53,13 +54,11 @@ export default class MainPage extends Component {
             <View style={styles.card}>
               <Text>Messenger</Text>
             </View>
-          </ScrollView>
+          </ScrollView> */}
 
-          <ScrollView tabLabel="ios-notifications" style={styles.tabView}>
-            <View style={styles.card}>
-              <Text>Notifications</Text>
-            </View>
-          </ScrollView>
+          <View tabLabel="ios-notifications" style={styles.tabView}>
+            <AgendaPage />
+          </View>
 
           <ScrollView tabLabel="ios-list" style={styles.tabView}>
             <SettingPage {...this.props} />

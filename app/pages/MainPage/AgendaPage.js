@@ -263,19 +263,19 @@ export default class CalendarPage extends Component {
               </Button>
             </Right>
           </Header>
-          <CalendarList
-            // items={this.state.items}
-            // loadItemsForMonth={this.loadItems.bind(this)}
-            // selected={this.getToday.bind(this)}
-            // renderItem={this.renderItem.bind(this)}
-            // renderEmptyDate={this.renderEmptyDate.bind(this)}
-            // rowHasChanged={this.rowHasChanged.bind(this)}
-            // theme={{
-            //   // agendaDayTextColor: 'yellow',
-            //   // agendaDayNumColor: 'green',
-            //   // agendaTodayColor: 'red',
-            //   // agendaKnobColor: FACEBOOK_BLUE
-            // }}
+          <Agenda
+            items={this.state.items}
+            loadItemsForMonth={this.loadItems.bind(this)}
+            selected={this.getToday.bind(this)}
+            renderItem={this.renderItem.bind(this)}
+            renderEmptyDate={this.renderEmptyDate.bind(this)}
+            rowHasChanged={this.rowHasChanged.bind(this)}
+            theme={{
+              // agendaDayTextColor: 'yellow',
+              // agendaDayNumColor: 'green',
+              // agendaTodayColor: 'red',
+              // agendaKnobColor: FACEBOOK_BLUE
+            }}
           />
         </Drawer>
       </Container>
