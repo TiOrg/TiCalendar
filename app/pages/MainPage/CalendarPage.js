@@ -14,14 +14,14 @@ import {
   CalendarList,
   Agenda,
   LocaleConfig
-} from '../../utils/CalendarUtils/index';
+} from 'react-native-calendars';
 import SideBar from '../SideBar/index';
-import Dialog, { 
+import Dialog, {
   ScaleAnimation,
   DialogTitle,
   DialogFooter,
   DialogButton,
-  DialogContent 
+  DialogContent
 } from 'react-native-popup-dialog';
 
 import { Input } from 'react-native-elements';
@@ -67,10 +67,10 @@ LocaleConfig.locales['zh-CN'] = {
 LocaleConfig.defaultLocale = 'zh-CN';
 
 export default class CalendarPage extends Component {
-  
+
   constructor(props) {
     super(props);
-    
+
     this.state = {
       userid: 0x0,
       visible: false,
@@ -90,38 +90,42 @@ export default class CalendarPage extends Component {
 
   getUserId() {
     storage.load({
-        key: 'user'
+      key: 'user'
     })
-    .then(ret => {
+      .then(ret => {
         // console.log('user:', ret);
         // id = ret.objectId;
         // console.log('id:',ret.objectId);
-        this.setState({userid: ret.objectId});
-    })
-    .catch(err => {
+        this.setState({ userid: ret.objectId });
+      })
+      .catch(err => {
         // 如果没有找到数据且没有sync方法，
         // 或者有其他异常，则在catch中返回
         console.warn(err.message);
         switch (err.name) {
-        case 'NotFoundError':
+          case 'NotFoundError':
             // TODO;
             break;
-        case 'ExpiredError':
+          case 'ExpiredError':
             // TODO
             break;
         }
-    });
+      });
+  }
+
+  getAllAgenda() {
+    alert('pull all agenda from database...');
   }
 
   clearInputState() {
-    this.setState({startDate: ''});
-    this.setState({endDate: ''});
-    this.setState({eventNameText: ''});
+    this.setState({ startDate: '' });
+    this.setState({ endDate: '' });
+    this.setState({ eventNameText: '' });
   }
   static navigationOptions = {
     title: 'Details',
   };
-  
+
 
 
 
@@ -140,142 +144,161 @@ export default class CalendarPage extends Component {
                 transparent
                 onPress={() => this.openDrawer()}
               >
-                <Icon name="md-menu" style={{ color: (Platform.OS === 'ios') ? 
-                color.FACEBOOK_BLUE : color.WHITE }} />
+                <Icon name="md-menu" style={{
+                  color: (Platform.OS === 'ios') ?
+                    color.FACEBOOK_BLUE : color.WHITE
+                }} />
               </Button>
             </Left>
             <Body>
-              <Title style={{ fontSize: 20, color: (Platform.OS === 'ios') ? 
-                color.FACEBOOK_BLUE : color.WHITE }}>TiCalendar</Title>
+              <Title style={{
+                fontSize: 20, color: (Platform.OS === 'ios') ?
+                  color.FACEBOOK_BLUE : color.WHITE
+              }}>TiCalendar</Title>
             </Body>
             <Right>
-              <Button 
+              <Button
+                transparent
+                onPress={() => {
+                  this.getAllAgenda();
+                }} >
+                <Icon name='md-refresh' style={{
+                  color: (Platform.OS === 'ios') ?
+                    color.FACEBOOK_BLUE : color.WHITE
+                }} />
+              </Button>
+
+              <Button
                 transparent
                 onPress={() => {
                   this.setState({ visible: true });
-                }}  
-              >
-              <Dialog
-                // height={0.5}
-                visible={this.state.visible}
-                footer={
-                  <DialogFooter>
-                    <DialogButton 
-                      text="取消"
-                      onPress={() => {
-                        this.clearInputState();
-                        this.setState({visible: false});
-                      }}
-                    />
-                    <DialogButton 
-                      text="添加"
-                      onPress={() => {
-                        // 按下添加按钮后的功能
-                        // 首先验证输入是否完整
-                        // console.log('获取所有数据');
-                        // storage.getAllDataForKey('event').then(events => {
-                        //   console.log(events);
-                        // })
-                        // storage.clearMap();
-                        let eventName = this.state.eventNameText;
-                        let startTime = this.state.startDate;
-                        let endTime = this.state.endDate;
-                        if(eventName === '') {
-                          Alert.alert('错误提示','事件名称不能为空',[{text:"好"}]);
-                        }
-                        else if(startTime === '') {
-                          Alert.alert('错误提示','请选择事件开始时间',[{text:"好"}]);
-                        }
-                        else if(startTime === '') {
-                          Alert.alert('错误提示','请选择事件结束时间',[{text:"好"}]);
-                        }
-                        else {
-                          // 输入合法，准备保存事件信息
-                          // 生成本地唯一的uuid，保证事件数据不被覆盖
-                          let id = uuidv1();
-                          EventAction.add(id, eventName, startTime, endTime);
-                          // EventAction.load(id);
-                          this.clearInputState();
-                          this.setState({ visible: false });
-                        }
-                      }}
-                    />
-                  </DialogFooter>
-                }
-                dialogTitle={<DialogTitle title="手动添加事件"/>}
-                dialogAnimation={new ScaleAnimation({
-                  toValue: 0,
-                  useNativeDriver: true,
-                })}
-                onTouchOutside={() => {
-                  this.setState({ visible: false });
                 }}
               >
-                <DialogContent>
-                  <View style={styles.label_view}>
-                    <Text style={styles.label}>
-                      事件名称：
+                <Dialog
+                  // height={0.5}
+                  visible={this.state.visible}
+                  footer={
+                    <DialogFooter>
+                      <DialogButton
+                        text="取消"
+                        onPress={() => {
+                          this.clearInputState();
+                          this.setState({ visible: false });
+                        }}
+                      />
+                      <DialogButton
+                        text="添加"
+                        onPress={() => {
+                          // 按下添加按钮后的功能
+                          // 首先验证输入是否完整
+                          // console.log('获取所有数据');
+                          // storage.getAllDataForKey('event').then(events => {
+                          //   console.log(events);
+                          // })
+                          // storage.clearMap();
+                          let eventName = this.state.eventNameText;
+                          let startTime = this.state.startDate;
+                          let endTime = this.state.endDate;
+                          if (eventName === '') {
+                            Alert.alert('错误提示', '事件名称不能为空', [{ text: "好" }]);
+                          }
+                          else if (startTime === '') {
+                            Alert.alert('错误提示', '请选择事件开始时间', [{ text: "好" }]);
+                          }
+                          else if (startTime === '') {
+                            Alert.alert('错误提示', '请选择事件结束时间', [{ text: "好" }]);
+                          }
+                          else {
+                            // 输入合法，准备保存事件信息
+                            // 生成本地唯一的uuid，保证事件数据不被覆盖
+                            let id = uuidv1();
+                            EventAction.add(id, eventName, startTime, endTime);
+                            // EventAction.load(id);
+                            this.clearInputState();
+                            this.setState({ visible: false });
+                          }
+                        }}
+                      />
+                    </DialogFooter>
+                  }
+                  dialogTitle={<DialogTitle title="手动添加事件" />}
+                  dialogAnimation={new ScaleAnimation({
+                    toValue: 0,
+                    useNativeDriver: true,
+                  })}
+                  onTouchOutside={() => {
+                    this.setState({ visible: false });
+                  }}
+                >
+                  <DialogContent>
+                    <View style={styles.label_view}>
+                      <Text style={styles.label}>
+                        事件名称：
                     </Text>
-                  </View>
-                  <Input
-                    style={{paddingTop: 10}}
-                    labelStyle={{fontSize: 20*(1.0/DeviceInfo.Dimensions.screen.fontScale)}}
-                    placeholder=""
-                    onChangeText={(text) => this.setState({eventNameText: text})}
-                  />
-                  <View style={styles.label_view}>
-                    <Text style={styles.label}>
-                      开始时间：
+                    </View>
+                    <Input
+                      style={{ paddingTop: 10 }}
+                      labelStyle={{ fontSize: 20 }}
+                      placeholder=""
+                      onChangeText={(text) => this.setState({ eventNameText: text })}
+                    />
+                    <View style={styles.label_view}>
+                      <Text style={styles.label}>
+                        开始时间：
                     </Text>
-                  </View>
-                  <DatePicker style={{
-                    paddingTop: 10,
-                    width: 300}}
-                    placeholder="点击此处或图标以选择时间"
-                    format="YYYY-MM-DD HH:MM"
-                    date={this.state.startDate}
-                    mode="datetime"
-                    confirmBtnText="确认"
-                    cancelBtnText="取消"
-                    onDateChange={(date) => {this.setState({startDate: date})}}
-                  />
-                  <View style={styles.label_view}>
-                    <Text style={styles.label}>
-                      结束时间：
+                    </View>
+                    <DatePicker style={{
+                      paddingTop: 10,
+                      width: 300
+                    }}
+                      placeholder="点击此处或图标以选择时间"
+                      format="YYYY-MM-DD HH:MM"
+                      date={this.state.startDate}
+                      mode="datetime"
+                      confirmBtnText="确认"
+                      cancelBtnText="取消"
+                      onDateChange={(date) => { this.setState({ startDate: date }) }}
+                    />
+                    <View style={styles.label_view}>
+                      <Text style={styles.label}>
+                        结束时间：
                     </Text>
-                  </View>
-                  <DatePicker style={{
-                    paddingTop: 10,
-                    width: 300}}
-                    placeholder="点击此处或图标以选择时间"
-                    format="YYYY-MM-DD HH:MM"
-                    date={this.state.endDate}
-                    mode="datetime"
-                    confirmBtnText="确认"
-                    cancelBtnText="取消"
-                    onDateChange={(date) => {this.setState({endDate: date})}}
-                  />
-                  
-                </DialogContent>
-              </Dialog>
-                <Icon name='md-add' style={{ color: (Platform.OS === 'ios') ? 
-                color.FACEBOOK_BLUE : color.WHITE }} />
+                    </View>
+                    <DatePicker style={{
+                      paddingTop: 10,
+                      width: 300
+                    }}
+                      placeholder="点击此处或图标以选择时间"
+                      format="YYYY-MM-DD HH:MM"
+                      date={this.state.endDate}
+                      mode="datetime"
+                      confirmBtnText="确认"
+                      cancelBtnText="取消"
+                      onDateChange={(date) => { this.setState({ endDate: date }) }}
+                    />
+
+                  </DialogContent>
+                </Dialog>
+                <Icon name='md-add' style={{
+                  color: (Platform.OS === 'ios') ?
+                    color.FACEBOOK_BLUE : color.WHITE
+                }} />
               </Button>
             </Right>
           </Header>
-          <Agenda
-            items={this.state.items}
-            loadItemsForMonth={this.loadItems.bind(this)}
-            selected={this.getToday.bind(this)}
-            renderItem={this.renderItem.bind(this)}
-            renderEmptyDate={this.renderEmptyDate.bind(this)}
-            rowHasChanged={this.rowHasChanged.bind(this)}
-            theme={{
-              // agendaDayTextColor: 'yellow',
-              // agendaDayNumColor: 'green',
-              // agendaTodayColor: 'red',
-              // agendaKnobColor: FACEBOOK_BLUE
-            }}
+          <CalendarList
+          // items={this.state.items}
+          // loadItemsForMonth={this.loadItems.bind(this)}
+          // selected={this.getToday.bind(this)}
+          // renderItem={this.renderItem.bind(this)}
+          // renderEmptyDate={this.renderEmptyDate.bind(this)}
+          // rowHasChanged={this.rowHasChanged.bind(this)}
+          // theme={{
+          //   // agendaDayTextColor: 'yellow',
+          //   // agendaDayNumColor: 'green',
+          //   // agendaTodayColor: 'red',
+          //   // agendaKnobColor: FACEBOOK_BLUE
+          // }}
           />
         </Drawer>
       </Container>
@@ -379,7 +402,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: 20*(1.0/DeviceInfo.Dimensions.screen.fontScale),
+    fontSize: 20,
     color: '#455a64',
   },
   label_view: {
