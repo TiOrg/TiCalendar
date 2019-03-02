@@ -1,29 +1,27 @@
 
 import AV from '../service/AVService';
 
-export function add(userid, eventName, startTime, endTime) {
+export function add(id, eventName, startTime, endTime) {
     console.log('保存事件方法');
 
     var success = false;
-    var startDate = new Date(startTime);
-    var endDate = new Date(endTime);
+    var startDate = new Date(Date.parse(startTime.replace(/-/g,   "/")));
+    var endDate = new Date(Date.parse(endTime.replace(/-/g,   "/")));
     var Event = AV.Object.extend('Events');
     var event = new Event();
     event.set('EventName', eventName);
+    // console.log('startdate: ' + startDate);
     event.set('StartDate', startDate);
+    // console.log('enddate: ' + endDate);
     event.set('EndDate', endDate);
+    event.set('EventID', id);
     event.save().then(function(event) {
         console.log('New object created with objectId: ' + event.id);
-        success = true;
-    }, function(error) {
-        // 异常处理
-        console.error('Failed to create new object, with error message: ' + error.message);
-    });
-    if(success) {
         global.storage.save({
             key: 'event',
-            id: userid,
+            id: id,
             data: {
+                // id: id,
                 eventName: eventName,
                 startTime: startTime,
                 endTime: endTime
@@ -31,7 +29,11 @@ export function add(userid, eventName, startTime, endTime) {
     
             expires: null
         });
-    }
+        console.log('saved locally:' + eventName);
+    }, function(error) {
+        // 异常处理
+        console.error('Failed to create new object, with error message: ' + error.message);
+    });
 }
 
 export function load(userid) {
