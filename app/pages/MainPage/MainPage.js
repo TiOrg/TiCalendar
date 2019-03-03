@@ -68,7 +68,7 @@ export default class MainPage extends Component {
   render() {
     const { navigate, dispatch } = this.props.navigation;
     return (
-      <SafeAreaView style={styles.container}>
+      // <SafeAreaView style={styles.container}>
         <Drawer
           ref={(ref) => { this._drawer = ref; }}
           content={<SideBar navigator={this.navigator} />}
@@ -252,7 +252,7 @@ export default class MainPage extends Component {
 
           </ScrollableTabView>
         </Drawer>
-      </SafeAreaView>
+      // </SafeAreaView>
     );
   }
 

@@ -118,7 +118,7 @@ class LoginPage extends Component {
                             defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
                             onChangeText={(text) => this.password = text} />
 
-                        <Button title={'登录'} onPress={() => this.doLogin()} />
+                        <Button style={{ paddingTop: 10 }}title={'登录'} onPress={() => this.doLogin()} />
                         <Text style={{ marginTop: 5, fontSize: 2 }}> </Text>
                         <Button color={'#80cbc4'} title={'注册'} onPress={() => this.doReg()} />
 
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     },
     loginInput: {
         // marginBottom: 8,
-        padding: 10
+        paddingBottom: 10
     },
     container: {
         flex: 1,
