@@ -15,24 +15,24 @@ import {
   Agenda,
   LocaleConfig
 } from 'react-native-calendars';
-import SideBar from '../SideBar/index';
-import Dialog, {
-  ScaleAnimation,
-  DialogTitle,
-  DialogFooter,
-  DialogButton,
-  DialogContent
-} from 'react-native-popup-dialog';
+// import SideBar from '../SideBar/index';
+// import Dialog, {
+//   ScaleAnimation,
+//   DialogTitle,
+//   DialogFooter,
+//   DialogButton,
+//   DialogContent
+// } from 'react-native-popup-dialog';
 
-import { Input } from 'react-native-elements';
+// import { Input } from 'react-native-elements';
 
-import * as color from '../../assets/css/color';
-import * as EventAction from '../../action/AddEventAction';
-import * as RefreshAction from '../../action/RefreshAction';
+// import * as color from '../../assets/css/color';
+// import * as EventAction from '../../action/AddEventAction';
+// import * as RefreshAction from '../../action/RefreshAction';
 
 // import stringToDate from '../../common/StringToDate';
 // import * as GetUserInfo from '../../action/GetUserInfo';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
+// import ScrollableTabView from 'react-native-scrollable-tab-view';
 // import {Header} from 'react-native-elements';
 import {
   Container,
@@ -46,16 +46,16 @@ import {
   Drawer
 } from 'native-base';
 
-import DatePicker from 'react-native-datepicker';
+
 
 
 
 // import DatePicker from '../CalendarPage/DatePickerPage';
 
-const uuidv1 = require('uuid/v1');
 
 
-Drawer.defaultProps.styles.mainOverlay.elevation = 0;
+
+// Drawer.defaultProps.styles.mainOverlay.elevation = 0;
 
 
 LocaleConfig.locales['zh-CN'] = {
@@ -73,22 +73,22 @@ export default class CalendarPage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      userid: 0x0,
-      visible: false,
-      items: {},      // 当天的事件
-      startDate: '',   // 
-      endDate: '',
-      eventNameText: '',
-    };
-    this.getUserId();
+    // this.state = {
+    //   // userid: 0x0,
+    //   // visible: false,
+    //   // items: {},      // 当天的事件
+    //   // startDate: '',   // 
+    //   // endDate: '',
+    //   // eventNameText: '',
+    // };
+  //   this.getUserId();
   }
-  closeDrawer() {
-    this._drawer._root.close()
-  }
-  openDrawer() {
-    this._drawer._root.open()
-  }
+  // closeDrawer() {
+  //   this._drawer._root.close()
+  // }
+  // openDrawer() {
+  //   this._drawer._root.open()
+  // }
 
   getUserId() {
     storage.load({
@@ -115,20 +115,8 @@ export default class CalendarPage extends Component {
       });
   }
 
-  getAllAgenda() {
-    //pull
-    // alert('pulling all agenda from database...');
-    // 从云端拉取所有events数据存储到storage
-    RefreshAction.pullEvents(); 
-    // 将所有数据显示在日历上
-    // TODO
-  }
+  
 
-  clearInputState() {
-    this.setState({ startDate: '' });
-    this.setState({ endDate: '' });
-    this.setState({ eventNameText: '' });
-  }
   static navigationOptions = {
     title: 'Details',
   };

@@ -18,6 +18,26 @@ export function quit() {
     }
 }
 
+export function updateLoginTime(userid) {
+    // 更新当前用户的登录时间
+    var loginDate = new Date();
+    // console.log('当前用户登录时间更新成功，登录时间为', loginDate);
+    var query = new AV.Query('_User');
+    // console.log('当前用户登录时间更新成功，登录时间为', loginDate);
+
+    query.get(userid).then(function (user) {
+        user.set('lastLogin', loginDate);
+        return user.save();
+        console.log('当前用户登录时间更新成功，登录时间为', loginDate);
+    },function(error) {
+        // 异常处理
+        console.log('当前用户登录时间更新失败！');
+    }) 
+    // var loginTime = loginDate.toLocaleTimeString();
+    // console.log('current time: ' + loginTime);
+    // console.log('current date: ' + loginDate);
+}
+
 // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
 export function login(username, password) {
     console.log('登录方法');
@@ -30,6 +50,7 @@ export function login(username, password) {
         // 模拟用户登录
         AV.User.logIn(username, password).then(function (loggedInUser) {
             console.log(loggedInUser);
+            updateLoginTime();
             // current_user = AV.User.current();
             dispatch(loginSuccess(true, loggedInUser));
         }, function (error) {
@@ -63,7 +84,7 @@ function isQuiting() {
 }
 
 function loginSuccess(isSuccess, user) {
-    console.log('success');
+    console.log('success user: ' + user);
 
     global.storage.save({
         key: 'user',

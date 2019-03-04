@@ -4,12 +4,10 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView
+  ScrollView,
+  Alert,
 } from 'react-native';
 
-import {
-  SafeAreaView
-} from 'react-navigation';
 
 import { Input } from 'react-native-elements';
 
@@ -35,6 +33,8 @@ import SideBar from '../SideBar/index';
 
 import DatePicker from 'react-native-datepicker';
 
+import * as RefreshAction from '../../action/RefreshAction'
+
 import Dialog, { 
   ScaleAnimation,
   DialogTitle,
@@ -42,6 +42,11 @@ import Dialog, {
   DialogButton,
   DialogContent 
 } from 'react-native-popup-dialog';
+
+const uuidv1 = require('uuid/v1');
+
+// import DatePicker from 'react-native-datepicker';
+import * as EventAction from '../../action/AddEventAction';
 
 Drawer.defaultProps.styles.mainOverlay.elevation = 0;
 
@@ -52,8 +57,28 @@ export default class MainPage extends Component {
     super(props);
     
     this.state = {
+      userid: 0x0,
       visible: false,
+      items: {},      // 当天的事件
+      startDate: '',   // 
+      endDate: '',
+      eventNameText: '',
     };
+  }
+  clearInputState() {
+    this.setState({ startDate: '' });
+    this.setState({ endDate: '' });
+    this.setState({ eventNameText: '' });
+  }
+  
+
+  getAllAgenda() {
+    //pull
+    // alert('pulling all agenda from database...');
+    // 从云端拉取所有events数据存储到storage
+    RefreshAction.pullEvents(); 
+    // 将所有数据显示在日历上
+    // TODO
   }
 
   closeDrawer() {
@@ -285,6 +310,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
+
+  label: {
+    fontSize: 20,
+    color: '#455a64',
+  },
+  label_view: {
+    paddingLeft: 5,
+    paddingTop: 10
+  }
 });
 
 // export default Main;

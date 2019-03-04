@@ -43,12 +43,16 @@ class LoginPage extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { message: '' };
+        this.state = { 
+            message: ''
+        };
     }
 
     componentWillMount() {
         this.checkHasLogin();
     }
+
+    
 
     checkHasLogin() {
         global.storage.load({
@@ -56,7 +60,9 @@ class LoginPage extends Component {
             //autoSync: false,
         }).then(ret => {
             if (ret && ret.username) {
-                console.log('用户已经登录：', ret.username);
+                console.log('用户已经登录：', ret);
+                console.log('userid:', ret.objectId);
+                LoginAction.updateLoginTime(ret.objectId);
                 this.props.navigation.dispatch(resetAction);
             }
         }).catch(err => {
