@@ -27,7 +27,7 @@ export function updateLoginTime(userid) {
 
     query.get(userid).then(function (user) {
         user.set('lastLogin', loginDate);
-        return user.save();
+        user.save();
         console.log('当前用户登录时间更新成功，登录时间为', loginDate);
     },function(error) {
         // 异常处理
@@ -48,9 +48,11 @@ export function login(username, password) {
     return dispatch => {
         dispatch(isLogining());
         // 模拟用户登录
+        // console.log('login function;');
         AV.User.logIn(username, password).then(function (loggedInUser) {
+            // console.log('hello AV');
             console.log(loggedInUser);
-            updateLoginTime();
+            // updateLoginTime();
             // current_user = AV.User.current();
             dispatch(loginSuccess(true, loggedInUser));
         }, function (error) {

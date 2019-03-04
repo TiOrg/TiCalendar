@@ -59,6 +59,7 @@ class LoginPage extends Component {
             key: 'user',
             //autoSync: false,
         }).then(ret => {
+            console.log('hello titi');
             if (ret && ret.username) {
                 console.log('用户已经登录：', ret);
                 console.log('userid:', ret.objectId);
