@@ -29,6 +29,12 @@ export function updateLoginTime(userid) {
         user.set('lastLogin', loginDate);
         user.save();
         console.log('当前用户登录时间更新成功，登录时间为', loginDate);
+        console.log('date: ',loginDate);
+        global.storage.save({
+            key: 'user',
+            data: user
+        });
+        // return loginDate;
     },function(error) {
         // 异常处理
         console.log('当前用户登录时间更新失败！');
