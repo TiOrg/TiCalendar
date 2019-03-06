@@ -15,7 +15,7 @@ if sys.stdout.encoding == None:
     sys.setdefaultencoding("UTF-8")
 
 proxies = {}
-
+path = './res/'
 class Query4m3(object):
     _RE_SAMLResponse = re.compile(r'name="SAMLResponse"\s*value="([\w\d\+\/=]*)"')
     _RE_SAMLURL = re.compile(r';url=([^"]*)"')
@@ -94,7 +94,7 @@ class Query4m3(object):
             text = soup.find_all('span') + soup.find_all('font')
             text = text[:len(text)/2]
 
-            out = open(result[0] + '.txt', "w")
+            out = open(path + result[0] + '.txt', "w")
 
             for s in text:
                 out.write(s.get_text().encode('utf-8'))

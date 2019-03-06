@@ -24,7 +24,7 @@ def cut_sent(para):
 
 # 时间表达式识别的主要工作类
 class TimeNormalizer:
-    def __init__(self, path='reg.pkl', isPreferFuture=True):
+    def __init__(self, path='/Users/simon/Desktop/TiCalendar/python/timex/nlp/reg.pkl', isPreferFuture=True):
         self.isPreferFuture = isPreferFuture
         with open(path, 'rb') as f:
             self.pattern = pickle.load(f)
@@ -123,8 +123,17 @@ class TimeNormalizer:
             # 时间上下文： 前一个识别出来的时间会是下一个时间的上下文，用于处理：周六3点到5点这样的多个时间的识别，第二个5点应识别到是周六的。
             contextTp = TimePoint()
             for i in range(0, rpointer):
-                res.append(TimeUnit(temp[i], self, contextTp, sent))
-                contextTp = res[i].tp
+                try:
+                    res.append(TimeUnit(temp[i], self, contextTp, sent))
+                except:
+                    pass
+                    # print(sent)
+                else:
+                    try:
+                        contextTp = res[i].tp
+                    except:
+                        print('i = ' + str(i))
+                        print(sent)
         res = self.__filterTimeUnit(res)
         return res
 

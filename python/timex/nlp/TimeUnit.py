@@ -24,6 +24,7 @@ class TimeUnit:
         self.time = arrow.now()
         self.time_normalization()
         self.sent = sent
+        print(self.time.format("YYYY-MM-DD HH:mm:ss --- ") + self.exp_time)
 
     def time_normalization(self):
         self.norm_setyear()
@@ -114,6 +115,38 @@ class TimeUnit:
             # 处理倾向于未来时间的情况
             self.preferFuture(1)
 
+        rule = u"春"
+        pattern = re.compile(rule)
+        match = pattern.search(self.exp_time)
+        if match is not None:
+            self.tp.tunit[1] = 1
+            # 处理倾向于未来时间的情况
+            self.preferFuture(1)
+
+        rule = u"夏"
+        pattern = re.compile(rule)
+        match = pattern.search(self.exp_time)
+        if match is not None:
+            self.tp.tunit[1] = 6
+            # 处理倾向于未来时间的情况
+            self.preferFuture(1)
+
+        rule = u"秋"
+        pattern = re.compile(rule)
+        match = pattern.search(self.exp_time)
+        if match is not None:
+            self.tp.tunit[1] = 9
+            # 处理倾向于未来时间的情况
+            self.preferFuture(1)
+
+        rule = u"冬"
+        pattern = re.compile(rule)
+        match = pattern.search(self.exp_time)
+        if match is not None:
+            self.tp.tunit[1] = 12
+            # 处理倾向于未来时间的情况
+            self.preferFuture(1)
+            
     def norm_setmonth_fuzzyday(self):
         """
         月-日 兼容模糊写法：该方法识别时间表达式单元的月、日字段
@@ -204,7 +237,9 @@ class TimeUnit:
         日-规范化方法：该方法识别时间表达式单元的日字段
         :return:
         """
-        rule = u"((?<!\\d))([0-3][0-9]|[1-9])(?=(日|号))"
+        # rule = u"((?<!\\d))([0-3][0-9]|[1-9])(?=(日|号))"
+        rule = u"((?<!\\d))([0-3][0-9]|[1-9])(?=(日))"
+
         pattern = re.compile(rule)
         match = pattern.search(self.exp_time)
         if match is not None:
