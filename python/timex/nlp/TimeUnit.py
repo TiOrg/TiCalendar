@@ -10,7 +10,7 @@ import copy
 from TimePoint import TimePoint
 from RangeTimeEnum import RangeTimeEnum
 
-
+initTime = arrow.get('1970-01-01 00:00:00')
 # 时间语句分析
 class TimeUnit:
     def __init__(self, exp_time, normalizer, contextTp, sent):
@@ -21,11 +21,22 @@ class TimeUnit:
         self.tp_origin = contextTp
         self.isFirstTimeSolveContext = True
         self.isAllDayTime = True
-        self.time = arrow.now()
-        self.time_normalization()
+        self.time = initTime
+
+        if self.checkLegal() == True:
+            try:
+                self.time_normalization()
+            except:
+                print('ERROR:' + self.exp_time)
+
         self.sent = sent
         print(self.time.format("YYYY-MM-DD HH:mm:ss --- ") + self.exp_time)
 
+    def checkLegal(self):
+        if len(self.exp_time) > 10 and self.exp_time[:10].isdigit(): # 20101231 
+            return False
+        return True
+        
     def time_normalization(self):
         self.norm_setyear()
         self.norm_setmonth()
@@ -57,14 +68,14 @@ class TimeUnit:
     def genTime(self, tunit):        
         # time = arrow.utcnow()
         if all(t <=0 for t in tunit[1:]): #不接受只有年份的信息
-            return arrow.get('1970-01-01 00:00:00')
+            return initTime
         
-        time = arrow.get('1970-01-01 00:00:00')
+        time = initTime
 
         if tunit[0] > 0: 
             time = time.replace(year=tunit[0])  
         else: #无年份默认本年
-            time = time.replace(year=arrow.utcnow().year)
+            time = time.replace(year=arrow.now().year)
 
         if tunit[1] > 0:
             time = time.replace(month=tunit[1])

@@ -101,7 +101,8 @@ class TimeNormalizer:
         """
         res = []
                 
-        sents = cut_sent(self.target).split('\n')
+        
+        sents = cut_sent(re.sub('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+','[url]',self.target)).split('\n')
         for sent in sents:
             startline = -1
             endline = -1
@@ -123,17 +124,8 @@ class TimeNormalizer:
             # 时间上下文： 前一个识别出来的时间会是下一个时间的上下文，用于处理：周六3点到5点这样的多个时间的识别，第二个5点应识别到是周六的。
             contextTp = TimePoint()
             for i in range(0, rpointer):
-                try:
-                    res.append(TimeUnit(temp[i], self, contextTp, sent))
-                except:
-                    pass
-                    # print(sent)
-                else:
-                    try:
-                        contextTp = res[i].tp
-                    except:
-                        print('i = ' + str(i))
-                        print(sent)
+                res.append(TimeUnit(temp[i], self, contextTp, sent))
+                contextTp = res[i].tp
         res = self.__filterTimeUnit(res)
         return res
 
