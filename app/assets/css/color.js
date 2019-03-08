@@ -3,6 +3,7 @@ export const THEME_BACKGROUND = '#f5f5f5';
 export const THEME_LABEL = '#56688a';
 export const THEME_TEXT = '#8c8c8c';
 export const FACEBOOK_BLUE = 'rgb(59,89,152)';
+export const LIGHT_BLUE = '#2979ff';
 export const BUTTON_RED = '#d50000';
 export const REG_GREEN = '#2e7d32';
 export const WHITE = '#ffffff';

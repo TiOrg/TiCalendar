@@ -135,45 +135,45 @@ class LoginPage extends Component {
                             
                             placeholder='请输入您的用户名或电子邮箱'
                             defaultValue={this.username} autoCapitalize={'none'} maxLength={30}
-                            onChangeText={(text) => this.username = text} 
-                            selectionColor={color.FACEBOOK_BLUE}/>
+                            onChangeText={(text) => this.username = text} />
                         <Divider />
                         <TextInput 
                             label='密码'
                             mode='outlined'
                             placeholder='请输入您的密码' secureTextEntry={true}
                             defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
-                            onChangeText={(text) => this.password = text}
-                            selectionColor={color.FACEBOOK_BLUE} />
+                            onChangeText={(text) => this.password = text} />
                         
-                        {/* <Button 
+                        <Button 
                             // title={'登录'} 
                             onPress={() => this.doLogin()}
-                            mode='contained'>
+                            mode='contained'
+                            style={{marginTop:20}}
+                            >
                             登录
                         </Button>
                         
                         <Button 
                             onPress={() => this.doReg()} 
                             mode='contained'
-                            style={{paddingTop: 20}}
+                            style={{marginTop: 10}}
                         >
                             注册
-                        </Button> */}
-                        <elements.Button
+                        </Button>
+                        {/* <elements.Button
                             onPress={() => this.doLogin()}
                             title='登录'
                             style={{paddingTop: 20}}
-                        > */}
+                        >  */}
 
-                        </elements.Button>
+                        {/* </elements.Button>
                         <elements.Button
                             onPress={() => this.doReg()}
                             title='注册'
                             style={{paddingTop: 10}}
                         > */}
 
-                        </elements.Button>
+                        {/* </elements.Button> */}
 
                         <View style={styles.subButton}>
                             <Text style={styles.subButtonText} onPress={() => this.doReg()}>游客浏览</Text>
