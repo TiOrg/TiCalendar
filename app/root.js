@@ -4,6 +4,7 @@ import App from './containers/app';
 // import { Provider } from 'react-redux';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { Component } from 'react';
 const store = configureStore();
 store.subscribe(() => {
@@ -11,12 +12,25 @@ store.subscribe(() => {
     console.log(store.getState());
 });
 
+const theme = {
+    ...DefaultTheme,
+    roundness: 2,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#3498db',
+      accent: '#f1c40f',
+    }
+  };
+
 export default class Root extends Component {
     render() {
         return (
             // 实现app和store的关联，等于整个系统的组件都被包含住了
             <Provider store={store}>
-                <App />
+                <PaperProvider>
+                    <App />
+                </PaperProvider>
+                
             </Provider>
         )
     }

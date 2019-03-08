@@ -3,18 +3,28 @@ import {
     Platform,
     StyleSheet,
     Text,
-    View,
-    TextInput
+    View
 } from 'react-native';
 
 import CButton from '../../common/button';
 
 import storage from '../../common/Storage';
 
-import { Input, Button } from 'react-native-elements'
+// import { Input, Button } from 'react-native-elements'
+
+import * as elements from 'react-native-elements';
+
+import { 
+    TextInput,
+    Title,
+    Button,
+    Divider
+ } from 'react-native-paper'
 
 import * as LoginAction from '../../action/LoginAction';
 import { getStackOptions } from '../../common/NavigatorOpts';
+
+// import * as color from '../../assets/css/color'
 
 
 
@@ -114,21 +124,56 @@ class LoginPage extends Component {
         const { login } = this.props;
         let message = this.state && this.state.message ? this.state.message : '';
         return (
-            <SafeAreaView style={styles.container}>
+            // <SafeAreaView style={styles.container}>
 
-                <View style={styles.loginPage}>
+                // <View style={styles.loginPage}>
                     <View style={styles.loginSection}>
-                        <Text style={styles.loginTitle}>TiCalendar</Text>
-                        <Input style={styles.loginInput} placeholder='用户名/电子邮箱'
+                        <Title style={styles.loginTitle}>TiCalendar</Title>
+                        <TextInput 
+                            label='用户名'
+                            mode='outlined'
+                            
+                            placeholder='请输入您的用户名或电子邮箱'
                             defaultValue={this.username} autoCapitalize={'none'} maxLength={30}
-                            onChangeText={(text) => this.username = text} />
-                        <Input style={styles.loginInput} placeholder='密码' secureTextEntry={true}
+                            onChangeText={(text) => this.username = text} 
+                            selectionColor={color.FACEBOOK_BLUE}/>
+                        <Divider />
+                        <TextInput 
+                            label='密码'
+                            mode='outlined'
+                            placeholder='请输入您的密码' secureTextEntry={true}
                             defaultValue={this.password} autoCapitalize={'none'} maxLength={20}
-                            onChangeText={(text) => this.password = text} />
+                            onChangeText={(text) => this.password = text}
+                            selectionColor={color.FACEBOOK_BLUE} />
+                        
+                        {/* <Button 
+                            // title={'登录'} 
+                            onPress={() => this.doLogin()}
+                            mode='contained'>
+                            登录
+                        </Button>
+                        
+                        <Button 
+                            onPress={() => this.doReg()} 
+                            mode='contained'
+                            style={{paddingTop: 20}}
+                        >
+                            注册
+                        </Button> */}
+                        <elements.Button
+                            onPress={() => this.doLogin()}
+                            title='登录'
+                            style={{paddingTop: 20}}
+                        > */}
 
-                        <Button style={{ paddingTop: 10 }}title={'登录'} onPress={() => this.doLogin()} />
-                        <Text style={{ marginTop: 5, fontSize: 2 }}> </Text>
-                        <Button color={'#80cbc4'} title={'注册'} onPress={() => this.doReg()} />
+                        </elements.Button>
+                        <elements.Button
+                            onPress={() => this.doReg()}
+                            title='注册'
+                            style={{paddingTop: 10}}
+                        > */}
+
+                        </elements.Button>
 
                         <View style={styles.subButton}>
                             <Text style={styles.subButtonText} onPress={() => this.doReg()}>游客浏览</Text>
@@ -137,9 +182,9 @@ class LoginPage extends Component {
                         <Text style={styles.message}>{message}</Text>
                         <Text style={{ marginTop: 16, fontSize: 12 }}>状态: {this.props.status}</Text>
                     </View>
-                </View>
+               // </View>
 
-            </SafeAreaView>
+            // </SafeAreaView>
         );
     }
 
@@ -180,7 +225,7 @@ const styles = StyleSheet.create({
     },
     loginInput: {
         // marginBottom: 8,
-        paddingBottom: 10
+        paddingBottom: 20
     },
     container: {
         flex: 1,
