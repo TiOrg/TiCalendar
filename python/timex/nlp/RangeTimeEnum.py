@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2017/11/20 16:27
-# @Author  : zhm
-# @File    : RangeTimeEnum.py
-# @Software: PyCharm
 
 
 
@@ -17,7 +13,3 @@ class RangeTimeEnum():
     night = 18  # 晚上、傍晚
     lateNight = 20  # 晚、晚间
     midNight = 23  # 深夜
-
-
-if __name__ == "__main__":
-    print RangeTimeEnum.afternoon
