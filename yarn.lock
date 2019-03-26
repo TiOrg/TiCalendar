@@ -4613,9 +4613,9 @@ react-native-navigation-actions@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/react-native-navigation-actions/-/react-native-navigation-actions-1.0.4.tgz#774f06980f7e1ecfa0af89f05a2cf6ccf94c88eb"
 
-react-native-paper@^2.12.0:
-  version "2.12.0"
-  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-2.12.0.tgz#0688ff6530677bbc33442345f57b0278b12231bd"
+react-native-paper@^2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-2.14.0.tgz#9364f54a0fa866fa56430f2c1d39b9115b893b34"
   dependencies:
     "@callstack/react-theme-provider" "^1.0.7"
     color "^2.0.1"
@@ -4669,6 +4669,10 @@ react-native-safe-area-view@^0.13.0:
     create-react-class "^15.6.2"
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.3"
+
+react-native-splash-screen@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
 
 react-native-status-bar-height@^2.2.0:
   version "2.2.0"

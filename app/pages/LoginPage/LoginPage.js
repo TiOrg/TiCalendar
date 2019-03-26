@@ -23,7 +23,7 @@ import {
 
 import * as LoginAction from '../../action/LoginAction';
 import { getStackOptions } from '../../common/NavigatorOpts';
-
+import SplashScreen from 'react-native-splash-screen'
 // import * as color from '../../assets/css/color'
 
 
@@ -60,6 +60,7 @@ class LoginPage extends Component {
 
     componentWillMount() {
         this.checkHasLogin();
+        SplashScreen.hide();
     }
 
     

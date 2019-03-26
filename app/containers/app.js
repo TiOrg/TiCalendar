@@ -6,6 +6,7 @@ import RegPage from '../pages/LoginPage/RegPage';
 
 
 
+
 const App = createStackNavigator({
     Login: { screen: LoginPage }, // 登录页
     Reg: { screen: RegPage }, // 注册页
@@ -15,6 +16,9 @@ const App = createStackNavigator({
         navigationOptions: ({ navigation }) => ({
             header: null // 去头部
         })
+    },
+    Setting: {
+        screen: SettingPage
     }
 },
     {

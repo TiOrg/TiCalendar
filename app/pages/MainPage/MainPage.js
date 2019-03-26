@@ -6,6 +6,7 @@ import {
   View,
   ScrollView,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 
 
@@ -42,6 +43,8 @@ import Dialog, {
   DialogButton,
   DialogContent 
 } from 'react-native-popup-dialog';
+import SplashScreen from 'react-native-splash-screen'
+
 
 const uuidv1 = require('uuid/v1');
 
@@ -52,6 +55,10 @@ Drawer.defaultProps.styles.mainOverlay.elevation = 0;
 
 
 export default class MainPage extends Component {
+
+  componentDidMount() {
+    // SplashScreen.hide();
+  }
 
   constructor(props) {
     super(props);
@@ -96,7 +103,7 @@ export default class MainPage extends Component {
       // <SafeAreaView style={styles.container}>
         <Drawer
           ref={(ref) => { this._drawer = ref; }}
-          content={<SideBar navigator={this.navigator} />}
+          content={<SideBar navigator={navigate} />}
           onClose={() => this.closeDrawer()} >
           
             

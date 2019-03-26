@@ -151,7 +151,7 @@ export default class CalendarPage extends Component {
   }
 
 
-  loadItems(day) {
+  async loadItems(day) {
     setTimeout(() => {
       for (let i = -15; i < 85; i++) {
         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
@@ -168,6 +168,7 @@ export default class CalendarPage extends Component {
           }
         }
       }
+      
       //console.log(this.state.items);
       const newItems = {};
       Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
@@ -175,6 +176,13 @@ export default class CalendarPage extends Component {
         items: newItems
       });
     }, 1000);
+    await storage.load({
+      key: 'event',
+      id: this.state.userid
+    }).then(ret => {
+      console.log('agenda userid: ' + this.state.userid);
+      console.log('ret: ' + ret);
+    })
     // console.log(`Load Items for ${day.year}-${day.month}`);
   }
 
