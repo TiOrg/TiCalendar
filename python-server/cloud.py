@@ -5,6 +5,8 @@ import re
 from TimeNormalizer import TimeNormalizer
 import Query4m3
 import sys
+from datetime import datetime
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
@@ -43,7 +45,6 @@ def parse_str(**params):
 #     if len(content) >= 240:
 #         todo.set('content', content[:240] + ' ...')
 
-from datetime import datetime
 
 @engine.define
 def refresh_events(**params):

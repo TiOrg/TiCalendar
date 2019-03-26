@@ -4,9 +4,6 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import sys
 import re
-import datetime
-import time
-import getpass
 from bs4 import BeautifulSoup
 from TimeNormalizer import TimeNormalizer
 import re
