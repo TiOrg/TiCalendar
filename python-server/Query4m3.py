@@ -101,10 +101,10 @@ class Query4m3(object):
             msgcontent = ''
             for s in text:
                 msgcontent = msgcontent + s.get_text()
-            res.append({'id':msgid, 'title': title, 'url': msgurl, 'content':msgcontent})
+            res.append({'title': title, 'url': msgurl, 'content':msgcontent})
 
             cnt = cnt+1
-            if msgnum > 0 and cnt > msgnum:
+            if msgnum > 0 and cnt >= msgnum:
                 break
 
             # out = open(path + msgid + '.txt', "w")
@@ -129,6 +129,7 @@ class Query4m3(object):
 
         res = self.getMessage(msgcnt)
 
+        times = []
         events = []
         for msg in res:
             text = msg['content']
@@ -144,6 +145,6 @@ class Query4m3(object):
                         event = event[:150] + '...'
 
                     # print(timestr + ' --- ' + event)
-
-                    events.append({'id':msg['id'], 'title': msg['title'], 'url': msg['url'], 'content':event})
-        return events
+                    events.append({'title':msg['title'],'url':msg['url'],'content':event})
+                    times.append(datetime)
+        return events, times

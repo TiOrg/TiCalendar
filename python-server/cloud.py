@@ -1,7 +1,6 @@
 # coding: utf-8
 
-from leancloud import Engine
-from leancloud import LeanEngineError
+import leancloud
 import re
 from TimeNormalizer import TimeNormalizer
 import Query4m3
@@ -9,7 +8,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-engine = Engine()
+engine = leancloud.Engine()
 
 
 @engine.define
@@ -21,9 +20,9 @@ def parse_str(**params):
         tn.parse(text)
         ret = []
         for token in tn.timeToken:
-            timestr = token.time.format("YYYY-MM-DD HH:mm:ss")
+            datetime = token.time.for_json()
             event = re.sub(u'\d[\.、]','',token.sent).replace('\n','')
-            ret.append({'timestr':timestr, 'event':event})
+            ret.append({'time':datetime, 'event':event})
         return ret
 
 
@@ -40,10 +39,11 @@ def parse_str(**params):
 # def before_todo_save(todo):
 #     content = todo.get('content')
 #     if not content:
-#         raise LeanEngineError('内容不能为空')
+#         raise leancloud.LeanEngineError('内容不能为空')
 #     if len(content) >= 240:
 #         todo.set('content', content[:240] + ' ...')
 
+from datetime import datetime
 
 @engine.define
 def refresh_events(**params):
@@ -53,10 +53,26 @@ def refresh_events(**params):
     eventnum = int(params['num'])
 
     if eventnum > 50:
-        return 'error: Too many events requests'
+        raise leancloud.LeanEngineError('Too many events requests, dont be too gready!')
 
     q = Query4m3.Query4m3()
     q.login(username, password)
-    return q.refreshEvents(eventnum)
+    events, times = q.refreshEvents(eventnum)
+
+
+    Event = leancloud.Object.extend('Events')
+    index = 0
+    for event in events:
+        newevent = Event()
+        newevent.set('title', event['title'])
+        newevent.set('url', event['url'])
+        newevent.set('dateTime', datetime.fromtimestamp(times[index].timestamp))
+        newevent.set('content', event['content'])
+        newevent.save()
+        index = index + 1
+
+    # print(times)
+    # return events
+        
     
    
