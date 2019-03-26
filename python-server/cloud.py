@@ -4,6 +4,7 @@ from leancloud import Engine
 from leancloud import LeanEngineError
 import re
 from TimeNormalizer import TimeNormalizer
+import Query4m3
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -25,29 +26,37 @@ def parse_str(**params):
             ret.append({'timestr':timestr, 'event':event})
         return ret
 
+
+# @engine.define
+# def hello(**params):
+#     # print("hello is called")
+#     if 'name' in params:
+#         return 'Hello, {}!'.format(params['name'])
+#     else:
+#         return 'Hello, LeanCloud!'
+
+
+# @engine.before_save('Todo')
+# def before_todo_save(todo):
+#     content = todo.get('content')
+#     if not content:
+#         raise LeanEngineError('内容不能为空')
+#     if len(content) >= 240:
+#         todo.set('content', content[:240] + ' ...')
+
+
 @engine.define
-def hello(**params):
+def refresh_events(**params):
     # print("hello is called")
-    if 'name' in params:
-        return 'Hello, {}!'.format(params['name'])
-    else:
-        return 'Hello, LeanCloud!'
+    username = params['username']
+    password = params['password']
+    eventnum = int(params['num'])
 
+    if eventnum > 50:
+        return 'error: Too many events requests'
 
-@engine.before_save('Todo')
-def before_todo_save(todo):
-    content = todo.get('content')
-    if not content:
-        raise LeanEngineError('内容不能为空')
-    if len(content) >= 240:
-        todo.set('content', content[:240] + ' ...')
-
-
-@engine.define
-def refreshEvents(**params):
-    # print("hello is called")
-    if 'school' in params:
-        return 'Hello ' + params['school']
-    else:
-        return 'Hello, LeanCloud!'
+    q = Query4m3.Query4m3()
+    q.login(username, password)
+    return q.refreshEvents(eventnum)
+    
    
