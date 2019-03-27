@@ -64,7 +64,7 @@ class Query4m3(object):
         self.w4m3Session.post(self.HOST_4M3 + "/eams/saml/SAMLAssertionConsumer", SAMLVar, headers = headers, proxies = self.proxies)
 
 
-    def getMessage(self, msgnum):
+    def getMessage(self, msgnum, eventids):
         # r = self.w4m3Session
         
         http = urllib3.PoolManager()
@@ -77,9 +77,18 @@ class Query4m3(object):
         # print(results)
         cnt = 0
         res = []
+    
         for result in results:
             # print(result)
             msgid = result[0]
+            
+            cnt = cnt+1
+            if int(msgid) in eventids:
+                if msgnum > 0 and cnt >= msgnum:
+                    break
+                else:
+                    continue
+
             title = result[1]
 
             msgurl = self.HOST_4M3 + '/eams/noticeDocument!info.action?ifMain=1&notice.id=' + msgid
@@ -98,9 +107,8 @@ class Query4m3(object):
             msgcontent = ''
             for s in text:
                 msgcontent = msgcontent + s.get_text()
-            res.append({'title': title, 'url': msgurl, 'content':msgcontent})
+            res.append({'title': title,'id':msgid, 'url': msgurl, 'content':msgcontent})
 
-            cnt = cnt+1
             if msgnum > 0 and cnt >= msgnum:
                 break
 
@@ -120,11 +128,11 @@ class Query4m3(object):
             # print(msgres.text)
         return res
 
-    def refreshEvents(self, msgcnt):
+    def refreshEvents(self, msgcnt, eventids):
         
         tn = TimeNormalizer()
 
-        res = self.getMessage(msgcnt)
+        res = self.getMessage(msgcnt, eventids)
 
         times = []
         events = []
@@ -133,15 +141,34 @@ class Query4m3(object):
             if text:
                 tn.parse(text)
                
+                event_existed = []
+                time_existed = []
+
                 for token in tn.timeToken:
                     datetime = token.time
-                    timestr = datetime.format("YYYY-MM-DD HH:mm:ss")
 
                     event = token.sent.replace('\n','')
                     if len(event) > 150:
                         event = event[:150] + '...'
+                    
+                    if event in event_existed:
+                        print(event)
+                        # index = event_existed.index(event)
+                        indices = [i for i, x in enumerate(event_existed) if x == event]
+
+                        should_jump = False
+                        for index in indices:
+                            if time_existed[index] == datetime:
+                                should_jump = True
+                                break
+                        if should_jump == True:
+                            continue
+                        
+
+                    event_existed.append(event)
+                    time_existed.append(datetime)
 
                     # print(timestr + ' --- ' + event)
-                    events.append({'title':msg['title'],'url':msg['url'],'content':event})
+                    events.append({'title':msg['title'],'msgid':msg['id'],'url':msg['url'],'content':event})
                     times.append(datetime)
         return events, times

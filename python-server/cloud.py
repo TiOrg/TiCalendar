@@ -23,7 +23,7 @@ def parse_str(**params):
         ret = []
         for token in tn.timeToken:
             datetime = token.time.for_json()
-            event = re.sub(u'\d[\.、]','',token.sent).replace('\n','')
+            event = token.sent.replace('\n','')
             ret.append({'time':datetime, 'event':event})
         return ret
 
@@ -49,6 +49,8 @@ def hello(**params):
 @engine.define
 def refresh_events(**params):
     # print("hello is called")
+    Event = leancloud.Object.extend('Events')
+
     username = params['username']
     password = params['password']
     eventnum = params['num']
@@ -58,19 +60,30 @@ def refresh_events(**params):
 
     q = Query4m3.Query4m3()
     q.login(username, password)
-    events, times = q.refreshEvents(eventnum)
+
+    query = Event.query
+    query.select('msgid')
+    event_found = query.find()
+
+    eventids = []
+    for event in event_found:
+        eventids.append(event.get('msgid'))
+    eventids = list(set(eventids))
+    events, times = q.refreshEvents(eventnum, eventids)
 
 
-    Event = leancloud.Object.extend('Events')
     index = 0
     for event in events:
         newevent = Event()
         newevent.set('title', event['title'])
+        newevent.set('msgid', int(event['msgid']))
         newevent.set('url', event['url'])
         newevent.set('dateTime', datetime.fromtimestamp(times[index].timestamp))
         newevent.set('content', event['content'])
         newevent.save()
         index = index + 1
+
+    return len(events)
 
     # print(times)
     # return events
