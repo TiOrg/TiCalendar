@@ -53,13 +53,12 @@ def refresh_events(**params):
 
     username = params['username']
     password = params['password']
-    eventnum = params['num']
-
-    if eventnum > 50:
-        raise leancloud.LeanEngineError('Too many events requests, dont be too gready!')
 
     q = Query4m3.Query4m3()
-    q.login(username, password)
+    try:
+        q.login(username, password)
+    except:
+        pass
 
     query = Event.query
     query.select('msgid')
@@ -69,7 +68,7 @@ def refresh_events(**params):
     for event in event_found:
         eventids.append(event.get('msgid'))
     eventids = list(set(eventids))
-    events, times = q.refreshEvents(eventnum, eventids)
+    events, times = q.refreshEvents(eventids)
 
 
     index = 0

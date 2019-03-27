@@ -7,21 +7,23 @@ import AV from '../service/AVService';
 
 export async function pullEvents() {
 
-    var eventsQuery = new AV.Query('Events');
-
     var school = 'unknown';
-    var lastLogin = 'unknown';
+    var user;
+
+    var lastUpdate = new Date();
 
     await global.storage.load({
         key: 'user',
-    }).then(ret=>{
+    }).then(ret => {
+        console.log(ret)
 
         school = ret.school;
-        lastLogin = ret.lastLogin;
+        if (ret.lastUpdate != undefined) {
+            lastUpdate = ret.lastUpdate;
+        }
+        user = ret;
 
-        console.log(school + lastLogin);
-
-    }).catch(err=>{
+    }).catch(err => {
         console.warn(err);
         switch (err.name) {
             case 'NotFoundError':
@@ -30,52 +32,66 @@ export async function pullEvents() {
             case 'ExpiredError':
                 // TODO
                 break;
-            }
+        }
         return 'error';
-    }); 
+    });
 
 
     await AV.Cloud.run('refresh_events', {
-        username:'1652224',
-        password:'Simon0628',
-        num:5
-        }).then(function(data) {
-            // alert(data);
-            // 调用成功，得到成功的应答 data
-            }, function(error) {
-            // 处理调用失败
-        });
+        username: '1652224',
+        password: 'Simon0628',
+    }).then(function (data) {
+        // alert(data);
+        console.log('cloud: refresh_success');
+        // 调用成功，得到成功的应答 data
+    }, function (error) {
+        // 处理调用失败
+    });
+
+
+    var eventsQuery = new AV.Query('Events');
 
     // eventsQuery.equalTo('school', ret.school);
-    eventsQuery.greaterThanOrEqualTo('updatedAt', lastLogin);
+    eventsQuery.greaterThanOrEqualTo('updatedAt', new Date(lastUpdate));
 
-    await eventsQuery.find().then(results=> {
+    var events;
+    await eventsQuery.find().then(results => {
 
         console.log(results);
-        // storage.getIdsForKey('event').then(ids => {
+        events = results;
 
-        //     // var events = [];
-        //     let i = Math.max(ids) + 1;
-        //     results.forEach(result=>{
-        //         console.log(result.attributes);
-        //         // events.push(result.attributes);
+    }, function (error) {
+        console.warn(error);
+    });
 
-        //         global.storage.save({
-        //             key: 'event',
-        //             id : toString(i),
-        //             data: result.attributes
-        //         })
-        //         i = i + 1;
-        //     });
-        //     });
-        
-        }, function (error) {
-            console.warn(error);
+
+    global.storage.getIdsForKey('event').then(ids => {
+
+        // var events = [];
+        let i = Math.max(ids) + 1;
+        results.forEach(result => {
+            console.log(result.attributes);
+            // events.push(result.attributes);
+
+            global.storage.save({
+                key: 'event',
+                id: toString(i),
+                data: result.attributes
+            })
+            i = i + 1;
         });
+    });
+
+    user['lastUpdate'] = new Date();
+    global.storage.save({
+        key: 'user',
+        data: user
+    }).then(ret => {
+        console.log('save lastupdate success');
+    });
 
     alert('刷新成功');
-
-
+    return events;
 }
 
 // // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理

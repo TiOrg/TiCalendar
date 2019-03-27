@@ -64,7 +64,7 @@ class Query4m3(object):
         self.w4m3Session.post(self.HOST_4M3 + "/eams/saml/SAMLAssertionConsumer", SAMLVar, headers = headers, proxies = self.proxies)
 
 
-    def getMessage(self, msgnum, eventids):
+    def getMessage(self, eventids):
         # r = self.w4m3Session
         
         http = urllib3.PoolManager()
@@ -82,12 +82,8 @@ class Query4m3(object):
             # print(result)
             msgid = result[0]
             
-            cnt = cnt+1
             if int(msgid) in eventids:
-                if msgnum > 0 and cnt >= msgnum:
-                    break
-                else:
-                    continue
+                break
 
             title = result[1]
 
@@ -109,9 +105,6 @@ class Query4m3(object):
                 msgcontent = msgcontent + s.get_text()
             res.append({'title': title,'id':msgid, 'url': msgurl, 'content':msgcontent})
 
-            if msgnum > 0 and cnt >= msgnum:
-                break
-
             # out = open(path + msgid + '.txt', "w")
 
             # for s in text:
@@ -128,11 +121,11 @@ class Query4m3(object):
             # print(msgres.text)
         return res
 
-    def refreshEvents(self, msgcnt, eventids):
+    def refreshEvents(self, eventids):
         
         tn = TimeNormalizer()
 
-        res = self.getMessage(msgcnt, eventids)
+        res = self.getMessage(eventids)
 
         times = []
         events = []
