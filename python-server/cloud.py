@@ -28,13 +28,13 @@ def parse_str(**params):
         return ret
 
 
-# @engine.define
-# def hello(**params):
-#     # print("hello is called")
-#     if 'name' in params:
-#         return 'Hello, {}!'.format(params['name'])
-#     else:
-#         return 'Hello, LeanCloud!'
+@engine.define
+def hello(**params):
+    # print("hello is called")
+    if 'name' in params:
+        return 'Hello, {}!'.format(params['name'])
+    else:
+        return 'Hello, LeanCloud!'
 
 
 # @engine.before_save('Todo')
@@ -51,7 +51,7 @@ def refresh_events(**params):
     # print("hello is called")
     username = params['username']
     password = params['password']
-    eventnum = int(params['num'])
+    eventnum = params['num']
 
     if eventnum > 50:
         raise leancloud.LeanEngineError('Too many events requests, dont be too gready!')
