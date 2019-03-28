@@ -54,29 +54,34 @@ export async function pullEvents() {
     // eventsQuery.equalTo('school', ret.school);
     eventsQuery.greaterThanOrEqualTo('updatedAt', new Date(lastUpdate));
 
-    var events;
+    var events = [];
     await eventsQuery.find().then(results => {
 
-        console.log(results);
-        events = results;
+        // console.log(results);
+        results.forEach(result => {
+            events.push(result.attributes);
+        });
 
     }, function (error) {
         console.warn(error);
     });
+
+    // console.log('events = ');
+    // console.log(events);
 
 
     global.storage.getIdsForKey('event').then(ids => {
 
         // var events = [];
         let i = Math.max(ids) + 1;
-        results.forEach(result => {
-            console.log(result.attributes);
-            // events.push(result.attributes);
+        events.forEach(event => {
+            // console.log(event.attributes);
+            // events.push(event.attributes);
 
             global.storage.save({
                 key: 'event',
                 id: toString(i),
-                data: result.attributes
+                data: event
             })
             i = i + 1;
         });

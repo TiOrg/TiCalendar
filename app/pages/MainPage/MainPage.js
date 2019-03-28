@@ -72,11 +72,20 @@ export default class MainPage extends Component {
   }
   
 
-  getAllAgenda() {
+  async getAllAgenda() {
     //pull
     // alert('pulling all agenda from database...');
     // 从云端拉取所有events数据存储到storage
-    RefreshAction.pullEvents(); 
+    var events = await RefreshAction.pullEvents(); 
+
+    console.log('get events:');
+    console.log(events);
+
+    events.forEach(event => {
+      
+      // console.log(event.attributes);
+      // events.push(event.attributes);
+  });
     // 将所有数据显示在日历上
     // TODO
   }
