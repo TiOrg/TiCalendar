@@ -95,7 +95,38 @@ export default class MainPage extends Component {
     this._drawer._root.open()
   }
 
-
+  validateInput() {
+    {
+      // 按下添加按钮后的功能
+      // 首先验证输入是否完整
+      // console.log('获取所有数据');
+      // storage.getAllDataForKey('event').then(events => {
+      //   console.log(events);
+      // })
+      // storage.clearMap();
+      let eventName = this.state.eventNameText;
+      let startTime = this.state.startDate;
+      let endTime = this.state.endDate;
+      if (eventName === '') {
+        Alert.alert('错误提示', '事件名称不能为空', [{ text: "好" }]);
+      }
+      else if (startTime === '') {
+        Alert.alert('错误提示', '请选择事件开始时间', [{ text: "好" }]);
+      }
+      else if (startTime === '') {
+        Alert.alert('错误提示', '请选择事件结束时间', [{ text: "好" }]);
+      }
+      else {
+        // 输入合法，准备保存事件信息
+        // 生成本地唯一的uuid，保证事件数据不被覆盖
+        let id = uuidv1();
+        EventAction.add(id, eventName, startTime, endTime);
+        // EventAction.load(id);
+        this.clearInputState();
+        this.setState({ visible: false });
+      }
+    }
+  }
 
   render() {
     const { navigate, dispatch } = this.props.navigation;
@@ -103,7 +134,10 @@ export default class MainPage extends Component {
       // <SafeAreaView style={styles.container}>
         <Drawer
           ref={(ref) => { this._drawer = ref; }}
-          content={<SideBar navigator={navigate} />}
+          content={<SideBar 
+            navigator={navigate} 
+            // quitAction={}
+          />}
           onClose={() => this.closeDrawer()} >
           
             
@@ -155,36 +189,7 @@ export default class MainPage extends Component {
                         />
                         <DialogButton
                           text="添加"
-                          onPress={() => {
-                            // 按下添加按钮后的功能
-                            // 首先验证输入是否完整
-                            // console.log('获取所有数据');
-                            // storage.getAllDataForKey('event').then(events => {
-                            //   console.log(events);
-                            // })
-                            // storage.clearMap();
-                            let eventName = this.state.eventNameText;
-                            let startTime = this.state.startDate;
-                            let endTime = this.state.endDate;
-                            if (eventName === '') {
-                              Alert.alert('错误提示', '事件名称不能为空', [{ text: "好" }]);
-                            }
-                            else if (startTime === '') {
-                              Alert.alert('错误提示', '请选择事件开始时间', [{ text: "好" }]);
-                            }
-                            else if (startTime === '') {
-                              Alert.alert('错误提示', '请选择事件结束时间', [{ text: "好" }]);
-                            }
-                            else {
-                              // 输入合法，准备保存事件信息
-                              // 生成本地唯一的uuid，保证事件数据不被覆盖
-                              let id = uuidv1();
-                              EventAction.add(id, eventName, startTime, endTime);
-                              // EventAction.load(id);
-                              this.clearInputState();
-                              this.setState({ visible: false });
-                            }
-                          }}
+                          onPress={() => this.validateInput()}
                         />
                       </DialogFooter>
                     }

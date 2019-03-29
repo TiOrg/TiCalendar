@@ -5,7 +5,13 @@ import {
   Text,
   View,
 } from 'react-native';
-import CButton from '../../common/button';
+import { 
+  TextInput,
+  Title,
+  Button,
+  Divider
+} from 'react-native-paper'
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { List, ListItem } from 'react-native-elements';
 import {
@@ -28,6 +34,10 @@ const resetAction = StackActions.reset({
 });
 
 const list = [
+  {
+    title: '学校信息绑定',
+    icon: 'exit-to-app'
+  },
   {
     title: '退出登录',
     icon: 'exit-to-app'
@@ -67,12 +77,20 @@ class SettingPage extends Component {
                 key={i}
                 title={item.title}
                 leftIcon={{ name: item.icon }}
+                onpress={() => this.quitLogin()}
               />
             ))
           }
         </View>
-        <CButton color={color.BUTTON_RED} title={'退出登录'} onPress={() => this.quitLogin()} />
-
+        {/* <CButton color={color.BUTTON_RED} title={'退出登录'} onPress={() => this.quitLogin()} /> */}
+        <Button 
+            // title={'登录'} 
+            onPress={() => this.quitLogin()}
+            mode='contained'
+            style={{marginTop:20}}
+            >
+            退出登录
+        </Button>
       </View>
     );
   }

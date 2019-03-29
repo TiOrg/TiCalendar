@@ -5,11 +5,6 @@ import {
     Text,
     View
 } from 'react-native';
-
-import CButton from '../../common/button';
-
-import storage from '../../common/Storage';
-
 // import { Input, Button } from 'react-native-elements'
 
 import * as elements from 'react-native-elements';
@@ -70,12 +65,11 @@ class LoginPage extends Component {
             key: 'user',
             //autoSync: false,
         }).then(ret => {
-            console.log('hello titi');
+            // console.log('hello titi');
             if (ret && ret.username) {
                 console.log('用户已经登录：', ret);
                 console.log('userid:', ret.objectId);
                 var date = LoginAction.updateLoginTime(ret.objectId);
-                console.log('fuck' + date);
                 this.props.navigation.dispatch(resetAction);
             }
         }).catch(err => {
