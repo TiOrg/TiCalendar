@@ -72,6 +72,10 @@ export default class MainPage extends Component {
       eventNameText: '',
     };
   }
+  componentWillMount() {
+    this.getAllAgenda();
+}
+
   clearInputState() {
     this.setState({ startDate: '' });
     this.setState({ endDate: '' });
@@ -79,14 +83,45 @@ export default class MainPage extends Component {
   }
   
 
-  getAllAgenda() {
+
+  async getAllAgenda() {
     //pull
     // alert('pulling all agenda from database...');
     // 从云端拉取所有events数据存储到storage
-    RefreshAction.pullEvents(); 
-    // 将所有数据显示在日历上
-    // TODO
+    var events = await RefreshAction.pullEvents(); 
+
+    // console.log('get events:');
+    // console.log(events);
+
+    events.forEach(event => {
+      const strTime = event.dateTime.toISOString().split('T')[0];
+      this.state.items[strTime] = [];
+
+  });
+
+  events.forEach(event => {
+    const strTime = event.dateTime.toISOString().split('T')[0];
+    this.state.items[strTime].push({
+      name: event.title + ': ' + event.content,
+      height: event.title.length + event.content.length
+      });
+    });
+
+  console.log('items:')
+  console.log(this.state.items);
+
+  const newItems = {};
+  Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
+  this.setState({
+    items: newItems
+  });
   }
+
+  refreshItems() {
+    getAllAgenda();
+    alert('提示', '事件刷新成功', [{ text: "好" }]);
+  }
+
 
   closeDrawer() {
     this._drawer._root.close()
@@ -260,7 +295,7 @@ export default class MainPage extends Component {
             </Header>
             <ScrollableTabView
             // style={{marginTop: 20, }}
-            initialPage={0}
+            initialPage={1}
             renderTabBar={() => <FacebookTabBar />}
             tabBarPosition='bottom'>
             <View tabLabel="ios-paper" style={styles.tabView}>
@@ -280,11 +315,11 @@ export default class MainPage extends Component {
             </ScrollView> */}
 
             <View tabLabel="ios-notifications" style={styles.tabView}>
-              <AgendaPage />
+              <AgendaPage items = {this.state.items} onChange={val => this.setState({items: val})}/>
             </View>
 
             <ScrollView tabLabel="ios-list" style={styles.tabView}>
-              <SettingPage {...this.props} />
+              <SettingPage  />
             </ScrollView>
 
           </ScrollableTabView>

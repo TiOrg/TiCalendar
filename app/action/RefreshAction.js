@@ -5,61 +5,98 @@ import AV from '../service/AVService';
 // import storage from '../common/Storage';
 
 
-export function pullEvents() {
+export async function pullEvents() {
 
-    var eventsQuery = new AV.Query('Events');
+    var school = 'unknown';
+    var user;
 
-    global.storage.load({
+    var lastUpdate = new Date();
+
+    await global.storage.load({
         key: 'user',
-    }).then(ret=>{
+    }).then(ret => {
+        console.log(ret)
 
-        AV.Cloud.run('refreshEvents', {
-            school: ret.school
-        }).then(function(data) {
-            alert(data);
-            // 调用成功，得到成功的应答 data
-          }, function(error) {
-            // 处理调用失败
-          });
-          
+        school = ret.school;
+        if (ret.lastUpdate != undefined) {
+            lastUpdate = ret.lastUpdate;
+        }
+        user = ret;
 
-    
-        eventsQuery.equalTo('school', ret.school);
-        // eventsQuery.greaterThanOrEqualTo('updatedAt', ret.lastLogin);
-
-        eventsQuery.find().then(results=> {
-            storage.getIdsForKey('event').then(ids => {
-
-                // var events = [];
-                let i = Math.max(ids) + 1;
-                results.forEach(result=>{
-                    console.log(result.attributes);
-                    // events.push(result.attributes);
-    
-                    global.storage.save({
-                        key: 'event',
-                        id : toString(i),
-                        data: result.attributes
-                    })
-                    i = i + 1;
-                });
-              });
-            
-            }, function (error) {
-                console.warn(error);
-            });
-    }).catch(err=>{
+    }).catch(err => {
         console.warn(err);
         switch (err.name) {
             case 'NotFoundError':
-                alert('You shall login first!');;
+                alert('请先登录');;
                 break;
             case 'ExpiredError':
                 // TODO
                 break;
-            }
+        }
         return 'error';
-    }); 
+    });
+
+
+    await AV.Cloud.run('refresh_events', {
+        username: '1652224',
+        password: 'Simon0628',
+    }).then(function (data) {
+        // alert(data);
+        console.log('cloud: refresh_success');
+        // 调用成功，得到成功的应答 data
+    }, function (error) {
+        // 处理调用失败
+    });
+
+
+    var eventsQuery = new AV.Query('Events');
+
+    // eventsQuery.equalTo('school', ret.school);
+    // eventsQuery.greaterThanOrEqualTo('updatedAt', new Date(lastUpdate));
+
+    var events = [];
+    await eventsQuery.find().then(results => {
+
+        // console.log(results);
+        results.forEach(result => {
+            events.push(result.attributes);
+        });
+
+    }, function (error) {
+        console.warn(error);
+    });
+
+
+    global.storage.getIdsForKey('event').then(ids => {
+
+        // var events = [];
+        let i = Math.max(ids) + 1;
+        events.forEach(event => {
+            // console.log(event.attributes);
+            // events.push(event.attributes);
+
+            global.storage.save({
+                key: 'event',
+                id: toString(i),
+                data: event
+            })
+            i = i + 1;
+        });
+    });
+
+    user['lastUpdate'] = new Date();
+    global.storage.save({
+        key: 'user',
+        data: user
+    }).then(ret => {
+        console.log('save lastupdate success');
+    });
+
+
+
+    // console.log('events2 = ');
+    // console.log(events);
+    return events;
 }
 
 // // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
