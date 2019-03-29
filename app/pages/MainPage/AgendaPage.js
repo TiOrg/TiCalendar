@@ -64,18 +64,22 @@ export default class CalendarPage extends Component {
   
   constructor(props) {
     super(props);
-    
+
     this.state = {
       userid: 0x0,
       visible: false,
       items: {},      // 当天的事件
+      onChange: new Function,
       startDate: '',   // 
       endDate: '',
       eventNameText: '',
     };
     this.getUserId();
   }
-  
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({items: nextProps.items});
+  }
 
   getUserId() {
     storage.load({
@@ -110,6 +114,10 @@ export default class CalendarPage extends Component {
   static navigationOptions = {
     title: 'Details',
   };
+
+  refreshState(items) {
+    console.log(items);
+  }
   
 
 
@@ -121,7 +129,7 @@ export default class CalendarPage extends Component {
       <Container>
         <Agenda
           items={this.state.items}
-          loadItemsForMonth={this.loadItems.bind(this)}
+          // loadItemsForMonth={this.loadItems.bind(this)}
           selected={this.getToday.bind(this)}
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
@@ -129,8 +137,12 @@ export default class CalendarPage extends Component {
           theme={{
             // agendaDayTextColor: 'yellow',
             // agendaDayNumColor: 'green',
-            // agendaTodayColor: 'red',
-            // agendaKnobColor: FACEBOOK_BLUE
+            agendaTodayColor: color.THEME_LABEL,
+            // selectedColor: color.FACEBOOK_BLUE,
+            selectedDayBackgroundColor: color.THEME,
+            todayTextColor: color.THEME,
+            dotColor:color.FACEBOOK_BLUE,
+            agendaKnobColor: color.THEME
           }}
         />
       </Container>
@@ -152,7 +164,6 @@ export default class CalendarPage extends Component {
 
 
   loadItems(day) {
-    setTimeout(() => {
       for (let i = -15; i < 85; i++) {
         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
         const strTime = this.timeToString(time);
@@ -168,13 +179,13 @@ export default class CalendarPage extends Component {
           }
         }
       }
+
       //console.log(this.state.items);
       const newItems = {};
       Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
       this.setState({
         items: newItems
       });
-    }, 1000);
     // console.log(`Load Items for ${day.year}-${day.month}`);
   }
 

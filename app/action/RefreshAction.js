@@ -52,7 +52,7 @@ export async function pullEvents() {
     var eventsQuery = new AV.Query('Events');
 
     // eventsQuery.equalTo('school', ret.school);
-    eventsQuery.greaterThanOrEqualTo('updatedAt', new Date(lastUpdate));
+    // eventsQuery.greaterThanOrEqualTo('updatedAt', new Date(lastUpdate));
 
     var events = [];
     await eventsQuery.find().then(results => {
@@ -65,9 +65,6 @@ export async function pullEvents() {
     }, function (error) {
         console.warn(error);
     });
-
-    // console.log('events = ');
-    // console.log(events);
 
 
     global.storage.getIdsForKey('event').then(ids => {
@@ -96,6 +93,10 @@ export async function pullEvents() {
     });
 
     alert('刷新成功');
+
+
+    // console.log('events2 = ');
+    // console.log(events);
     return events;
 }
 
