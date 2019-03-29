@@ -92,7 +92,6 @@ export async function pullEvents() {
         console.log('save lastupdate success');
     });
 
-    alert('刷新成功');
 
 
     // console.log('events2 = ');

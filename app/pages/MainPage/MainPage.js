@@ -95,8 +95,8 @@ export default class MainPage extends Component {
   events.forEach(event => {
     const strTime = event.dateTime.toISOString().split('T')[0];
     this.state.items[strTime].push({
-      name: event.content,
-      height: 50
+      name: event.title + ': ' + event.content,
+      height: event.title.length + event.content.length
       });
     });
 
@@ -108,10 +108,13 @@ export default class MainPage extends Component {
   this.setState({
     items: newItems
   });
-  
-    // 将所有数据显示在日历上
-    // TODO
   }
+
+  refreshItems() {
+    getAllAgenda();
+    alert('提示', '事件刷新成功', [{ text: "好" }]);
+  }
+
 
   closeDrawer() {
     this._drawer._root.close()
