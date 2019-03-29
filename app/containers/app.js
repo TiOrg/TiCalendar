@@ -3,6 +3,7 @@ import MainPage from '../pages/MainPage/MainPage';
 import SettingPage from '../pages/MainPage/SettingPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import RegPage from '../pages/LoginPage/RegPage';
+import SchoolSetPage from '../pages/ConfigurePage/SchoolSetPage';
 
 
 
@@ -10,6 +11,7 @@ import RegPage from '../pages/LoginPage/RegPage';
 const App = createStackNavigator({
     Login: { screen: LoginPage }, // 登录页
     Reg: { screen: RegPage }, // 注册页
+    School: { screen: SchoolSetPage },
     // SettingPage: {screen: SettingPage},
     Main: { // 主页面
         screen: MainPage, // tab导航配置

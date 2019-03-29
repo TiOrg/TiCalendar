@@ -53,8 +53,6 @@ export function login(username, password) {
 
     return dispatch => {
         dispatch(isLogining());
-        // 模拟用户登录
-        // console.log('login function;');
         AV.User.logIn(username, password).then(function (loggedInUser) {
             // console.log('hello AV');
             console.log(loggedInUser);

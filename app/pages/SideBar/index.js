@@ -11,6 +11,9 @@ import {
   Right,
   Badge
 } from "native-base";
+import {
+  Button
+} from "react-native-paper";
 import styles from "./style";
 
 const drawerCover = require("../../assets/image/drawer-cover.png");
@@ -21,8 +24,16 @@ const datas = [
     route: "Setting",
     icon: "md-menu",
     bg: "#C5F442"
+  }, 
+  {
+    name: "学校信息绑定",
+    route: "School",
+    icon: "school",
+    bg: "#C5F442"
   }
 ];
+
+
 
 class SideBar extends Component {
   constructor(props) {
@@ -78,7 +89,19 @@ class SideBar extends Component {
                   </Right>}
               </ListItem>}
           />
+          <Button
+              onPress={() => this.quitLogin()}
+              color='#d50000'
+              mode='contained'
+              compact={true}
+              style={{
+                margin:20
+              }}
+          >
+              退出登录
+          </Button>
         </Content>
+        
       </Container>
     );
   }
