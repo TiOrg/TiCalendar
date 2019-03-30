@@ -227,6 +227,6 @@ export default connect(
     status: state.bindSchool.status,
   }),
   (dispatch) => ({
-    schoolBinded: () => dispatch(schoolBinded()),
+    schoolBinded: (s) => dispatch(schoolBinded(s)),
   })
 )(SchoolSetPage)
