@@ -15,7 +15,8 @@ export async function pullEvents() {
     await global.storage.load({
         key: 'user',
     }).then(ret => {
-        console.log(ret)
+        console.log('ret = ');
+        console.log(ret);
 
         school = ret.school;
         if (ret.lastUpdate != undefined) {
@@ -66,24 +67,39 @@ export async function pullEvents() {
         console.warn(error);
     });
 
+    // console.log(events);
+
+    let i = 0;
 
     global.storage.getIdsForKey('event').then(ids => {
 
-        // var events = [];
-        let i = Math.max(ids) + 1;
+        // console.log(ids);
+        // if(Math.max(ids)!= NaN){
+        //     console.log('max:' + Math.max(ids))
+        //     i = Math.max(ids) + 1;
+        // }
+        storage.clearMapForKey('event');
+
         events.forEach(event => {
+            i = i + 1;
             // console.log(event.attributes);
             // events.push(event.attributes);
 
             global.storage.save({
                 key: 'event',
-                id: toString(i),
+                id: i,
                 data: event
-            })
-            i = i + 1;
+            }).then(() => {
+                // console.log('i = ' + i);
+                // console.log('saving:');
+                // console.log(event);
+            });
         });
+
+        console.log('save events successfully');
     });
 
+    // 对更新时间的存储--本地
     user['lastUpdate'] = new Date();
     global.storage.save({
         key: 'user',
@@ -92,73 +108,44 @@ export async function pullEvents() {
         console.log('save lastupdate success');
     });
 
+    // // 对更新时间的存储--云端
+    // var refreshDate = new Date();
+    // var query = new AV.Query('_User');
 
+    // query.get(user.userid).then(function (user) {
+    //     user.set('lastUpdate', refreshDate);
+    //     user.save();
+    //     global.storage.save({
+    //         key: 'user',
+    //         data: user
+    //     });
+    //     // return loginDate;
+    // },function(error) {
+    //     // 异常处理
+    //     console.log('当前用户登录时间更新失败！');
+    // }) 
 
-    // console.log('events2 = ');
-    // console.log(events);
+    console.log('events2 = ');
+    console.log(events);
     return events;
 }
 
-// // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
-// export function login(username, password) {
-//     console.log('登录方法');
-
-//     // user.mobile = mobile;
-//     // user.password = password;
-
-//     return dispatch => {
-//         dispatch(isLogining());
-//         // 模拟用户登录
-//         AV.User.logIn(username, password).then(function (loggedInUser) {
-//             console.log(loggedInUser);
-//             // current_user = AV.User.current();
-//             dispatch(loginSuccess(true, loggedInUser));
-//         }, function (error) {
-//             dispatch(loginError(false));
-//             console.log(error);
-//         });
-//         // if (mobile === '' + user.mobile && password === user.pwd) {
-//         //     dispatch(loginSuccess(true, user));
-//         // } else {
-//         //     dispatch(loginError(false));
-//         // }
-//         /*let result = fetch('https://localhost:8088/login')
-//          .then((res) => {
-//          dispatch(loginSuccess(true, user));
-//          }).catch((e) => {
-//          dispatch(loginError(false));
-//          })*/
-//     }
-// }
-
-// function isLogining() {
-//     return {
-//         type: types.LOGIN_IN_DOING
-//     }
-// }
-
-// function isQuiting() {
-//     return {
-//         type: types.LOGIN_OUT
-//     }
-// }
-
-// function loginSuccess(isSuccess, user) {
-//     console.log('success');
-
-//     global.storage.save({
-//         key: 'user',
-//         data: user
-//     });
-//     return {
-//         type: types.LOGIN_IN_DONE,
-//         user: user,
-//     }
-// }
-
-// function loginError(isSuccess) {
-//     console.log('error');
-//     return {
-//         type: types.LOGIN_IN_ERROR,
-//     }
-// }
+export async function getLocalEvents() {
+    var events;
+    await global.storage.getAllDataForKey('event').then(ret => {
+        events = ret;
+    }).catch(err => {
+        // 如果没有找到数据且没有sync方法，
+        // 或者有其他异常，则在catch中返回
+        console.warn(err.message);
+        switch (err.name) {
+          case 'NotFoundError':
+            // TODO;
+            break;
+          case 'ExpiredError':
+            // TODO
+            break;
+        }
+      });
+    return events;
+}

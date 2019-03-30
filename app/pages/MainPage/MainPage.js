@@ -73,7 +73,8 @@ export default class MainPage extends Component {
     };
   }
   componentWillMount() {
-    this.getAllAgenda();
+    // this.getAllAgenda();
+    this.getLocalAgenda();
 }
 
   clearInputState() {
@@ -83,6 +84,37 @@ export default class MainPage extends Component {
   }
   
 
+  async getLocalAgenda() {
+    var events = await RefreshAction.getLocalEvents();
+
+    // console.log('get local events:');
+    // console.log(events);
+    events.forEach(event => {
+      var date = new Date(event.dateTime);
+      const strTime = date.toISOString().split('T')[0];
+      this.state.items[strTime] = [];
+
+  });
+
+  events.forEach(event => {
+    var date = new Date(event.dateTime);
+    const strTime = date.toISOString().split('T')[0];
+    this.state.items[strTime].push({
+      title: event.title,
+      content: event.content,
+      url: event.url
+      });
+    });
+
+  console.log('items:')
+  console.log(this.state.items);
+
+  const newItems = {};
+  Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
+  this.setState({
+    items: newItems
+  });
+  }
 
   async getAllAgenda() {
     //pull
@@ -90,8 +122,8 @@ export default class MainPage extends Component {
     // 从云端拉取所有events数据存储到storage
     var events = await RefreshAction.pullEvents(); 
 
-    // console.log('get events:');
-    // console.log(events);
+    console.log('get all events:');
+    console.log(events);
 
     events.forEach(event => {
       const strTime = event.dateTime.toISOString().split('T')[0];
@@ -116,11 +148,9 @@ export default class MainPage extends Component {
   this.setState({
     items: newItems
   });
-  }
 
-  refreshItems() {
-    getAllAgenda();
-    alert('提示', '事件刷新成功', [{ text: "好" }]);
+  Alert.alert('提示', '事件刷新成功', [{ text: "好" }]);
+
   }
 
 
