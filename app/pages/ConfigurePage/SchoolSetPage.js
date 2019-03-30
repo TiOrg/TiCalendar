@@ -10,7 +10,9 @@ import {
     TextInput,
     Title,
     Button,
-    Divider
+    Divider,
+    ActivityIndicator,
+    Snackbar
  } from 'react-native-paper';
 
  import Dialog, { 
@@ -29,56 +31,98 @@ import {
 import { connect } from 'react-redux'; // 引入connect函数
 import storage from '../../common/Storage';
 import { getStackOptions } from '../../common/NavigatorOpts';
-
-import * as LoginAction from '../../action/LoginAction';
 import * as color from '../../assets/css/color';
 import * as types from '../../constants/SchoolTypes'
+import * as SchoolActions from '../../action/SetSchoolAction'
 // import console = require('console');
 
 const resetAction = StackActions.reset({
-  index: 0,
+  index: 1,
   actions: [
-    NavigationActions.navigate({ routeName: 'Login' })
+    NavigationActions.navigate({ routeName: 'School' })
   ]
 });
 
-function dealInput() {
-    let school_info = {
-        studentid : this.studentid,
-        studentpswd: this.studentpasswd
-    };
-    console.log('input dealing');
-    // this.setState({ BindPageVisible: false });
-    return dispatch => {
-        dispatch(schoolBinded(school_info));
-    }
-    
-    // schoolBinded(school_info);
-    // 
-    // let studentid = this.studentid;
-    // let studentpswd = this.studentpasswd;
-    
-  }
 
 
 class SchoolSetPage extends Component {
+    componentWillMount() {
+        this.checkHasBind();
+    }
+    dealInput() {
+        console.log('input dealing props');
+        console.log(this.props);
+        const { bind } = this.props;
+        bind(this.state.studentid, this.state.studentpasswd);
+        let id = this.state.studentid;
+        this.setState({
+            BindPageVisible: false,
+            localBind: true,
+            studentid: id,
+            BindAlertVisible: true,
+        });
+    }
  
-  static navigationOptions = getStackOptions('学生信息绑定');
+    static navigationOptions = getStackOptions('学生信息绑定');
 
-  constructor(props) {
-    super(props);
-    this.state = { 
-        message: '',
-        BindPageVisible: false, 
-        school: '',
-        studentid: '',
-        studentpasswd: '',
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = { 
+            message: '',
+            BindPageVisible: false, 
+            school: '',
+            studentid: '',
+            studentpasswd: '',
+            loadingDone: false,
+            localBind: false,
+            UnbindAlertVisible: false,
+            BindAlertVisible: false,
+        };
+    }
 
-  clearInputState() {
-    this.setState({studentid:'', studentpasswd:''});
-  }
+    unbindStudent() {
+        // 将当前绑定的学生信息取消，以重新绑定
+        const { unbind } = this.props;
+        this.setState({
+            localBind: false,
+            studentid: '',
+            studentpasswd: '',
+            UnbindAlertVisible: true,
+        });
+        unbind();
+    }
+
+    // shouldComponentUpdate(nextprops, nextstate) {
+        
+    //     return true;
+    // }
+
+    checkHasBind() {
+        global.storage.load({
+            key: 'schoolinfo',
+        }).then(ret => {
+            console.log('从本地存储中查询到绑定信息：', ret);
+            if( ret && ret.studentid ) {
+                console.log('用户已经绑定学生信息');
+                console.log('学号：', ret.studentid);
+                this.setState({
+                    studentid: ret.studentid,
+                    localBind: true
+                });
+
+                // this.props.navigation.dispatch(resetAction);
+            }
+            this.setState({
+                loadingDone: true
+            })
+        }).catch(err = {
+
+        });
+    }
+
+    clearInputState() {
+        this.setState({studentid:'', studentpasswd:''});
+    }
 
   
 
@@ -101,7 +145,7 @@ class SchoolSetPage extends Component {
                         <DialogButton
                             text="添加"
                             onPress={() => {
-                                dealInput();
+                                this.dealInput();
                                 this.setState({ BindPageVisible: false });
                             }}
                         />
@@ -138,48 +182,68 @@ class SchoolSetPage extends Component {
       );
   }
 
-  generateUnbind() {
-      if(this.props.status === '未绑定学生信息') {
-          return (
-            <View>
-                {
-                    this.getDialog()
-                }
-                <Text style={{margin: 10}}>
-                您当前的学校绑定情况为：{this.props.status}
-                </Text>
-                <Divider />
-                <Button
-                    onPress={() => {
-                        console.log('绑定学生信息');
-                        this.setState({BindPageVisible: true});
-                    }}
-                    mode='contained'
-                    style={{marginTop:20}}
-                >
-                    绑定学生信息
-                </Button>
-                <Divider />
-                <Button
-                    onPress={() => console.log('退出登录')}
-                    color='#d50000'
-                    mode='contained'
-                    style={{marginTop:10}}
-                >
-                    退出登录
-                </Button>
-            </View>
-            
-            
-          );
+  studentInfoArea() {
+      if(this.props.school_status === '学生信息绑定完成' || this.state.localBind) {
+        
+        return this.generateBinded();
       }
-    //   else if(this)
+      else {
+        return this.generateUnbind();
+      }
   }
 
-  quitLogin() {
-    const { quit } = this.props;
-    quit();
-    this.props.navigation.dispatch(resetAction);
+  generateBinded() {
+    return (
+        <View>
+            <Text style={{margin: 10}}>
+            {/* 您当前的学校绑定情况为：{this.props.school_status} */}
+            您当前绑定了学号为 { this.state.studentid } 的学生信息。
+            </Text>
+            <Button
+                onPress={() => {
+                    console.log('解除绑定')
+                    this.unbindStudent()
+                }}
+                color='#d50000'
+                mode='contained'
+                style={{marginTop:10}}
+            >
+                解除绑定
+            </Button>
+        </View>
+        
+    );
+  }
+
+  generateUnbind() {
+    return (
+        <View>
+            <Text style={{margin: 10}}>
+            {/* 您当前的学校绑定情况为：{this.props.school_status} */}
+            您当前未绑定学生信息，进行绑定后才可自动获取通知信息！
+            </Text>
+            <Divider />
+            <Button
+                onPress={() => {
+                    console.log('绑定学生信息');
+                    this.setState({BindPageVisible: true});
+                }}
+                mode='contained'
+                style={{marginTop:20}}
+            >
+                绑定学生信息
+            </Button>
+            <Divider />
+            <Button
+                onPress={() => console.log('退出登录')}
+                color='#d50000'
+                mode='contained'
+                style={{marginTop:10}}
+            >
+                退出登录
+            </Button>
+        </View>
+        );
   }
 
 
@@ -189,10 +253,36 @@ class SchoolSetPage extends Component {
     return (
 
       <View style={styles.card}>
-        
         {
-            this.generateUnbind()
+            this.studentInfoArea()
         }
+        {
+            this.getDialog()
+        }
+        <Snackbar
+            visible={this.state.UnbindAlertVisible}
+            onDismiss={() => this.setState({ UnbindAlertVisible: false})}
+            action={{
+                label:'我知道了',
+                onPress: () => {
+                    // Do something
+                },
+            }}
+        >
+        学生信息解绑完成
+        </Snackbar>
+        <Snackbar
+            visible={this.state.BindAlertVisible}
+            onDismiss={() => this.setState({ BindAlertVisible: false})}
+            action={{
+                label:'我知道了',
+                onPress: () => {
+                    // Do something
+                },
+            }}
+        >
+        学生信息绑定完成，学号{this.state.studentid}
+        </Snackbar>
       </View>
     );
   }
@@ -222,22 +312,13 @@ const styles = StyleSheet.create({
 
 })
 
-function schoolBinded(school_info) {
-    global.storage.save({
-        key: 'schoolinfo',
-        data: school_info
-    });
-    console.log('school binded.');
-    return (
-        type: types.SCHOOL_BIND_DONE
-    )
-}
-
 export default connect(
   (state) => ({
-    status: state.bindSchool.status,
+    school_status: state.bindSchool.school_status,
+    bind_is_success: state.bindSchool.bind_is_success,
   }),
   (dispatch) => ({
-    schoolBinded: (s) => dispatch(schoolBinded(s)),
+    bind: (u, p) => dispatch(SchoolActions.bind(u, p)),
+    unbind: () => dispatch(SchoolActions.unbind()),
   })
 )(SchoolSetPage)
