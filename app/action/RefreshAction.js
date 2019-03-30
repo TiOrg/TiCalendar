@@ -7,23 +7,43 @@ import AV from '../service/AVService';
 
 export async function pullEvents() {
 
-    var school = 'unknown';
-    var user;
+    // var school = 'unknown';
+    // var user;
 
-    var lastUpdate = new Date();
+    // var lastUpdate = new Date();
 
+    // await global.storage.load({
+    //     key: 'user',
+    // }).then(ret => {
+    //     console.log('ret = ');
+    //     console.log(ret);
+
+    //     school = ret.school;
+    //     if (ret.lastUpdate != undefined) {
+    //         lastUpdate = ret.lastUpdate;
+    //     }
+    //     user = ret;
+
+    // }).catch(err => {
+    //     console.warn(err);
+    //     switch (err.name) {
+    //         case 'NotFoundError':
+    //             alert('请先登录');;
+    //             break;
+    //         case 'ExpiredError':
+    //             // TODO
+    //             break;
+    //     }
+    //     return 'error';
+    // });
+
+    var stu_info;
     await global.storage.load({
-        key: 'user',
+        key: 'schoolinfo',
     }).then(ret => {
-        console.log('ret = ');
         console.log(ret);
-
-        school = ret.school;
-        if (ret.lastUpdate != undefined) {
-            lastUpdate = ret.lastUpdate;
-        }
-        user = ret;
-
+        stu_info = ret;
+        
     }).catch(err => {
         console.warn(err);
         switch (err.name) {
@@ -37,10 +57,9 @@ export async function pullEvents() {
         return 'error';
     });
 
-
     await AV.Cloud.run('refresh_events', {
-        username: '1652224',
-        password: 'Simon0628',
+        username: stu_info.studentid,
+        password: stu_info.studentpswd,
     }).then(function (data) {
         // alert(data);
         console.log('cloud: refresh_success');
@@ -48,7 +67,6 @@ export async function pullEvents() {
     }, function (error) {
         // 处理调用失败
     });
-
 
     var eventsQuery = new AV.Query('Events');
 
@@ -100,13 +118,13 @@ export async function pullEvents() {
     });
 
     // 对更新时间的存储--本地
-    user['lastUpdate'] = new Date();
-    global.storage.save({
-        key: 'user',
-        data: user
-    }).then(ret => {
-        console.log('save lastupdate success');
-    });
+    // user['lastUpdate'] = new Date();
+    // global.storage.save({
+    //     key: 'user',
+    //     data: user
+    // }).then(ret => {
+    //     console.log('save lastupdate success');
+    // });
 
     // // 对更新时间的存储--云端
     // var refreshDate = new Date();
@@ -125,8 +143,6 @@ export async function pullEvents() {
     //     console.log('当前用户登录时间更新失败！');
     // }) 
 
-    console.log('events2 = ');
-    console.log(events);
     return events;
 }
 
@@ -139,13 +155,13 @@ export async function getLocalEvents() {
         // 或者有其他异常，则在catch中返回
         console.warn(err.message);
         switch (err.name) {
-          case 'NotFoundError':
-            // TODO;
-            break;
-          case 'ExpiredError':
-            // TODO
-            break;
+            case 'NotFoundError':
+                // TODO;
+                break;
+            case 'ExpiredError':
+                // TODO
+                break;
         }
-      });
+    });
     return events;
 }
