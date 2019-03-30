@@ -17,7 +17,7 @@ export default {
     left: Platform.OS === "android" ? deviceWidth / 10 : deviceWidth / 9,
     top: Platform.OS === "android" ? deviceHeight / 13 : deviceHeight / 12,
     width: 210,
-    height: 75,
+    height: 140,
     resizeMode: "cover"
   },
   text: {
@@ -30,5 +30,12 @@ export default {
     fontWeight: "400",
     textAlign: "center",
     marginTop: Platform.OS === "android" ? -3 : undefined
+  },
+  logoText: {
+    fontSize: Platform.OS === "ios" ? 21 : 19,
+    fontWeight: "400",
+    textAlign: "center",
+    marginTop: Platform.OS === "android" ? -3 : undefined,
+    marginBottom: Platform.OS === "ios" ? 9 : 7
   }
 };
