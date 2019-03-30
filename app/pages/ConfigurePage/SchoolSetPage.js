@@ -42,6 +42,23 @@ const resetAction = StackActions.reset({
   ]
 });
 
+function dealInput() {
+    let school_info = {
+        studentid : this.studentid,
+        studentpswd: this.studentpasswd
+    };
+    console.log('input dealing');
+    // this.setState({ BindPageVisible: false });
+    return dispatch => {
+        dispatch(schoolBinded(school_info));
+    }
+    
+    // schoolBinded(school_info);
+    // 
+    // let studentid = this.studentid;
+    // let studentpswd = this.studentpasswd;
+    
+  }
 
 
 class SchoolSetPage extends Component {
@@ -63,17 +80,7 @@ class SchoolSetPage extends Component {
     this.setState({studentid:'', studentpasswd:''});
   }
 
-  dealInput() {
-    let school_info = {
-        studentid : this.studentid,
-        studentpswd: this.studentpasswd
-    };
-    schoolBinded(school_info);
-    this.setState({ BindPageVisible: false });
-    // let studentid = this.studentid;
-    // let studentpswd = this.studentpasswd;
-    
-  }
+  
 
   getDialog() {
       return (
@@ -93,7 +100,10 @@ class SchoolSetPage extends Component {
                         />
                         <DialogButton
                             text="添加"
-                            onPress={() => this.dealInput()}
+                            onPress={() => {
+                                dealInput();
+                                this.setState({ BindPageVisible: false });
+                            }}
                         />
                     </DialogFooter>
                 }
@@ -217,6 +227,7 @@ function schoolBinded(school_info) {
         key: 'schoolinfo',
         data: school_info
     });
+    console.log('school binded.');
     return (
         type: types.SCHOOL_BIND_DONE
     )
