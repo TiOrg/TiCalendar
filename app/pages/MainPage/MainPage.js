@@ -319,7 +319,7 @@ export default class MainPage extends Component {
             </View>
 
             <ScrollView tabLabel="ios-list" style={styles.tabView}>
-              <SettingPage  />
+              <SettingPage  {...this.props}/>
             </ScrollView>
 
           </ScrollableTabView>
