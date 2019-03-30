@@ -8,6 +8,10 @@ import {
   DeviceInfo,
   AsyncStorage,
   Alert,
+  TouchableWithoutFeedback,
+  TouchableNativeFeedback,
+  ValidButton,
+  Linking
 } from 'react-native';
 import {
   Calendar,
@@ -53,15 +57,16 @@ const uuidv1 = require('uuid/v1');
 LocaleConfig.locales['zh-CN'] = {
   monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
     '七月', '八月', '九月', '十月', '十一月', '十二月'],
-  monthNamesShort: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'],
+  monthNamesShort: ['一月', '二月', '三月', '四月', '五月', '六月',
+  '七月', '八月', '九月', '十月', '十一月', '十二月'],
   dayNames: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-  dayNamesShort: ['日', '一', '二', '三', '四', '五', '六']
+  dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
 };
 
 LocaleConfig.defaultLocale = 'zh-CN';
 
 export default class CalendarPage extends Component {
-  
+
   constructor(props) {
     super(props);
 
@@ -78,38 +83,38 @@ export default class CalendarPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({items: nextProps.items});
+    this.setState({ items: nextProps.items });
   }
 
   getUserId() {
     storage.load({
-        key: 'user'
+      key: 'user'
     })
-    .then(ret => {
+      .then(ret => {
         // console.log('user:', ret);
         // id = ret.objectId;
         // console.log('id:',ret.objectId);
-        this.setState({userid: ret.objectId});
-    })
-    .catch(err => {
+        this.setState({ userid: ret.objectId });
+      })
+      .catch(err => {
         // 如果没有找到数据且没有sync方法，
         // 或者有其他异常，则在catch中返回
         console.warn(err.message);
         switch (err.name) {
-        case 'NotFoundError':
+          case 'NotFoundError':
             // TODO;
             break;
-        case 'ExpiredError':
+          case 'ExpiredError':
             // TODO
             break;
         }
-    });
+      });
   }
 
   clearInputState() {
-    this.setState({startDate: ''});
-    this.setState({endDate: ''});
-    this.setState({eventNameText: ''});
+    this.setState({ startDate: '' });
+    this.setState({ endDate: '' });
+    this.setState({ eventNameText: '' });
   }
   static navigationOptions = {
     title: 'Details',
@@ -118,7 +123,7 @@ export default class CalendarPage extends Component {
   refreshState(items) {
     console.log(items);
   }
-  
+
 
 
 
@@ -129,7 +134,7 @@ export default class CalendarPage extends Component {
       <Container>
         <Agenda
           items={this.state.items}
-          // loadItemsForMonth={this.loadItems.bind(this)}
+          loadItemsForMonth={this.loadItems.bind(this)}
           selected={this.getToday.bind(this)}
           renderItem={this.renderItem.bind(this)}
           renderEmptyDate={this.renderEmptyDate.bind(this)}
@@ -141,7 +146,7 @@ export default class CalendarPage extends Component {
             // selectedColor: color.FACEBOOK_BLUE,
             selectedDayBackgroundColor: color.THEME,
             todayTextColor: color.THEME,
-            dotColor:color.FACEBOOK_BLUE,
+            dotColor: color.FACEBOOK_BLUE,
             agendaKnobColor: color.THEME
           }}
         />
@@ -163,50 +168,51 @@ export default class CalendarPage extends Component {
   }
 
 
-  // async loadItems(day) {
-  //   setTimeout(() => {
-  //     for (let i = -15; i < 85; i++) {
-  //       const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-  //       const strTime = this.timeToString(time);
-  //       if (!this.state.items[strTime]) {
-  //         this.state.items[strTime] = [];
-  //         const numItems = Math.floor(Math.random() * 5);
-  //         for (let j = 0; j < numItems; j++) {
-  //           this.state.items[strTime].push({
-  //             name: 'Item for ' + strTime,
+  loadItems(day) {
+      for (let i = -150; i < 150; i++) {
+        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+        const strTime = this.timeToString(time);
+        if (!this.state.items[strTime]) {
+          this.state.items[strTime] = [];
+        }
+      }
 
-  //             height: Math.max(50, Math.floor(Math.random() * 150))
-  //           });
-  //         }
-  //       }
-  //     }
-      
-  //     //console.log(this.state.items);
-  //     const newItems = {};
-  //     Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
-  //     this.setState({
-  //       items: newItems
-  //     });
-  //   }, 1000);
-  //   await storage.load({
-  //     key: 'event',
-  //     id: this.state.userid
-  //   }).then(ret => {
-  //     console.log('agenda userid: ' + this.state.userid);
-  //     console.log('ret: ' + ret);
-  //   })
-  //   // console.log(`Load Items for ${day.year}-${day.month}`);
-  // }
+      //console.log(this.state.items);
+      const newItems = {};
+      Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
+      this.setState({
+        items: newItems
+      });
+    // await storage.load({
+    //   key: 'event',
+    //   id: this.state.userid
+    // }).then(ret => {
+    //   console.log('agenda userid: ' + this.state.userid);
+    //   console.log('ret: ' + ret);
+    // })
+    // console.log(`Load Items for ${day.year}-${day.month}`);
+  }
+
+  openURL(url) {
+    Linking.openURL(url)
+  }
 
   renderItem(item) {
     return (
-      <View style={[styles.item, { height: item.height }]}><Text>{item.name}</Text></View>
+      // <TouchableNativeFeedback onPress={this.openURL(item.url)}>
+
+        <View style={[styles.item]}>
+          <Text style={styles.itemtitle}>{item.title}</Text>
+          <Text style={styles.itemcontent}>{item.content}</Text>
+        </View>
+      // </TouchableNativeFeedback>
+
     );
   }
 
   renderEmptyDate() {
     return (
-      <View style={styles.emptyDate}><Text>This is empty date!</Text></View>
+      <View style={styles.emptyDate}><Text>无事件</Text></View>
     );
   }
 
@@ -247,6 +253,16 @@ const styles = StyleSheet.create({
     marginTop: 17
   },
 
+  itemtitle: {
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+
+  itemcontent: {
+    fontSize: 12
+
+  },
+
   emptyDate: {
     height: 15,
     flex: 1,
@@ -261,4 +277,5 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingTop: 10
   }
+
 })

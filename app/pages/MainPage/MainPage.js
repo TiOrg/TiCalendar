@@ -102,8 +102,9 @@ export default class MainPage extends Component {
   events.forEach(event => {
     const strTime = event.dateTime.toISOString().split('T')[0];
     this.state.items[strTime].push({
-      name: event.title + ': ' + event.content,
-      height: event.title.length + event.content.length
+      title: event.title,
+      content: event.content,
+      url: event.url
       });
     });
 
