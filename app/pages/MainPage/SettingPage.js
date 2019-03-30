@@ -36,15 +36,11 @@ const resetAction = StackActions.reset({
 const list = [
   {
     title: '学校信息绑定',
-    icon: 'exit-to-app'
+    icon: 'school'
   },
   {
     title: '退出登录',
     icon: 'exit-to-app'
-  },
-  {
-    title: 'Trips',
-    icon: 'flight-takeoff'
   },
 ]
 

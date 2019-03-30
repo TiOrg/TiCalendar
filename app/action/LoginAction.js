@@ -12,6 +12,9 @@ export function quit() {
     global.storage.remove({
         key: 'user',
     });
+    global.storage.remove({
+        key: 'schoolinfo',
+    });
     return dispatch => {
         dispatch(isQuiting());
         console.log('quiting');

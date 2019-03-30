@@ -12,12 +12,16 @@ import {
   Badge
 } from "native-base";
 import {
+  Divider
+} from "react-native-paper";
+import {
   Button
 } from "react-native-paper";
 import styles from "./style";
 
-const drawerCover = require("../../assets/image/drawer-cover.png");
-const drawerImage = require("../../assets/image/logo-kitchen-sink.png");
+
+const drawerCover = require("../../assets/image/white.png");
+const drawerImage = require("../../assets/image/T.png");
 const datas = [
   {
     name: "设置",
@@ -34,8 +38,8 @@ const datas = [
 ];
 
 
-
 class SideBar extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -53,7 +57,10 @@ class SideBar extends Component {
         >
           <Image source={drawerCover} style={styles.drawerCover} />
           <Image square style={styles.drawerImage} source={drawerImage} />
-
+          <Text style={styles.logoText} >
+        TiCalendar
+          </Text>
+          <Divider />
           <List
             dataArray={datas}
             renderRow={data =>
@@ -89,17 +96,6 @@ class SideBar extends Component {
                   </Right>}
               </ListItem>}
           />
-          <Button
-              onPress={() => this.quitLogin()}
-              color='#d50000'
-              mode='contained'
-              compact={true}
-              style={{
-                margin:20
-              }}
-          >
-              退出登录
-          </Button>
         </Content>
         
       </Container>
