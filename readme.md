@@ -4,8 +4,9 @@ TiCalendar是一个智能日历应用，致力于提取网络关键信息并智�
 
 目前，TiCalendar致力于为高校学生提供便捷的日程信息获取功能，用户输入学生教务信息后，应用可以自动获取教务网站上的通知信息并获取到本地进行储存。目前，我们的应用支持同济大学学生使用。
 
-![CalendarPage](./screenshots/CalendarPage.png) ![LoginPage](./screenshots/LoginPage.png)
+ ![LoginPage](./screenshots/LoginPage.png) ![CalendarPage](./screenshots/CalendarPage.png)![Binding](./screenshots/Binding.png)
 
+![Android_login](./screenshots/Android_login.png) ![Android_page](./screenshots/Android_page.png) ![Android_page](./screenshots/Android_event.png)
 
 ## 项目适用平台
 
@@ -28,3 +29,6 @@ npm install
 
 
 
+## 项目的包依赖
+
+​	请参考<https://github.com/TiOrg/TiCalendar/network/dependencies>
