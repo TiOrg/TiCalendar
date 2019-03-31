@@ -1,4 +1,4 @@
-# TiCalendar📆
+# TiCalendar 📆
 
 TiCalendar是一个智能日历应用，致力于提取网络关键信息并智能生成日历事件。
 
