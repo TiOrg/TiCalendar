@@ -13,6 +13,7 @@ store.subscribe(() => {
     //监听state变化
     console.log(store.getState());
 });
+console.disableYellowBox = true;
 
 const theme = {
     ...DefaultTheme,
