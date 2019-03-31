@@ -11,7 +11,8 @@ import {
   TouchableWithoutFeedback,
   TouchableNativeFeedback,
   ValidButton,
-  Linking
+  Linking,
+  Line
 } from 'react-native';
 import {
   Calendar,

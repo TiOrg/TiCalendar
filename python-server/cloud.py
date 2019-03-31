@@ -58,17 +58,21 @@ def refresh_events(**params):
     try:
         q.login(username, password)
     except:
-        pass
+        return 'LoginError'
 
-    query = Event.query
-    query.select('msgid')
-    event_found = query.find()
 
-    eventids = []
-    for event in event_found:
-        eventids.append(event.get('msgid'))
-    eventids = list(set(eventids))
-    events, times = q.refreshEvents(eventids)
+    try:
+        query = Event.query
+        query.select('msgid')
+        event_found = query.find()
+
+        eventids = []
+        for event in event_found:
+            eventids.append(event.get('msgid'))
+        eventids = list(set(eventids))
+        events, times = q.refreshEvents(eventids)
+    except:
+        return 'ParseError'
 
 
     index = 0

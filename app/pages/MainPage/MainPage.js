@@ -7,8 +7,12 @@ import {
   ScrollView,
   Alert,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 
+import {
+  Snackbar
+} from 'react-native-paper';
 
 import { Input } from 'react-native-elements';
 
@@ -26,7 +30,8 @@ import {
   Button,
   Icon,
   Title,
-  Drawer
+  Drawer,
+  Spinner
 } from 'native-base';
 import * as color from '../../assets/css/color';
 
@@ -36,12 +41,12 @@ import DatePicker from 'react-native-datepicker';
 
 import * as RefreshAction from '../../action/RefreshAction'
 
-import Dialog, { 
+import Dialog, {
   ScaleAnimation,
   DialogTitle,
   DialogFooter,
   DialogButton,
-  DialogContent 
+  DialogContent
 } from 'react-native-popup-dialog';
 import SplashScreen from 'react-native-splash-screen'
 
@@ -62,7 +67,7 @@ export default class MainPage extends Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       userid: 0x0,
       visible: false,
@@ -70,19 +75,21 @@ export default class MainPage extends Component {
       startDate: '',   // 
       endDate: '',
       eventNameText: '',
+      doingRefresh: false,
+      refreshSuccess: false
     };
   }
   componentWillMount() {
     // this.getAllAgenda();
     this.getLocalAgenda();
-}
+  }
 
   clearInputState() {
     this.setState({ startDate: '' });
     this.setState({ endDate: '' });
     this.setState({ eventNameText: '' });
   }
-  
+
 
   async getLocalAgenda() {
     var events = await RefreshAction.getLocalEvents();
@@ -94,33 +101,53 @@ export default class MainPage extends Component {
       const strTime = date.toISOString().split('T')[0];
       this.state.items[strTime] = [];
 
-  });
+    });
 
-  events.forEach(event => {
-    var date = new Date(event.dateTime);
-    const strTime = date.toISOString().split('T')[0];
-    this.state.items[strTime].push({
-      title: event.title,
-      content: event.content,
-      url: event.url
+    events.forEach(event => {
+      var date = new Date(event.dateTime);
+      const strTime = date.toISOString().split('T')[0];
+      this.state.items[strTime].push({
+        title: event.title,
+        content: event.content,
+        url: event.url
       });
     });
 
-  console.log('items:')
-  console.log(this.state.items);
+    console.log('items:')
+    console.log(this.state.items);
 
-  const newItems = {};
-  Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
-  this.setState({
-    items: newItems
-  });
+    const newItems = {};
+    Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
+    this.setState({
+      items: newItems
+    });
   }
 
   async getAllAgenda() {
     //pull
     // alert('pulling all agenda from database...');
     // 从云端拉取所有events数据存储到storage
-    var events = await RefreshAction.pullEvents(); 
+    this.setState({ doingRefresh: true });
+    var events = await RefreshAction.pullEvents().catch(err => {
+      switch (err) {
+        case 'UserNotLogin':
+          alert('请先绑定学校信息');
+          break;
+        case 'LoginError':
+          alert('登录失败，请检查用户名和密码是否正确');
+          break;
+        case 'UnknownError':
+          alert('未知错误');
+          break;
+        case 'CloudFailed':
+          alert('与服务器同步失败');
+          break;
+      }
+      this.setState({
+        doingRefresh: false,
+        refreshSuccess: false
+      });
+    });
 
     console.log('get all events:');
     console.log(events);
@@ -129,27 +156,31 @@ export default class MainPage extends Component {
       const strTime = event.dateTime.toISOString().split('T')[0];
       this.state.items[strTime] = [];
 
-  });
+    });
 
-  events.forEach(event => {
-    const strTime = event.dateTime.toISOString().split('T')[0];
-    this.state.items[strTime].push({
-      title: event.title,
-      content: event.content,
-      url: event.url
+    events.forEach(event => {
+      const strTime = event.dateTime.toISOString().split('T')[0];
+      this.state.items[strTime].push({
+        title: event.title,
+        content: event.content,
+        url: event.url
       });
     });
 
-  console.log('items:')
-  console.log(this.state.items);
+    console.log('items:')
+    console.log(this.state.items);
 
-  const newItems = {};
-  Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
-  this.setState({
-    items: newItems
-  });
+    const newItems = {};
+    Object.keys(this.state.items).forEach(key => { newItems[key] = this.state.items[key]; });
+    this.setState({
+      items: newItems
+    });
 
-  Alert.alert('提示', '事件刷新成功', [{ text: "好" }]);
+    // Alert.alert('提示', '事件刷新成功', [{ text: "好" }]);
+    this.setState({
+      doingRefresh: false,
+      refreshSuccess: true
+    });
 
   }
 
@@ -196,144 +227,166 @@ export default class MainPage extends Component {
 
   render() {
     const { navigate, dispatch } = this.props.navigation;
+
+    const doingRefresh = this.state.doingRefresh;
+
+    let refreshButton = null;
+    if (doingRefresh) {
+      refreshButton = <Button transparent visible={false}>
+        <ActivityIndicator
+          size="small"
+          color={(Platform.OS === 'ios') ?
+            color.FACEBOOK_BLUE : color.WHITE}
+        />
+      </Button>;
+    }
+    else {
+      refreshButton = <Button
+        transparent
+        onPress={() => {
+          this.getAllAgenda();
+        }} >
+        <Icon name='md-refresh' style={{
+          color: (Platform.OS === 'ios') ?
+            color.FACEBOOK_BLUE : color.WHITE
+        }} />
+      </Button>
+
+    }
     return (
       // <SafeAreaView style={styles.container}>
-        <Drawer
-          ref={(ref) => { this._drawer = ref; }}
-          content={<SideBar 
-            navigator={navigate} 
-            // quitAction={}
-          />}
-          onClose={() => this.closeDrawer()} >
-          
-            
-            <Header>
-              <Left>
-                <Button
-                  transparent
-                  onPress={() => this.openDrawer()}
-                >
-                  <Icon name="md-menu" style={{ color: (Platform.OS === 'ios') ? 
-                  color.FACEBOOK_BLUE : color.WHITE }} />
-                </Button>
-              </Left>
-              <Body>
-                <Title style={{
-                  fontSize: 20, color: (Platform.OS === 'ios') ?
-                    color.FACEBOOK_BLUE : color.WHITE
-                }}>TiCalendar</Title>
-              </Body>
-              <Right>
-                <Button
-                  transparent
-                  onPress={() => {
-                    this.getAllAgenda();
-                  }} >
-                  <Icon name='md-refresh' style={{
-                    color: (Platform.OS === 'ios') ?
-                      color.FACEBOOK_BLUE : color.WHITE
-                  }} />
-                </Button>
+      <Drawer
+        ref={(ref) => { this._drawer = ref; }}
+        content={<SideBar
+          navigator={navigate}
+        // quitAction={}
+        />}
+        onClose={() => this.closeDrawer()} >
 
-                <Button
-                  transparent
-                  onPress={() => {
-                    this.setState({ visible: true });
-                  }}
-                >
-                  <Dialog
-                    // height={0.5}
-                    visible={this.state.visible}
-                    footer={
-                      <DialogFooter>
-                        <DialogButton
-                          text="取消"
-                          onPress={() => {
-                            this.clearInputState();
-                            this.setState({ visible: false });
-                          }}
-                        />
-                        <DialogButton
-                          text="添加"
-                          onPress={() => this.validateInput()}
-                        />
-                      </DialogFooter>
-                    }
-                    dialogTitle={<DialogTitle title="手动添加事件" />}
-                    dialogAnimation={new ScaleAnimation({
-                      toValue: 0,
-                      useNativeDriver: true,
-                    })}
-                    onTouchOutside={() => {
-                      this.setState({ visible: false });
-                    }}
-                  >
-                    <DialogContent>
-                      <View style={styles.label_view}>
-                        <Text style={styles.label}>
-                          事件名称：
+
+        <Header>
+          <Left>
+            <Button
+              transparent
+              onPress={() => this.openDrawer()}
+            >
+              <Icon name="md-menu" style={{
+                color: (Platform.OS === 'ios') ?
+                  color.FACEBOOK_BLUE : color.WHITE
+              }} />
+            </Button>
+          </Left>
+
+          <Body>
+            <Title style={{
+              fontSize: 20, color: (Platform.OS === 'ios') ?
+                color.FACEBOOK_BLUE : color.WHITE
+            }}>TiCalendar</Title>
+          </Body>
+
+          <Right>
+            {/* <Spinner color = 'white'/> */}
+            {refreshButton}
+
+            <Button
+              transparent
+              onPress={() => {
+                this.setState({ visible: true });
+              }}
+            >
+              <Dialog
+                // height={0.5}
+                visible={this.state.visible}
+                footer={
+                  <DialogFooter>
+                    <DialogButton
+                      text="取消"
+                      onPress={() => {
+                        this.clearInputState();
+                        this.setState({ visible: false });
+                      }}
+                    />
+                    <DialogButton
+                      text="添加"
+                      onPress={() => this.validateInput()}
+                    />
+                  </DialogFooter>
+                }
+                dialogTitle={<DialogTitle title="手动添加事件" />}
+                dialogAnimation={new ScaleAnimation({
+                  toValue: 0,
+                  useNativeDriver: true,
+                })}
+                onTouchOutside={() => {
+                  this.setState({ visible: false });
+                }}
+              >
+                <DialogContent>
+                  <View style={styles.label_view}>
+                    <Text style={styles.label}>
+                      事件名称：
                       </Text>
-                      </View>
-                      <Input
-                        style={{ paddingTop: 10 }}
-                        labelStyle={{ fontSize: 20 }}
-                        placeholder=""
-                        onChangeText={(text) => this.setState({ eventNameText: text })}
-                      />
-                      <View style={styles.label_view}>
-                        <Text style={styles.label}>
-                          开始时间：
+                  </View>
+                  <Input
+                    style={{ paddingTop: 10 }}
+                    labelStyle={{ fontSize: 20 }}
+                    placeholder=""
+                    onChangeText={(text) => this.setState({ eventNameText: text })}
+                  />
+                  <View style={styles.label_view}>
+                    <Text style={styles.label}>
+                      开始时间：
                         </Text>
-                      </View>
-                      <DatePicker style={{
-                        paddingTop: 10,
-                        width: 300
-                      }}
-                        placeholder="点击此处或图标以选择时间"
-                        format="YYYY-MM-DD HH:MM"
-                        date={this.state.startDate}
-                        mode="datetime"
-                        confirmBtnText="确认"
-                        cancelBtnText="取消"
-                        onDateChange={(date) => { this.setState({ startDate: date }) }}
-                      />
-                      <View style={styles.label_view}>
-                        <Text style={styles.label}>
-                          结束时间：
+                  </View>
+                  <DatePicker style={{
+                    paddingTop: 10,
+                    width: 300
+                  }}
+                    placeholder="点击此处或图标以选择时间"
+                    format="YYYY-MM-DD HH:MM"
+                    date={this.state.startDate}
+                    mode="datetime"
+                    confirmBtnText="确认"
+                    cancelBtnText="取消"
+                    onDateChange={(date) => { this.setState({ startDate: date }) }}
+                  />
+                  <View style={styles.label_view}>
+                    <Text style={styles.label}>
+                      结束时间：
                         </Text>
-                      </View>
-                      <DatePicker style={{
-                        paddingTop: 10,
-                        width: 300
-                      }}
-                        placeholder="点击此处或图标以选择时间"
-                        format="YYYY-MM-DD HH:MM"
-                        date={this.state.endDate}
-                        mode="datetime"
-                        confirmBtnText="确认"
-                        cancelBtnText="取消"
-                        onDateChange={(date) => { this.setState({ endDate: date }) }}
-                      />
+                  </View>
+                  <DatePicker style={{
+                    paddingTop: 10,
+                    width: 300
+                  }}
+                    placeholder="点击此处或图标以选择时间"
+                    format="YYYY-MM-DD HH:MM"
+                    date={this.state.endDate}
+                    mode="datetime"
+                    confirmBtnText="确认"
+                    cancelBtnText="取消"
+                    onDateChange={(date) => { this.setState({ endDate: date }) }}
+                  />
 
-                    </DialogContent>
-                  </Dialog>
-                  <Icon name='md-add' style={{
-                    color: (Platform.OS === 'ios') ?
-                      color.FACEBOOK_BLUE : color.WHITE
-                  }} />
-                </Button>
-              </Right>
-            </Header>
-            <ScrollableTabView
-            // style={{marginTop: 20, }}
-            initialPage={1}
-            renderTabBar={() => <FacebookTabBar />}
-            tabBarPosition='bottom'>
-            <View tabLabel="ios-paper" style={styles.tabView}>
-              <CalendarPage />
-            </View>
+                </DialogContent>
+              </Dialog>
+              <Icon name='md-add' style={{
+                color: (Platform.OS === 'ios') ?
+                  color.FACEBOOK_BLUE : color.WHITE
+              }} />
+            </Button>
+          </Right>
+        </Header>
+        <ScrollableTabView
+          // style={{marginTop: 20, }}
+          initialPage={1}
+          renderTabBar={() => <FacebookTabBar />}
+          tabBarPosition='bottom'>
+          <View tabLabel="ios-paper" style={styles.tabView}>
+            <CalendarPage />
+          </View>
 
-            {/* <ScrollView tabLabel="ios-people" style={styles.tabView}>
+          {/* <ScrollView tabLabel="ios-people" style={styles.tabView}>
               <View style={styles.card}>
                 <Text>Friends</Text>
               </View>
@@ -345,16 +398,29 @@ export default class MainPage extends Component {
               </View>
             </ScrollView> */}
 
-            <View tabLabel="ios-notifications" style={styles.tabView}>
-              <AgendaPage items = {this.state.items} onChange={val => this.setState({items: val})}/>
-            </View>
+          <View tabLabel="ios-notifications" style={styles.tabView}>
+            <AgendaPage items={this.state.items} onChange={val => this.setState({ items: val })} />
+          </View>
 
-            <ScrollView tabLabel="ios-list" style={styles.tabView}>
-              <SettingPage  {...this.props}/>
-            </ScrollView>
+          <ScrollView tabLabel="ios-list" style={styles.tabView}>
+            <SettingPage  {...this.props} />
+          </ScrollView>
 
-          </ScrollableTabView>
-        </Drawer>
+        </ScrollableTabView>
+        <Snackbar
+          visible={this.state.refreshSuccess}
+          onDismiss={() => this.setState({ refreshSuccess: false })}
+          action={{
+            label: '好的',
+            onPress: () => {
+              this.setState({ refreshSuccess: false })
+            },
+          }}
+          duration={Snackbar.DURATION_SHORT}
+        >
+          刷新日程成功
+        </Snackbar>
+      </Drawer>
       // </SafeAreaView>
     );
   }

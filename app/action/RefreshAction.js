@@ -48,24 +48,29 @@ export async function pullEvents() {
         console.warn(err);
         switch (err.name) {
             case 'NotFoundError':
-                alert('请先登录');;
+                throw 'UserNotLogin';
                 break;
             case 'ExpiredError':
-                // TODO
+            throw 'UnknownError';
                 break;
         }
-        return 'error';
+        
     });
 
     await AV.Cloud.run('refresh_events', {
         username: stu_info.studentid,
         password: stu_info.studentpswd,
     }).then(function (data) {
-        // alert(data);
-        console.log('cloud: refresh_success');
-        // 调用成功，得到成功的应答 data
+        
+        if(data == 'LoginError'){
+            throw 'LoginError';
+        }
+        else if(data == 'ParseError'){
+            throw 'UnknownError';
+        }
+
     }, function (error) {
-        // 处理调用失败
+        throw 'CloudFailed';
     });
 
     var eventsQuery = new AV.Query('Events');
@@ -83,6 +88,7 @@ export async function pullEvents() {
 
     }, function (error) {
         console.warn(error);
+        throw 'CloudFailed'
     });
 
     // console.log(events);
