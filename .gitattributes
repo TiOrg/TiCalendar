@@ -1,2 +1,2 @@
 *.pbxproj -text
-*.python linguist-language=JavaScript
+*.py linguist-language=JavaScript
