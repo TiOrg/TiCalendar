@@ -31,6 +31,12 @@ npm install
 
 
 
+## 项目的整体结构
+
+### 1.文件框架结构
+所有的JavaScript代码文件存放在根目录下的app目录中。其中UI的主要设计部分在pages目录，登录注册等按钮逻辑在action目录中，其余涉及到react以及redux的部分核心代码可以在store目录找到。此处主要考虑UI设计的改善，故关注pages目录即可。pages目录中的核心UI是LoginPage、MainPage和CalendarPage三个目录中的相关文件，分别对应登录页、两种视图方式的主页面。主页面的Drawer视图在SideBar子目录中，WelcomPage目前无意义。
+
+
 ## 项目的包依赖
 
 ​	请参考<https://github.com/TiOrg/TiCalendar/network/dependencies>
