@@ -5,7 +5,6 @@ import {
   Text,
   List,
   ListItem,
-  Icon,
   Container,
   Left,
   Right,
@@ -19,6 +18,9 @@ import {
 } from "react-native-paper";
 import styles from "./style";
 
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+
 
 const drawerCover = require("../../assets/image/white.png");
 const drawerImage = require("../../assets/image/T.png");
@@ -26,15 +28,32 @@ const datas = [
   {
     name: "设置",
     route: "Setting",
-    icon: "md-menu",
+    icon: "bars",
     bg: "#C5F442"
   }, 
   {
     name: "学校信息绑定",
     route: "School",
-    icon: "school",
+    icon: "graduation-cap",
     bg: "#C5F442"
-  }
+  },
+  {
+    name: "我的收藏",
+    route: "Setting",
+    icon: "heart",
+    bg: "#C5F442"
+  },{
+    name: "关于",
+    route: "Setting",
+    icon: "info-circle",
+    bg: "#C5F442"
+  },
+  {
+    name: "退出登录",
+    route: "Setting",
+    icon: "sign-out",
+    bg: "#C5F442"
+  },
 ];
 
 
@@ -55,8 +74,8 @@ class SideBar extends Component {
           bounces={false}
           style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
         >
-          <Image source={drawerCover} style={styles.drawerCover} />
-          <Image square style={styles.drawerImage} source={drawerImage} />
+          {/* <Image source={drawerCover} style={styles.drawerCover} /> */}
+          {/* <Image square style={styles.drawerImage} source={drawerImage} /> */}
           <Text style={styles.logoText} >
         TiCalendar
           </Text>

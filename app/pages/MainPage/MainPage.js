@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 
 import {
-  Snackbar
+  Snackbar,
+  FAB
 } from 'react-native-paper';
 
 import { Input } from 'react-native-elements';
@@ -33,6 +34,8 @@ import {
   Drawer,
   Spinner
 } from 'native-base';
+
+// import Icon from 'react-native-vector-icons/FontAwesome';
 import * as color from '../../assets/css/color';
 
 import SideBar from '../SideBar/index';
@@ -407,6 +410,13 @@ export default class MainPage extends Component {
           </ScrollView>
 
         </ScrollableTabView>
+        <FAB
+          style={styles.fab}
+          small={false}
+          icon="add"
+          color={color.FACEBOOK_BLUE}
+          onPress={() => console.log('Pressed')}
+        />
         <Snackbar
           visible={this.state.refreshSuccess}
           onDismiss={() => this.setState({ refreshSuccess: false })}
@@ -448,6 +458,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2, },
     shadowOpacity: 0,
     shadowRadius: 3,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    marginBottom: 60,
+    color: color.FACEBOOK_BLUE,
+    right: 0,
+    bottom: 0,
   },
 
   container: {

@@ -1,6 +1,8 @@
 const React = require("react-native");
 const { Platform, Dimensions } = React;
 
+
+import * as color from '../../assets/css/color';
 const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 
@@ -32,10 +34,12 @@ export default {
     marginTop: Platform.OS === "android" ? -3 : undefined
   },
   logoText: {
-    fontSize: Platform.OS === "ios" ? 21 : 19,
+    fontSize: Platform.OS === "ios" ? 41 : 39,
     fontWeight: "400",
     textAlign: "center",
-    marginTop: Platform.OS === "android" ? -3 : undefined,
-    marginBottom: Platform.OS === "ios" ? 9 : 7
+    color: color.FACEBOOK_BLUE,
+    // marginTop: Platform.OS === "android" ? -3 : undefined,
+    marginTop: 100,
+    marginBottom: Platform.OS === "ios" ? 90 : 90
   }
 };
