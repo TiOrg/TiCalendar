@@ -415,7 +415,9 @@ export default class MainPage extends Component {
           small={false}
           icon="add"
           color={color.FACEBOOK_BLUE}
-          onPress={() => console.log('Pressed')}
+          onPress={() => {
+            this.setState({ visible: true });
+          }}
         />
         <Snackbar
           visible={this.state.refreshSuccess}
